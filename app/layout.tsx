@@ -1,10 +1,10 @@
+import { Footer } from "@/src/components/layout/footer";
+import { Header } from "@/src/components/layout/header";
+import { ThemeProvider } from "@/src/components/theme-provider";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/src/components/layout/header";
-import { Footer } from "@/src/components/layout/footer";
-import { ThemeProvider } from "@/src/components/theme-provider";
-import { TrpcProvider } from "@/src/contexts/trpc-provider";
+import { QueryProviderWrapper } from "@/src/contexts/trpc-query-provider-wrapper";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -23,9 +23,6 @@ export const metadata: Metadata = {
   description: "Une collection d'outils pratiques pour développeurs",
 };
 
-
-
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -36,7 +33,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <TrpcProvider>
+        <QueryProviderWrapper>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
@@ -47,7 +44,7 @@ export default function RootLayout({
             <main className="flex-1">{children}</main>
             <Footer />
           </ThemeProvider>
-        </TrpcProvider>
+        </QueryProviderWrapper>
       </body>
     </html>
   );

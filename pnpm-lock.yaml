@@ -23,6 +23,9 @@ importers:
       '@trpc/client':
         specifier: ^11.8.0
         version: 11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/react-query':
+        specifier: ^11.8.0
+        version: 11.8.0(@tanstack/react-query@5.90.12(react@19.2.3))(@trpc/client@11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.8.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
       '@trpc/server':
         specifier: ^11.8.0
         version: 11.8.0(typescript@5.9.3)
@@ -65,6 +68,9 @@ importers:
       shadcn:
         specifier: ^3.6.2
         version: 3.6.2(@types/node@20.19.27)(hono@4.11.1)(typescript@5.9.3)
+      superjson:
+        specifier: ^2.2.6
+        version: 2.2.6
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -1599,6 +1605,16 @@ packages:
       '@trpc/server': 11.8.0
       typescript: '>=5.7.2'
 
+  '@trpc/react-query@11.8.0':
+    resolution: {integrity: sha512-zJG22PqhGUBq6ke58McGxRBGWGDTHlmsgpxp/rQx8iT2yi0Ja1H2/UcSsjZ/MG65DhCfpKvMVH0OVivTn9FWwA==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.80.3
+      '@trpc/client': 11.8.0
+      '@trpc/server': 11.8.0
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
+      typescript: '>=5.7.2'
+
   '@trpc/server@11.8.0':
     resolution: {integrity: sha512-DphyQnLuyX2nwJCQGWQ9zYz4hZGvRhSBqDhQ0SH3tDhQ3PU4u68xofA0pJ741Ir4InEAFD+TtJVLAQy+wVOkiQ==}
     peerDependencies:
@@ -2139,6 +2155,10 @@ packages:
 
   cookie@1.1.1:
     resolution: {integrity: sha512-ei8Aos7ja0weRpFzJnEA9UHJ/7XQmqglbRwnf2ATjcB9Wq874VKH9kfjjirM6UhU2/E5fFYadylyhFldcqSidQ==}
+    engines: {node: '>=18'}
+
+  copy-anything@4.0.5:
+    resolution: {integrity: sha512-7Vv6asjS4gMOuILabD3l739tsaxFQmC+a7pLZm02zyvs8p977bL3zEgq3yDk5rn9B0PbYgIv++jmHcuUab4RhA==}
     engines: {node: '>=18'}
 
   cors@2.8.5:
@@ -2976,6 +2996,10 @@ packages:
   is-weakset@2.0.4:
     resolution: {integrity: sha512-mfcwb6IzQyOKTs84CQMrOwW4gQcaTOAWJ0zzJCl2WSPDrWk/OzDaImWFH3djXhb24g4eudZfLRozAvPGw4d9hQ==}
     engines: {node: '>= 0.4'}
+
+  is-what@5.5.0:
+    resolution: {integrity: sha512-oG7cgbmg5kLYae2N5IVd3jm2s+vldjxJzK1pcu9LfpGuQ93MQSzo0okvRna+7y5ifrD+20FE8FvjusyGaz14fw==}
+    engines: {node: '>=18'}
 
   is-wsl@3.1.0:
     resolution: {integrity: sha512-UcVfVfaK4Sc4m7X3dUSoHoozQGBEFeDC+zVo06t98xe8CzHSZZBekNXH+tu0NalHolcJ/QAGqS46Hef7QXBIMw==}
@@ -3966,6 +3990,10 @@ packages:
         optional: true
       babel-plugin-macros:
         optional: true
+
+  superjson@2.2.6:
+    resolution: {integrity: sha512-H+ue8Zo4vJmV2nRjpx86P35lzwDT3nItnIsocgumgr0hHMQ+ZGq5vrERg9kJBo5AWGmxZDhzDo+WVIJqkB0cGA==}
+    engines: {node: '>=16'}
 
   supports-color@7.2.0:
     resolution: {integrity: sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw==}
@@ -5831,6 +5859,15 @@ snapshots:
       '@trpc/server': 11.8.0(typescript@5.9.3)
       typescript: 5.9.3
 
+  '@trpc/react-query@11.8.0(@tanstack/react-query@5.90.12(react@19.2.3))(@trpc/client@11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.8.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)':
+    dependencies:
+      '@tanstack/react-query': 5.90.12(react@19.2.3)
+      '@trpc/client': 11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/server': 11.8.0(typescript@5.9.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      typescript: 5.9.3
+
   '@trpc/server@11.8.0(typescript@5.9.3)':
     dependencies:
       typescript: 5.9.3
@@ -6353,6 +6390,10 @@ snapshots:
   cookie@0.7.2: {}
 
   cookie@1.1.1: {}
+
+  copy-anything@4.0.5:
+    dependencies:
+      is-what: 5.5.0
 
   cors@2.8.5:
     dependencies:
@@ -7316,6 +7357,8 @@ snapshots:
     dependencies:
       call-bound: 1.0.4
       get-intrinsic: 1.3.0
+
+  is-what@5.5.0: {}
 
   is-wsl@3.1.0:
     dependencies:
@@ -8426,6 +8469,10 @@ snapshots:
       react: 19.2.3
     optionalDependencies:
       '@babel/core': 7.28.5
+
+  superjson@2.2.6:
+    dependencies:
+      copy-anything: 4.0.5
 
   supports-color@7.2.0:
     dependencies:
