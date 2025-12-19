@@ -1,0 +1,63 @@
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Pin, X } from "lucide-react";
+import { ReactNode } from "react";
+
+interface ModuleProps {
+  title: string;
+  description?: string;
+  icon?: ReactNode;
+  isPinned?: boolean;
+  onTogglePin?: () => void;
+  children: ReactNode;
+}
+
+export function Module({
+  title,
+  description,
+  icon,
+  isPinned = false,
+  onTogglePin,
+  children,
+}: ModuleProps) {
+  return (
+    <Card className="h-full flex flex-col">
+      <CardHeader>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2 flex-1">
+            {icon && <div className="text-2xl">{icon}</div>}
+            <div className="flex-1 min-w-0">
+              <CardTitle className="text-lg">{title}</CardTitle>
+              {description && (
+                <CardDescription className="mt-1">
+                  {description}
+                </CardDescription>
+              )}
+            </div>
+          </div>
+          {onTogglePin && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onTogglePin}
+              className="shrink-0"
+            >
+              {isPinned ? (
+                <X className="h-4 w-4" />
+              ) : (
+                <Pin className="h-4 w-4" />
+              )}
+            </Button>
+          )}
+        </div>
+      </CardHeader>
+      <CardContent className="flex-1">{children}</CardContent>
+    </Card>
+  );
+}

@@ -821,6 +821,7 @@ export const WorkspaceScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
   layout: 'layout',
+  pinnedModules: 'pinnedModules',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

@@ -1,0 +1,49 @@
+"use client";
+
+import { Copy, RefreshCw } from "lucide-react";
+import { useState } from "react";
+import { Module } from "../dashboard/module";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+
+function generateUUID() {
+  return crypto.randomUUID();
+}
+
+export function UuidModule() {
+  const [uuid, setUuid] = useState(generateUUID());
+  const [copied, setCopied] = useState(false);
+
+  const handleGenerate = () => {
+    setUuid(generateUUID());
+    setCopied(false);
+  };
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(uuid);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <Module
+      title="UUID Generator"
+      description="Generate unique identifiers"
+      icon="🔑"
+    >
+      <div className="space-y-4">
+        <Input value={uuid} readOnly className="font-mono text-sm" />
+        <div className="flex gap-2">
+          <Button onClick={handleGenerate} variant="outline" className="flex-1">
+            <RefreshCw className="h-4 w-4 mr-2" />
+            Generate
+          </Button>
+          <Button onClick={handleCopy} variant="outline" className="flex-1">
+            <Copy className="h-4 w-4 mr-2" />
+            {copied ? "Copied!" : "Copy"}
+          </Button>
+        </div>
+      </div>
+    </Module>
+  );
+}

@@ -8,12 +8,13 @@ datasource db {
 }
 
 model Workspace {
-  id        String   @id
-  userId    String   @unique
-  layout    Json?
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String   @id
+  userId         String   @unique
+  layout         Json?
+  pinnedModules  String[] @default([])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  User           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {

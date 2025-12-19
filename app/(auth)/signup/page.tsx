@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,9 +8,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { signIn, signUp } from "@/src/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -43,7 +43,7 @@ export default function SignUpPage() {
         name,
         callbackURL: "/",
       });
-      router.push("/");
+      router.push("/dashboard");
     } catch (err) {
       setError("Une erreur est survenue lors de l'inscription");
       console.error(err);
@@ -57,7 +57,7 @@ export default function SignUpPage() {
     try {
       await signIn.social({
         provider: "github",
-        callbackURL: "/",
+        callbackURL: "/dashboard",
       });
     } catch (err) {
       setError("Erreur lors de la connexion avec GitHub");
@@ -72,7 +72,7 @@ export default function SignUpPage() {
     try {
       await signIn.social({
         provider: "gitlab",
-        callbackURL: "/",
+        callbackURL: "/dashboard",
       });
     } catch (err) {
       setError("Erreur lors de la connexion avec GitLab");
@@ -88,7 +88,7 @@ export default function SignUpPage() {
         <CardHeader>
           <CardTitle>Créer un compte</CardTitle>
           <CardDescription>
-            Créez votre compte ada-tools pour commencer
+            Créez votre compte AdaTools pour commencer
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">

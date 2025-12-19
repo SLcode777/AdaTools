@@ -1,9 +1,15 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
-import { Button } from "@/src/components/ui/button";
+import { useSearchParams } from "next/navigation";
 
 export default function VerifyPage() {
   const searchParams = useSearchParams();
@@ -24,8 +30,8 @@ export default function VerifyPage() {
             <span className="font-medium text-foreground">{email}</span>.
           </p>
           <p className="text-sm text-muted-foreground">
-            Veuillez vérifier votre boîte de réception et cliquer sur le lien pour
-            activer votre compte.
+            Veuillez vérifier votre boîte de réception et cliquer sur le lien
+            pour activer votre compte.
           </p>
 
           <div className="pt-4">

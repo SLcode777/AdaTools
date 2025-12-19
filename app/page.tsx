@@ -1,37 +1,42 @@
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import Link from "next/link";
-import { Button } from "@/src/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/src/components/ui/card";
 
 export default function Page() {
   const tools = [
     {
-      title: "Gestionnaire de Snippets",
-      description: "Organisez et réutilisez vos extraits de code favoris",
+      title: "Snippet Manager",
+      description: "Organize and reuse your favorite code snippets",
       icon: "📝",
     },
     {
-      title: "Palettes de Couleurs",
-      description: "Créez et gérez vos palettes de couleurs",
+      title: "Color Palettes",
+      description: "Create and manage your color palettes",
       icon: "🎨",
     },
     {
-      title: "Convertisseur d'Images",
-      description: "Convertissez vos images PNG/JPG en WebP",
+      title: "Image Converter",
+      description: "Convert your PNG/JPG images to WebP",
       icon: "🖼️",
     },
     {
-      title: "Générateur Lorem Ipsum",
-      description: "Générez du texte de remplissage rapidement",
+      title: "Lorem Ipsum Generator",
+      description: "Generate placeholder text quickly",
       icon: "📄",
     },
     {
-      title: "Générateur UUID",
-      description: "Créez des identifiants uniques",
+      title: "UUID Generator",
+      description: "Create unique identifiers",
       icon: "🔑",
     },
     {
-      title: "Formatteur JSON",
-      description: "Formatez et validez vos données JSON",
+      title: "JSON Formatter",
+      description: "Format and validate your JSON data",
       icon: "⚙️",
     },
   ];
@@ -41,10 +46,11 @@ export default function Page() {
       {/* Hero Section */}
       <div className="text-center mb-16 space-y-4">
         <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-          ada-tools
+          AdaTools
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Une collection d'outils pratiques pour développeurs, accessible en un clic
+          Une collection d'outils pratiques pour développeurs, accessible en un
+          clic
         </p>
         <div className="flex gap-4 justify-center pt-4">
           <Button asChild size="lg">
@@ -57,7 +63,10 @@ export default function Page() {
       </div>
 
       {/* Features Grid */}
-      <div id="features" className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div
+        id="features"
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+      >
         {tools.map((tool) => (
           <Card key={tool.title}>
             <CardHeader>

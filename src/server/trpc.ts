@@ -4,7 +4,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { type NextRequest } from "next/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { prisma as db } from "../lib/db";
+import { db } from "../lib/db";
 
 //Context : will be passed to all tRPC procedures
 export const createTRPCContext = async (opts: { req: NextRequest }) => {
