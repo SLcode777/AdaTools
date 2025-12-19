@@ -17,6 +17,18 @@ importers:
       '@prisma/client':
         specifier: ^7.2.0
         version: 7.2.0(prisma@7.2.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(typescript@5.9.3)
+      '@tanstack/react-query':
+        specifier: ^5.90.12
+        version: 5.90.12(react@19.2.3)
+      '@trpc/client':
+        specifier: ^11.8.0
+        version: 11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/server':
+        specifier: ^11.8.0
+        version: 11.8.0(typescript@5.9.3)
+      '@trpc/tanstack-react-query':
+        specifier: ^11.8.0
+        version: 11.8.0(@tanstack/react-query@5.90.12(react@19.2.3))(@trpc/client@11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.8.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)
       better-auth:
         specifier: ^1.4.7
         version: 1.4.7(@prisma/client@7.2.0(prisma@7.2.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(typescript@5.9.3))(mysql2@3.15.3)(next@16.1.0(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(pg@8.16.3)(prisma@7.2.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -1572,6 +1584,35 @@ packages:
 
   '@tailwindcss/postcss@4.1.18':
     resolution: {integrity: sha512-Ce0GFnzAOuPyfV5SxjXGn0CubwGcuDB0zcdaPuCSzAa/2vII24JTkH+I6jcbXLb1ctjZMZZI6OjDaLPJQL1S0g==}
+
+  '@tanstack/query-core@5.90.12':
+    resolution: {integrity: sha512-T1/8t5DhV/SisWjDnaiU2drl6ySvsHj1bHBCWNXd+/T+Hh1cf6JodyEYMd5sgwm+b/mETT4EV3H+zCVczCU5hg==}
+
+  '@tanstack/react-query@5.90.12':
+    resolution: {integrity: sha512-graRZspg7EoEaw0a8faiUASCyJrqjKPdqJ9EwuDRUF9mEYJ1YPczI9H+/agJ0mOJkPCJDk0lsz5QTrLZ/jQ2rg==}
+    peerDependencies:
+      react: ^18 || ^19
+
+  '@trpc/client@11.8.0':
+    resolution: {integrity: sha512-imJQeESX1hAapDaC4JB91yvXg41AZfBuTh/scnEiN/hAubZa5s/ikp0n+w29q2GCf+hREkr3WptUFKFJoDAIug==}
+    peerDependencies:
+      '@trpc/server': 11.8.0
+      typescript: '>=5.7.2'
+
+  '@trpc/server@11.8.0':
+    resolution: {integrity: sha512-DphyQnLuyX2nwJCQGWQ9zYz4hZGvRhSBqDhQ0SH3tDhQ3PU4u68xofA0pJ741Ir4InEAFD+TtJVLAQy+wVOkiQ==}
+    peerDependencies:
+      typescript: '>=5.7.2'
+
+  '@trpc/tanstack-react-query@11.8.0':
+    resolution: {integrity: sha512-LtLVyYzv5MjviBUElkCn1X246BCcq2j58N7mNxg4IqaR9Uvw9y7q6VdJMo5jWO9XogBVltgvHc5sZCJ+7IE1NQ==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.80.3
+      '@trpc/client': 11.8.0
+      '@trpc/server': 11.8.0
+      react: '>=18.2.0'
+      react-dom: '>=18.2.0'
+      typescript: '>=5.7.2'
 
   '@ts-morph/common@0.27.0':
     resolution: {integrity: sha512-Wf29UqxWDpc+i61k3oIOzcUfQt79PIT9y/MWfAGlrkjg6lBC1hwDECLXPVJAhWjiGbfBCxZd65F/LIZF3+jeJQ==}
@@ -5777,6 +5818,31 @@ snapshots:
       '@tailwindcss/oxide': 4.1.18
       postcss: 8.5.6
       tailwindcss: 4.1.18
+
+  '@tanstack/query-core@5.90.12': {}
+
+  '@tanstack/react-query@5.90.12(react@19.2.3)':
+    dependencies:
+      '@tanstack/query-core': 5.90.12
+      react: 19.2.3
+
+  '@trpc/client@11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3)':
+    dependencies:
+      '@trpc/server': 11.8.0(typescript@5.9.3)
+      typescript: 5.9.3
+
+  '@trpc/server@11.8.0(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
+
+  '@trpc/tanstack-react-query@11.8.0(@tanstack/react-query@5.90.12(react@19.2.3))(@trpc/client@11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3))(@trpc/server@11.8.0(typescript@5.9.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3)':
+    dependencies:
+      '@tanstack/react-query': 5.90.12(react@19.2.3)
+      '@trpc/client': 11.8.0(@trpc/server@11.8.0(typescript@5.9.3))(typescript@5.9.3)
+      '@trpc/server': 11.8.0(typescript@5.9.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      typescript: 5.9.3
 
   '@ts-morph/common@0.27.0':
     dependencies:

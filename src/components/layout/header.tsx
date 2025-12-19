@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/src/components/ui/button";
 import { ThemeToggle } from "@/src/components/theme-toggle";
 import { signOut, useSession } from "@/src/lib/auth-client";
 import Link from "next/link";
