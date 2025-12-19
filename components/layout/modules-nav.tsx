@@ -15,7 +15,7 @@ import {
 import { Pin, PinOff } from "lucide-react";
 
 export function ModulesNav() {
-  const { isPinned, handleTogglePin } = useModuleContext();
+  const { isPinned, handleTogglePin, toggleTempOpen } = useModuleContext();
 
   const modulesByCategory = AVAILABLE_MODULES.reduce((acc, module) => {
     if (!acc[module.category]) {
@@ -40,6 +40,9 @@ export function ModulesNav() {
                 <DropdownMenuItem
                   key={module.id}
                   className="flex flex-row justify-between"
+                  onSelect={() => {
+                    toggleTempOpen(module.id);
+                  }}
                 >
                   <div>{module.name}</div>
                   <Button
@@ -47,7 +50,7 @@ export function ModulesNav() {
                     // size="icon"
                     className="h-4 w-4 shrink-0"
                     onClick={(e) => {
-                      e.preventDefault();
+                      e.stopPropagation(); // Empêche la propagation au parent
                       handleTogglePin(module.id);
                     }}
                   >

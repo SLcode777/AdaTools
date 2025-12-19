@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy } from "lucide-react";
+import { Copy, TextInitial } from "lucide-react";
 import { useState } from "react";
 import { Module } from "../dashboard/module";
 import { Button } from "../ui/button";
@@ -8,7 +8,15 @@ import { Button } from "../ui/button";
 const LOREM_IPSUM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
 
-export function LoremIpsumModule() {
+interface LoremIpsumModuleProps {
+  isPinned?: boolean;
+  onTogglePin?: () => void;
+}
+
+export function LoremIpsumModule({
+  isPinned,
+  onTogglePin,
+}: LoremIpsumModuleProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -21,7 +29,9 @@ export function LoremIpsumModule() {
     <Module
       title="Lorem Ipsum"
       description="Placeholder text generator"
-      icon="📄"
+      icon={<TextInitial className="h-5 w-5" color="#00B5D4" />}
+      isPinned={isPinned}
+      onTogglePin={onTogglePin}
     >
       <div className="space-y-4">
         <p className="text-sm text-muted-foreground line-clamp-3">

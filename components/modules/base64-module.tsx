@@ -1,12 +1,17 @@
 "use client";
 
-import { ArrowDownUp } from "lucide-react";
+import { ArrowDownUp, MessageSquareLock } from "lucide-react";
 import { useState } from "react";
 import { Module } from "../dashboard/module";
 import { Button } from "../ui/button";
 import { Textarea } from "../ui/textarea";
 
-export function Base64Module() {
+interface Base64ModuleProps {
+  isPinned?: boolean;
+  onTogglePin?: () => void;
+}
+
+export function Base64Module({ isPinned, onTogglePin }: Base64ModuleProps) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState<"encode" | "decode">("encode");
@@ -30,7 +35,13 @@ export function Base64Module() {
   };
 
   return (
-    <Module title="Base64" description="Encode or decode Base64" icon="⚙️">
+    <Module
+      title="Base64"
+      description="Encode or decode Base64"
+      icon={<MessageSquareLock className="h-5 w-5" color="#00B5D4" />}
+      isPinned={isPinned}
+      onTogglePin={onTogglePin}
+    >
       <div className="space-y-4">
         <div>
           <label className="text-sm font-medium mb-2 block">

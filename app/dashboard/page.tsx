@@ -10,7 +10,7 @@ import { useEffect } from "react";
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
-  const { pinnedModules } = useModuleContext();
+  const { pinnedModules, handleTogglePin, tempOpenModules, toggleTempOpen } = useModuleContext();
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -34,15 +34,36 @@ export default function DashboardPage() {
     return null;
   }
 
+  // Combiner les modules pinnés et temporaires (sans doublons)
+  const allModules = Array.from(new Set([...pinnedModules, ...tempOpenModules]));
+
   return (
     <div className="container mx-auto px-4 py-8">
-      {pinnedModules.length > 0 ? (
+      {allModules.length > 0 ? (
         <ModuleGrid>
-          {pinnedModules.map((moduleId) => {
+          {allModules.map((moduleId) => {
             const moduleConfig = getModuleById(moduleId);
             if (!moduleConfig) return null;
             const ModuleComponent = moduleConfig.component;
-            return <ModuleComponent key={moduleId} />;
+            const isPinned = pinnedModules.includes(moduleId);
+            const isTemp = tempOpenModules.includes(moduleId);
+
+            return (
+              <ModuleComponent
+                key={moduleId}
+                isPinned={isPinned}
+                onTogglePin={() => {
+                  if (isPinned) {
+                    // Module pinné → unpinner
+                    handleTogglePin(moduleId);
+                  } else if (isTemp) {
+                    // Module temporaire → pinner définitivement et retirer des temporaires
+                    handleTogglePin(moduleId);
+                    toggleTempOpen(moduleId);
+                  }
+                }}
+              />
+            );
           })}
         </ModuleGrid>
       ) : (

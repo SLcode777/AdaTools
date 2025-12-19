@@ -1,6 +1,6 @@
 "use client";
 
-import { Copy, RefreshCw } from "lucide-react";
+import { Copy, KeyRound, RefreshCw } from "lucide-react";
 import { useState } from "react";
 import { Module } from "../dashboard/module";
 import { Button } from "../ui/button";
@@ -10,7 +10,12 @@ function generateUUID() {
   return crypto.randomUUID();
 }
 
-export function UuidModule() {
+interface UuidModuleProps {
+  isPinned?: boolean;
+  onTogglePin?: () => void;
+}
+
+export function UuidModule({ isPinned, onTogglePin }: UuidModuleProps) {
   const [uuid, setUuid] = useState(generateUUID());
   const [copied, setCopied] = useState(false);
 
@@ -29,7 +34,9 @@ export function UuidModule() {
     <Module
       title="UUID Generator"
       description="Generate unique identifiers"
-      icon="🔑"
+      icon={<KeyRound className="h-5 w-5" color="#00B5D4" />}
+      isPinned={isPinned}
+      onTogglePin={onTogglePin}
     >
       <div className="space-y-4">
         <Input value={uuid} readOnly className="font-mono text-sm" />

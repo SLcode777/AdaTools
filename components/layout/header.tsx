@@ -4,6 +4,7 @@ import { ModulesNav } from "@/components/layout/modules-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -29,7 +30,13 @@ export function Header() {
     <header className="border-b">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-8">
         <Link href="/" className="text-xl font-bold shrink-0">
-          AdaTools
+          <Image
+            src="/logoV2.png"
+            alt="logo"
+            width={200}
+            height={200}
+            className="p-4"
+          />
         </Link>
 
         {/* Central navigation - visible only when logged in */}

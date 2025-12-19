@@ -49,8 +49,8 @@ export default function Page() {
           AdaTools
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Une collection d'outils pratiques pour développeurs, accessible en un
-          clic
+          Une collection d&apoos;outils pratiques pour développeurs, accessible
+          en un clic
         </p>
         <div className="flex gap-4 justify-center pt-4">
           <Button asChild size="lg">

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext } from "react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { useModule } from "../hooks/useModule";
 
 interface ModulesContextType {
@@ -9,12 +9,16 @@ interface ModulesContextType {
   isPinned: (moduleId: string) => boolean;
   isLoading: boolean;
   isToggling: boolean;
+  tempOpenModules: string[];
+  toggleTempOpen: (moduleId: string) => void;
+  isTempOpen: (moduleId: string) => boolean;
 }
 
 const ModulesContext = createContext<ModulesContextType | undefined>(undefined);
 
 export function ModulesProvider({ children }: { children: ReactNode }) {
   const { getPinnedModules, togglePin, isToggling, isLoading } = useModule();
+  const [tempOpenModules, setTempOpenModules] = useState<string[]>([]);
 
   const handleTogglePin = (moduleId: string) => {
     togglePin({ moduleId });
@@ -22,6 +26,16 @@ export function ModulesProvider({ children }: { children: ReactNode }) {
 
   const isPinned = (moduleId: string) =>
     getPinnedModules?.includes(moduleId) ?? false;
+
+  const toggleTempOpen = (moduleId: string) => {
+    setTempOpenModules((prev) =>
+      prev.includes(moduleId)
+        ? prev.filter((id) => id !== moduleId)
+        : [...prev, moduleId]
+    );
+  };
+
+  const isTempOpen = (moduleId: string) => tempOpenModules.includes(moduleId);
 
   return (
     <ModulesContext.Provider
@@ -31,6 +45,9 @@ export function ModulesProvider({ children }: { children: ReactNode }) {
         isPinned,
         isLoading,
         isToggling,
+        tempOpenModules,
+        toggleTempOpen,
+        isTempOpen,
       }}
     >
       {children}

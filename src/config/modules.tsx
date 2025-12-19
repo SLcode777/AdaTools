@@ -1,13 +1,18 @@
 import { Base64Module } from "@/components/modules/base64-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { UuidModule } from "@/components/modules/uuid-module";
+import { FileText, KeyRound, Settings } from "lucide-react";
+import { ReactNode } from "react";
 
 export interface ModuleConfig {
   id: string;
   name: string;
   description: string;
-  icon: string;
-  component: () => JSX.Element;
+  icon: ReactNode;
+  component: (props: {
+    isPinned?: boolean;
+    onTogglePin?: () => void;
+  }) => JSX.Element;
   category: string;
 }
 
@@ -16,7 +21,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     id: "lorem-ipsum",
     name: "Lorem Ipsum",
     description: "Placeholder text generator",
-    icon: "📄",
+    icon: <FileText className="h-5 w-5" />,
     component: LoremIpsumModule,
     category: "Generators",
   },
@@ -24,7 +29,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     id: "uuid",
     name: "UUID",
     description: "Unique identifier generator",
-    icon: "🔑",
+    icon: <KeyRound className="h-5 w-5" />,
     component: UuidModule,
     category: "Generators",
   },
@@ -32,7 +37,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     id: "base64",
     name: "Base64",
     description: "Base64 encoder/decoder",
-    icon: "⚙️",
+    icon: <Settings className="h-5 w-5" />,
     component: Base64Module,
     category: "Encoding",
   },
