@@ -316,17 +316,17 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
             </div>
             {/* Account Balance */}
             {accountBalance && (
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800  px-3 py-1">
+              <div className="bg-primary/10 dark:bg-primary/10 border border-primary dark:border-primary  px-3 py-1">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100">
+                  <p className="text-sm font-medium text-primary dark:text-chart-1">
                     Remaining Credits
                   </p>
-                  <p className="text-lg font-bold text-blue-900 dark:text-blue-100">
+                  <p className="text-lg font-bold text-primary dark:text-chart-1">
                     {accountBalance.total}
                   </p>
                 </div>
                 {accountBalance.freeCalls > 0 && (
-                  <p className="text-xs text-blue-700 dark:text-blue-300 ">
+                  <p className="text-xs text-chart-2  ">
                     + {accountBalance.freeCalls} free calls
                   </p>
                 )}

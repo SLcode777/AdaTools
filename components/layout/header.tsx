@@ -4,6 +4,7 @@ import { ModulesNav } from "@/components/layout/modules-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,7 @@ export function Header() {
   const { data: session, isPending } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   const handleSignOut = async () => {
     setIsLoading(true);
@@ -31,7 +33,7 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-8">
         <Link href="/" className="text-xl font-bold shrink-0">
           <Image
-            src="/logoV2.png"
+            src={theme === "dark" ? "/logoV2-black.png" : "/logoV2-white.png"}
             alt="logo"
             width={200}
             height={200}
