@@ -3,9 +3,11 @@ import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
+import { WebpConverterModule } from "@/components/modules/webpConverter";
 import {
   BookType,
   FileText,
+  Images,
   KeyRound,
   Settings,
   Wallpaper,
@@ -55,6 +57,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Remove background from a file image",
     icon: <Wallpaper className="h-5 w-5" />,
     component: RemoveBgModule,
+    category: "Image processing",
+  },
+  {
+    id: "webpConverter",
+    name: "Webp Converter",
+    description: "Convert a jpg/png image to webp format",
+    icon: <Images className="h-5 w-5" />,
+    component: WebpConverterModule,
     category: "Image processing",
   },
   {
