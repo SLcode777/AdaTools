@@ -111,7 +111,7 @@ export const removebgRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       // Get user's encrypted API key from database
       const user = await ctx.db.user.findUnique({
-        where: { id: ctx.session.user.id },
+        where: { id: ctx.userId },
         select: { removeBgApiKey: true },
       });
 

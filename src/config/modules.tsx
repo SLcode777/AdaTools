@@ -1,8 +1,15 @@
 import { Base64Module } from "@/components/modules/base64-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
+import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
-import { FileText, KeyRound, Settings, Wallpaper } from "lucide-react";
+import {
+  BookType,
+  FileText,
+  KeyRound,
+  Settings,
+  Wallpaper,
+} from "lucide-react";
 import { JSX, ReactNode } from "react";
 
 export interface ModuleConfig {
@@ -49,6 +56,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Wallpaper className="h-5 w-5" />,
     component: RemoveBgModule,
     category: "Image processing",
+  },
+  {
+    id: "translation",
+    name: "Translator",
+    description: "Translation powered by deepL",
+    icon: <BookType className="h-5 w-5" />,
+    component: TranslationModule,
+    category: "Translation",
   },
 ];
 

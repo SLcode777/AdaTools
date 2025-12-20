@@ -8,13 +8,18 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { data: session, isPending } = useSession();
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme } = useTheme();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSignOut = async () => {
     setIsLoading(true);
@@ -33,10 +38,16 @@ export function Header() {
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-8">
         <Link href="/" className="text-xl font-bold shrink-0">
           <Image
-            src={theme === "dark" ? "/logoV2-black.png" : "/logoV2-white.png"}
+            src={
+              !mounted
+                ? "/logoV2-black.png"
+                : theme === "dark"
+                ? "/logoV2-black.png"
+                : "/logoV2-white.png"
+            }
             alt="logo"
             width={200}
-            height={200}
+            height={73}
             className="p-4"
           />
         </Link>
