@@ -835,6 +835,7 @@ export const UserScalarFieldEnum = {
   email: 'email',
   emailVerified: 'emailVerified',
   image: 'image',
+  removeBgApiKey: 'removeBgApiKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

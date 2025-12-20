@@ -1,8 +1,9 @@
 import { Base64Module } from "@/components/modules/base64-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
+import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { UuidModule } from "@/components/modules/uuid-module";
-import { FileText, KeyRound, Settings } from "lucide-react";
-import { ReactNode } from "react";
+import { FileText, KeyRound, Settings, Wallpaper } from "lucide-react";
+import { JSX, ReactNode } from "react";
 
 export interface ModuleConfig {
   id: string;
@@ -40,6 +41,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Settings className="h-5 w-5" />,
     component: Base64Module,
     category: "Encoding",
+  },
+  {
+    id: "removebg",
+    name: "Remove Background",
+    description: "Remove background from a file image",
+    icon: <Wallpaper className="h-5 w-5" />,
+    component: RemoveBgModule,
+    category: "Image processing",
   },
 ];
 

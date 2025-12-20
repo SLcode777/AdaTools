@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-  ],
+, "src/server/_app.ts.old"  ],
   "exclude": ["node_modules"]
 }

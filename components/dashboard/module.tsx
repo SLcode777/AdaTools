@@ -30,14 +30,12 @@ export function Module({
     <Card className="h-full flex flex-col">
       <CardHeader>
         <div className="flex items-start justify-between gap-2">
-          <div className="flex items-center gap-2 flex-1">
+          <div className="flex items-center gap-4 flex-1">
             {icon && <div className="text-2xl">{icon}</div>}
             <div className="flex-1 min-w-0">
-              <CardTitle className="text-lg">{title}</CardTitle>
+              <CardTitle className="text-base">{title}</CardTitle>
               {description && (
-                <CardDescription className="mt-1">
-                  {description}
-                </CardDescription>
+                <CardDescription className="mt-">{description}</CardDescription>
               )}
             </div>
           </div>

@@ -23,6 +23,7 @@ model User {
   email         String
   emailVerified Boolean    @default(false)
   image         String?
+  removeBgApiKey String?
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @updatedAt
   sessions      Session[]
