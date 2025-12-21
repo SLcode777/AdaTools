@@ -22,5 +22,5 @@ export const auth = betterAuth({
       prompt: "select_account",
     },
   },
-  trustedOrigins: [process.env.NEXTAUTH_URL || "http://localhost:3000"],
+  trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:3000"],
 });
