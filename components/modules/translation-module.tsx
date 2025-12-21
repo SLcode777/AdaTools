@@ -12,7 +12,14 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/src/lib/trpc/client";
-import { BookType, Eye, EyeOff, Languages, Settings, ArrowLeftRight } from "lucide-react";
+import {
+  ArrowLeftRight,
+  BookType,
+  Eye,
+  EyeOff,
+  Languages,
+  Settings,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { Module } from "../dashboard/module";
 
@@ -55,20 +62,21 @@ export function TranslationModule({
   // Set default target language once languages are loaded
   useEffect(() => {
     if (targetLanguages && targetLanguages.length > 0 && !targetLang) {
-      const defaultLang = targetLanguages.find((lang: any) =>
-        lang.language === "EN-US" || lang.language === "en-US"
+      const defaultLang = targetLanguages.find(
+        (lang: any) => lang.language === "EN-US" || lang.language === "en-US"
       );
       if (defaultLang) {
         setTargetLang(defaultLang.language);
       } else {
         // Fallback to first English variant or first language
-        const englishLang = targetLanguages.find((lang: any) =>
-          lang.language.startsWith("EN") || lang.language.startsWith("en")
+        const englishLang = targetLanguages.find(
+          (lang: any) =>
+            lang.language.startsWith("EN") || lang.language.startsWith("en")
         );
         setTargetLang(englishLang?.language || targetLanguages[0].language);
       }
     }
-  }, [targetLanguages]);
+  }, [targetLanguages, targetLang]);
 
   const handleSaveApiKey = async () => {
     try {
@@ -120,7 +128,7 @@ export function TranslationModule({
       <div className="space-y-4">
         {/* API Key Settings */}
         {!apiKeyData?.hasApiKey && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800  p-3">
             <p className="text-sm text-yellow-800 dark:text-yellow-200">
               Please configure your Deepl API key to use this module.
             </p>
@@ -139,7 +147,7 @@ export function TranslationModule({
           </Button>
 
           {showSettings && (
-            <div className="space-y-2 p-3 border rounded-lg">
+            <div className="space-y-2 p-3 border bg-background/20">
               <Label htmlFor="apiKey">Deepl API Key</Label>
               <div className="flex gap-2">
                 <div className="relative flex-1">

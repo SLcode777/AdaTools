@@ -163,7 +163,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
       <div className="space-y-4">
         {/* API Key Settings */}
         {!apiKeyData?.hasApiKey && (
-          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-3">
+          <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800  p-3">
             <p className="text-sm text-yellow-800 dark:text-yellow-200">
               Please configure your Remove.bg API key to use this module.
             </p>
@@ -182,7 +182,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
           </Button>
 
           {showSettings && (
-            <div className="space-y-2 p-3 border rounded-lg">
+            <div className="space-y-2 p-3 border bg-background/20">
               <Label htmlFor="apiKey">Remove.bg API Key</Label>
               <div className="flex gap-2">
                 <div className="relative flex-1">
@@ -235,7 +235,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
           onClick={() => fileInputRef.current?.click()}
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="border-2 border-dashed rounded-lg py-12 flex flex-col items-center justify-center text-muted-foreground cursor-pointer hover:border-primary/50 transition-colors"
+          className="border-2 border-dashed  py-12 flex flex-col items-center justify-center text-muted-foreground cursor-pointer hover:border-primary/50 transition-colors"
         >
           <Upload className="h-8 w-8 mb-2" />
           <div className="text-sm">

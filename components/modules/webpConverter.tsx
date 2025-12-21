@@ -114,14 +114,14 @@ export function WebpConverterModule({
           onClick={() => fileInputRef.current?.click()}
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
-          className="border-2 border-dashed rounded-lg py-12 flex flex-col items-center justify-center text-muted-foreground cursor-pointer hover:border-primary/50 transition-colors"
+          className="border-2 border-dashed py-12 flex flex-col items-center justify-center text-muted-foreground cursor-pointer hover:border-primary/50 transition-colors"
         >
           <Upload className="h-8 w-8 mb-2" />
           <div className="text-sm">
             {selectedFile ? (
               <div className="flex flex-row border border-primary p-1 items-center">
                 <FileImage size={20} />
-                <p className=" text-sm">{selectedFile?.name}</p>
+                <p className="ml-2 text-sm">{selectedFile?.name}</p>
                 <X
                   className="ml-2"
                   size={20}
@@ -147,7 +147,7 @@ export function WebpConverterModule({
 
         {/* Conversion Options */}
         {selectedFile && (
-          <div className="space-y-4 p-3 border rounded-lg">
+          <div className="space-y-4 p-3 border">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="quality">Quality: {quality}%</Label>

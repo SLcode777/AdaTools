@@ -13,13 +13,6 @@ export const createTRPCContext = async (opts: { req: NextRequest }) => {
     headers: opts.req.headers,
   });
 
-  console.log("========== TRPC Auth Debug ==========");
-  console.log("Session from cookies:", !!session);
-
-  console.log("Final session:", !!session);
-  console.log("Final userId:", session?.user.id);
-  console.log("====================================");
-
   return {
     db,
     session,

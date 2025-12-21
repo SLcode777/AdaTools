@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Pin, PinOff } from "lucide-react";
+import { Pin, PinOff, SquareChevronDown } from "lucide-react";
 
 export function ModulesNav() {
   const { isPinned, handleTogglePin, toggleTempOpen } = useModuleContext();
@@ -27,8 +27,11 @@ export function ModulesNav() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>Modules</DropdownMenuTrigger>
-      <DropdownMenuContent className="flex flex-col">
+      <DropdownMenuTrigger className="flex flex-row gap-2 hover:bg-muted dark:hover:bg-muted/50 aria-expanded:bg-muted aria-expanded:text-foreground hover:text-primary hover:cursor-pointer px-2 items-center">
+        <p className="">Modules</p>
+        <SquareChevronDown className="" size={16} />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="flex flex-col w-64">
         {Object.entries(modulesByCategory).map(([category, modules]) => (
           <div key={category}>
             <DropdownMenuSeparator />

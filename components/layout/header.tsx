@@ -1,14 +1,23 @@
 "use client";
 
 import { ModulesNav } from "@/components/layout/modules-nav";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggleWithLabel } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
+import { cn } from "@/src/lib/utils";
+import { LogOut } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 export function Header() {
   const { data: session, isPending } = useSession();
@@ -16,6 +25,7 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme } = useTheme();
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -56,30 +66,61 @@ export function Header() {
         {session && (
           <div className="flex items-center gap-4">
             <ModulesNav />
-            <Button asChild variant="ghost" size="sm">
-              <Link href="/dashboard">Dashboard</Link>
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className={cn(
+                pathname === "/dashboard"
+                  ? "text-base text-primary"
+                  : "text-base"
+              )}
+            >
+              <Link href="/dashboard">
+                <p className="text-base">Dashboard</p>
+              </Link>
             </Button>
           </div>
         )}
 
         {/* Right navigation */}
         <nav className="flex items-center gap-3 ml-auto">
-          <ThemeToggle />
           {isPending ? (
             <div className="h-9 w-20 bg-muted animate-pulse rounded-md" />
           ) : session ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden md:inline">
-                {session.user.email}
-              </span>
-              <Button
-                variant="outline"
-                onClick={handleSignOut}
-                disabled={isLoading}
-              >
-                {isLoading ? "Signing out..." : "Sign out"}
-              </Button>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-3 border border-muted hover:bg-muted hover:cursor-pointer px-4 py-1 ">
+                <Image
+                  src={session.user.image || "/globe.svg"}
+                  alt="user-avatar"
+                  height={24}
+                  width={24}
+                  className="rounded-full"
+                />
+                <span className="text-sm hidden md:inline">
+                  {session.user.name}
+                </span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="flex flex-col w-fit">
+                <DropdownMenuItem>
+                  <Link href="">Settings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <div className="mt-1 px-1">
+                  <ThemeToggleWithLabel />
+                </div>
+
+                <Button
+                  variant="outline"
+                  onClick={handleSignOut}
+                  disabled={isLoading}
+                  className="m-1 flex-1 py-1 text-destructive"
+                >
+                  <LogOut />
+                  {isLoading ? "Signing out..." : "Sign out"}
+                </Button>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
             <Button asChild>
               <Link href="/signin">Sign in</Link>
