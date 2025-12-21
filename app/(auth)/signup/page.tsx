@@ -9,8 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { signIn, signUp } from "@/src/lib/auth-client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -86,9 +84,9 @@ export default function SignUpPage() {
     <div className="container max-w-md mx-auto px-4 py-16">
       <Card>
         <CardHeader>
-          <CardTitle>Créer un compte</CardTitle>
+          <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Créez votre compte AdaTools pour commencer
+            To begin, create your AdaTools account
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -137,7 +135,7 @@ export default function SignUpPage() {
             Continuer avec GitLab
           </Button>
 
-          <div className="relative">
+          {/* <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t" />
             </div>
@@ -206,7 +204,7 @@ export default function SignUpPage() {
             <Button type="submit" className="w-full" disabled={isLoading}>
               {isLoading ? "Création du compte..." : "Créer un compte"}
             </Button>
-          </form>
+          </form> */}
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-sm text-muted-foreground">
