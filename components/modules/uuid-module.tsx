@@ -39,7 +39,7 @@ export function UuidModule({ isPinned, onTogglePin }: UuidModuleProps) {
       onTogglePin={onTogglePin}
     >
       <div className="space-y-4">
-        <Input value={uuid} readOnly className="font-mono text-sm" />
+        <Input value={uuid} readOnly className="font-sans text-sm" />
         <div className="flex gap-2">
           <Button onClick={handleGenerate} variant="outline" className="flex-1">
             <RefreshCw className="h-4 w-4 mr-2" />

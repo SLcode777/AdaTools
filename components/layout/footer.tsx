@@ -9,14 +9,14 @@ export function Footer() {
 
           <div className="flex gap-6 text-sm">
             <a
-              href="https://github.com"
+              href="https://github.com/SLcode777"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               GitHub
             </a>
-            <a
+            {/* <a
               href="#"
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
@@ -27,7 +27,7 @@ export function Footer() {
               className="text-muted-foreground hover:text-foreground transition-colors"
             >
               Contact
-            </a>
+            </a> */}
           </div>
         </div>
       </div>
