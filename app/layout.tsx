@@ -29,6 +29,26 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "AdaTools - Developer Tools",
   description: "A collection of practical tools for developers",
+  openGraph: {
+    title: "AdaTools",
+    description: "A collection of practical tools for developers",
+    images: [
+      {
+        url: "/og-image.webp",
+        width: 1200,
+        height: 630,
+        alt: "AdaTools",
+      },
+    ],
+    locale: "en_EN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AdaTools",
+    description: "A collection of practical tools for developers",
+    images: ["/og-image.webp"],
+  },
 };
 
 export default function RootLayout({
