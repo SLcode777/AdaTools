@@ -15,62 +15,70 @@ interface WebpConverterModuleProps {
   onTogglePin?: () => void;
 }
 
+interface ConversionResult {
+  fileName: string;
+  originalSize: number;
+  convertedSize: number;
+  base64: string;
+}
+
 export function WebpConverterModule({
   isPinned,
   onTogglePin,
 }: WebpConverterModuleProps) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [resultUrl, setResultUrl] = useState<string | null>(null);
+  const [results, setResults] = useState<ConversionResult[]>([]);
   const [quality, setQuality] = useState<number>(80);
   const [lossless, setLossless] = useState<boolean>(false);
-  const [originalSize, setOriginalSize] = useState<number>(0);
-  const [convertedSize, setConvertedSize] = useState<number>(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const convertToWebpMutation = api.webpConverter.convertToWebp.useMutation();
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      setSelectedFile(file);
-      setOriginalSize(file.size);
-      setResultUrl(null);
-      setConvertedSize(0);
+    const files = Array.from(e.target.files || []);
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+    if (imageFiles.length > 0) {
+      setSelectedFiles((prev) => [...prev, ...imageFiles]);
+      setResults([]);
     }
   };
 
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith("image/")) {
-      setSelectedFile(file);
-      setOriginalSize(file.size);
-      setResultUrl(null);
-      setConvertedSize(0);
+    const files = Array.from(e.dataTransfer.files);
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+    if (imageFiles.length > 0) {
+      setSelectedFiles((prev) => [...prev, ...imageFiles]);
+      setResults([]);
     }
   };
 
-  const handleClearFile = () => {
-    setSelectedFile(null);
-    setResultUrl(null);
-    setOriginalSize(0);
-    setConvertedSize(0);
+  const handleRemoveFile = (index: number) => {
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleClearAll = () => {
+    setSelectedFiles([]);
+    setResults([]);
   };
 
   const handleConvertToWebp = async () => {
-    if (!selectedFile) return;
+    if (selectedFiles.length === 0) return;
 
     setIsProcessing(true);
+    const conversionResults: ConversionResult[] = [];
 
     try {
-      // Read file as base64
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-
-      reader.onload = async () => {
+      for (const file of selectedFiles) {
         try {
-          const base64 = reader.result as string;
+          // Read file as base64
+          const base64 = await new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = () => reject(new Error("Error reading file"));
+          });
 
           const result = await convertToWebpMutation.mutateAsync({
             imageBase64: base64,
@@ -78,24 +86,22 @@ export function WebpConverterModule({
             lossless,
           });
 
-          setResultUrl(result.base64);
-          setConvertedSize(result.size);
-          setIsProcessing(false);
+          conversionResults.push({
+            fileName: file.name.replace(/\.[^/.]+$/, ""),
+            originalSize: file.size,
+            convertedSize: result.size,
+            base64: result.base64,
+          });
         } catch (error) {
-          console.error("Conversion error:", error);
-          alert("Failed to convert image. Please try again.");
-          setIsProcessing(false);
+          console.error(`Error converting ${file.name}:`, error);
         }
-      };
+      }
 
-      reader.onerror = () => {
-        console.error("Error reading file");
-        alert("Error reading file. Please try again.");
-        setIsProcessing(false);
-      };
+      setResults(conversionResults);
+      setIsProcessing(false);
     } catch (error) {
       console.error("Conversion error:", error);
-      alert("Failed to convert image. Please try again.");
+      alert("Failed to convert images. Please try again.");
       setIsProcessing(false);
     }
   };
@@ -118,35 +124,61 @@ export function WebpConverterModule({
         >
           <Upload className="h-8 w-8 mb-2" />
           <div className="text-sm">
-            {selectedFile ? (
-              <div className="flex flex-row border border-primary p-1 items-center">
-                <FileImage size={20} />
-                <p className="ml-2 text-sm">{selectedFile?.name}</p>
-                <X
-                  className="ml-2"
-                  size={20}
-                  color="red"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleClearFile();
-                  }}
-                />
-              </div>
-            ) : (
-              "Drop your image here or click to browse"
-            )}
+            Drop your images here or click to browse
           </div>
+          <div className="text-xs mt-1">You can select multiple files</div>
         </div>
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
+          multiple
           onChange={handleFileSelect}
           className="hidden"
         />
 
+        {/* Selected Files List */}
+        {selectedFiles.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <Label className="text-sm">
+                Selected files ({selectedFiles.length})
+              </Label>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleClearAll}
+                className="h-6 text-xs"
+              >
+                Clear all
+              </Button>
+            </div>
+            <div className="max-h-32 overflow-y-auto space-y-1 border rounded-md p-2">
+              {selectedFiles.map((file, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between bg-muted px-2 py-1 rounded text-xs"
+                >
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <FileImage size={16} className="shrink-0" />
+                    <span className="truncate">{file.name}</span>
+                    <span className="text-muted-foreground shrink-0">
+                      ({(file.size / 1024).toFixed(1)} KB)
+                    </span>
+                  </div>
+                  <X
+                    size={16}
+                    className="cursor-pointer text-destructive hover:text-destructive/80 shrink-0 ml-2"
+                    onClick={() => handleRemoveFile(index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Conversion Options */}
-        {selectedFile && (
+        {selectedFiles.length > 0 && (
           <div className="space-y-4 p-3 border">
             <div className="space-y-2">
               <div className="flex items-center justify-between">
@@ -187,75 +219,106 @@ export function WebpConverterModule({
         {/* Action Button */}
         <Button
           onClick={handleConvertToWebp}
-          disabled={!selectedFile || isProcessing}
+          disabled={selectedFiles.length === 0 || isProcessing}
           className="w-full"
         >
-          {isProcessing ? "Converting..." : "Convert to WebP"}
+          {isProcessing
+            ? "Converting..."
+            : `Convert ${selectedFiles.length} file${selectedFiles.length > 1 ? "s" : ""} to WebP`}
         </Button>
 
-        {/* Result */}
-        {resultUrl && (
-          <div className="space-y-2">
-            <Label>Result</Label>
-
-            {/* File Size Comparison */}
-            <div className="bg-primary/10 border border-primary rounded-lg p-3 space-y-1">
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Original:</span>
-                <span className="font-medium">
-                  {(originalSize / 1024).toFixed(2)} KB
-                </span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">WebP:</span>
-                <span className="font-medium">
-                  {(convertedSize / 1024).toFixed(2)} KB
-                </span>
-              </div>
-              <div className="flex justify-between text-sm border-t pt-1 mt-1">
-                <span className="text-muted-foreground">Reduction:</span>
-                <span
-                  className={`font-bold ${
-                    convertedSize < originalSize
-                      ? "text-green-600 dark:text-green-400"
-                      : "text-red-600 dark:text-red-400"
-                  }`}
-                >
-                  {convertedSize < originalSize ? "-" : "+"}
-                  {(
-                    ((originalSize - convertedSize) / originalSize) *
-                    100
-                  ).toFixed(1)}
-                  %
-                </span>
-              </div>
+        {/* Results */}
+        {results.length > 0 && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <Label>Results ({results.length})</Label>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  results.forEach((result) => {
+                    const a = document.createElement("a");
+                    a.href = result.base64;
+                    a.download = `${result.fileName}.webp`;
+                    a.click();
+                  });
+                }}
+                className="h-7 text-xs"
+              >
+                <Download className="h-3 w-3 mr-1" />
+                Download all
+              </Button>
             </div>
 
-            <div className="relative border rounded-lg overflow-hidden">
-              <Image
-                src={resultUrl}
-                alt="Result"
-                width={40}
-                height={40}
-                className="w-full"
-              />
-              <Button
-                size="sm"
-                className="absolute top-2 right-2"
-                onClick={() => {
-                  const a = document.createElement("a");
-                  a.href = resultUrl;
-                  const originalName = selectedFile?.name.replace(
-                    /\.[^/.]+$/,
-                    ""
-                  );
-                  a.download = `${originalName}.webp`;
-                  a.click();
-                }}
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download
-              </Button>
+            <div className="max-h-96 overflow-y-auto space-y-3">
+              {results.map((result, index) => (
+                <div key={index} className="border rounded-lg p-3 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium truncate">
+                      {result.fileName}.webp
+                    </span>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        const a = document.createElement("a");
+                        a.href = result.base64;
+                        a.download = `${result.fileName}.webp`;
+                        a.click();
+                      }}
+                      className="h-7 text-xs shrink-0"
+                    >
+                      <Download className="h-3 w-3 mr-1" />
+                      Download
+                    </Button>
+                  </div>
+
+                  {/* File Size Comparison */}
+                  <div className="bg-primary/10 border border-primary rounded-lg p-2 space-y-1">
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">Original:</span>
+                      <span className="font-medium">
+                        {(result.originalSize / 1024).toFixed(2)} KB
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs">
+                      <span className="text-muted-foreground">WebP:</span>
+                      <span className="font-medium">
+                        {(result.convertedSize / 1024).toFixed(2)} KB
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-xs border-t pt-1 mt-1">
+                      <span className="text-muted-foreground">Reduction:</span>
+                      <span
+                        className={`font-bold ${
+                          result.convertedSize < result.originalSize
+                            ? "text-green-600 dark:text-green-400"
+                            : "text-red-600 dark:text-red-400"
+                        }`}
+                      >
+                        {result.convertedSize < result.originalSize ? "-" : "+"}
+                        {(
+                          ((result.originalSize - result.convertedSize) /
+                            result.originalSize) *
+                          100
+                        ).toFixed(1)}
+                        %
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Preview */}
+                  <div className="relative border rounded-lg overflow-hidden">
+                    <Image
+                      src={result.base64}
+                      alt={result.fileName}
+                      width={40}
+                      height={40}
+                      className="w-full"
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         )}

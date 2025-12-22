@@ -4,6 +4,7 @@ import { ModulesNav } from "@/components/layout/modules-nav";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
+import { useColorTheme } from "@/src/contexts/color-theme-context";
 import { cn } from "@/src/lib/utils";
 import { LogOut, Settings } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -25,6 +26,7 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
   const router = useRouter();
   const { theme } = useTheme();
+  const { colorTheme } = useColorTheme();
   const pathname = usePathname();
 
   useEffect(() => {
@@ -50,12 +52,10 @@ export function Header() {
           <Image
             src={
               !mounted
-                ? "/logoV2-black.png"
-                : theme === "dark"
-                ? "/logoV2-black.png"
-                : "/logoV2-white.png"
+                ? "/logo-cyan-light.webp"
+                : `/logo-${colorTheme}-${theme}.webp`
             }
-            alt="logo"
+            alt="AdaTools logo"
             width={200}
             height={73}
             className="p-4"
