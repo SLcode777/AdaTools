@@ -34,7 +34,7 @@ export function UuidModule({ isPinned, onTogglePin }: UuidModuleProps) {
     <Module
       title="UUID Generator"
       description="Generate unique identifiers"
-      icon={<KeyRound className="h-5 w-5" color="#00B5D4" />}
+      icon={<KeyRound className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

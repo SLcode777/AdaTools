@@ -38,7 +38,7 @@ export function Base64Module({ isPinned, onTogglePin }: Base64ModuleProps) {
     <Module
       title="Base64"
       description="Encode or decode Base64"
-      icon={<MessageSquareLock className="h-5 w-5" color="#00B5D4" />}
+      icon={<MessageSquareLock className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

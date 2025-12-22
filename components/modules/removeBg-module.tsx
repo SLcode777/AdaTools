@@ -156,7 +156,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
     <Module
       title="Remove Background"
       description="Remove background from an image file"
-      icon={<Wallpaper className="h-5 w-5" color="#00B5D4" />}
+      icon={<Wallpaper className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

@@ -1,6 +1,7 @@
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { Toaster } from "@/components/ui/sonner";
+import { ColorThemeProvider } from "@/src/contexts/color-theme-context";
 import { ModulesProvider } from "@/src/contexts/modules-context";
 import { QueryProviderWrapper } from "@/src/contexts/trpc-query-provider-wrapper";
 import type { Metadata } from "next";
@@ -36,25 +37,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className={inter.variable} suppressHydrationWarning>
+    <html
+      lang="fr"
+      data-color-theme="cyan"
+      className={inter.variable}
+      suppressHydrationWarning
+    >
       <body
         className={` ${jetbrainsMono.variable}  ${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col`}
       >
-        <QueryProviderWrapper>
-          <ModulesProvider>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Toaster />
-              <Footer />
-            </ThemeProvider>
-          </ModulesProvider>
-        </QueryProviderWrapper>
+        <ColorThemeProvider>
+          <QueryProviderWrapper>
+            <ModulesProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+                disableTransitionOnChange
+              >
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Toaster />
+                <Footer />
+              </ThemeProvider>
+            </ModulesProvider>
+          </QueryProviderWrapper>
+        </ColorThemeProvider>
       </body>
     </html>
   );

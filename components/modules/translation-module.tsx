@@ -121,7 +121,7 @@ export function TranslationModule({
     <Module
       title="Translator"
       description="Translation powered by deepL"
-      icon={<BookType className="h-5 w-5" color="#00B5D4" />}
+      icon={<BookType className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

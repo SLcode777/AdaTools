@@ -104,7 +104,7 @@ export function WebpConverterModule({
     <Module
       title="Webp Converter"
       description="Convert a jpg/png image to webp format"
-      icon={<Images className="h-5 w-5" color="#00B5D4" />}
+      icon={<Images className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

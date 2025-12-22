@@ -29,7 +29,7 @@ export function LoremIpsumModule({
     <Module
       title="Lorem Ipsum"
       description="Placeholder text generator"
-      icon={<TextInitial className="h-5 w-5" color="#00B5D4" />}
+      icon={<TextInitial className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

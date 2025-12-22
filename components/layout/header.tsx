@@ -1,11 +1,11 @@
 "use client";
 
 import { ModulesNav } from "@/components/layout/modules-nav";
-import { ThemeToggleWithLabel } from "@/components/theme-toggle";
+import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
 import { cn } from "@/src/lib/utils";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
@@ -102,13 +102,14 @@ export function Header() {
                 </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="flex flex-col w-fit">
-                <DropdownMenuItem>
-                  <Link href="">Settings</Link>
-                </DropdownMenuItem>
+                <SettingsDialog>
+                  <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Settings className="h-4 w-4 mr-2" />
+                    Settings
+                  </DropdownMenuItem>
+                </SettingsDialog>
+
                 <DropdownMenuSeparator />
-                <div className="mt-1 px-1">
-                  <ThemeToggleWithLabel />
-                </div>
 
                 <Button
                   variant="outline"
