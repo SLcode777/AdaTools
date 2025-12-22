@@ -209,7 +209,6 @@ export function LoremIpsumModule({
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value) || 1)}
             onFocus={(e) => e.target.select()}
-            autoFocus
           />
         </div>
 

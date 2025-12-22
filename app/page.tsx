@@ -157,7 +157,7 @@ export default function Page() {
         </div>
       </div>
 
-      {/* webp converter demo */}
+      {/* modules demo */}
       <div id="demo" className="max-w-4xl mx-auto mb-16">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold mb-2">Try it out !</h2>
