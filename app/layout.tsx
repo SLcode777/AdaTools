@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ColorThemeProvider } from "@/src/contexts/color-theme-context";
 import { ModulesProvider } from "@/src/contexts/modules-context";
 import { QueryProviderWrapper } from "@/src/contexts/trpc-query-provider-wrapper";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono, Inter, JetBrains_Mono } from "next/font/google";
@@ -83,6 +84,7 @@ export default function RootLayout({
             </ModulesProvider>
           </QueryProviderWrapper>
         </ColorThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
