@@ -1,4 +1,5 @@
 import { Base64Module } from "@/components/modules/base64-module";
+import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { Button } from "@/components/ui/button";
@@ -168,6 +169,7 @@ export default function Page() {
           <WebpConverterModule />
           <Base64Module />
           <UuidModule />
+          <LoremIpsumModule />
         </div>
       </div>
 
