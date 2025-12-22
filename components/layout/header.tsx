@@ -52,7 +52,7 @@ export function Header() {
           <Image
             src={
               !mounted
-                ? "/logo-cyan-light.webp"
+                ? "/logo-cyan-dark.webp"
                 : `/logo-${colorTheme}-${theme === "dark" ? "dark" : "light"}.webp`
             }
             alt="AdaTools logo"
