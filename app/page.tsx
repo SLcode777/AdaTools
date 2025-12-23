@@ -195,12 +195,12 @@ export default function Page() {
           AdaTools is an OpenSource project so we can build together the most
           useful and customizable tool for devs!
         </p>
-        <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
-          <Link href={"https://github.com/SLcode777/AdaTools"}>
+        <Link href={"https://github.com/SLcode777/AdaTools"}>
+          <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
             <Github />
             <p>See the repository</p>
-          </Link>
-        </div>
+          </div>
+        </Link>
       </div>
     </div>
   );
