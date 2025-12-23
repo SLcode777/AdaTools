@@ -15,11 +15,7 @@ import Link from "next/link";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
-
-
 export default function Page() {
-
-
   const tools = [
     {
       title: "WebP Converter",
@@ -200,8 +196,10 @@ export default function Page() {
           useful and customizable tool for devs!
         </p>
         <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
-          <Github />
-          <p>See the repository</p>
+          <Link href={"https://github.com/SLcode777/AdaTools"}>
+            <Github />
+            <p>See the repository</p>
+          </Link>
         </div>
       </div>
     </div>
