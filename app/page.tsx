@@ -9,13 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BookType, Eraser, Images, Sparkles } from "lucide-react";
+import { BookType, Eraser, Github, Images, Sparkles } from "lucide-react";
 import { JetBrains_Mono } from "next/font/google";
 import Link from "next/link";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ["latin"] });
 
+
+
 export default function Page() {
+
+
   const tools = [
     {
       title: "WebP Converter",
@@ -192,14 +196,13 @@ export default function Page() {
           Want to add your own modules?
         </h2>
         <p className="text-muted-foreground mb-2 text-pretty max-w-2xl  flex  justify-center">
-          AdaTools will soon become OpenSource so we can build together the most
+          AdaTools is an OpenSource project so we can build together the most
           useful and customizable tool for devs!
-          <br /> If you want to be notified when the project is open, send me an
-          email :
         </p>
-        <p className="text-primary mb-6 text-pretty max-w-2xl  flex  justify-center">
-          sl.code.777@gmail.com
-        </p>
+        <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
+          <Github />
+          <p>See the repository</p>
+        </div>
       </div>
     </div>
   );
