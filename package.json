@@ -1,7 +1,16 @@
 {
   "name": "adatools",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SLcode777/AdaTools.git"
+  },
+  "homepage": "https://github.com/SLcode777/AdaTools#readme",
+  "bugs": {
+    "url": "https://github.com/SLcode777/AdaTools/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
