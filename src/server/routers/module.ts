@@ -1,17 +1,24 @@
 import { db } from "@/src/lib/db";
 import z from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+
+const DEFAULT_MODULES = ["lorem-ipsum", "uuid", "base64"];
 
 export const moduleRouter = createTRPCRouter({
-  // Get pinned modules
-  getPinned: protectedProcedure.query(async ({ ctx }) => {
+  // Get pinned modules - public so it works without auth
+  getPinned: publicProcedure.query(async ({ ctx }) => {
+    // If not authenticated, return defaults
+    if (!ctx.session?.user?.id) {
+      return DEFAULT_MODULES;
+    }
+
     const workspace = await db.workspace.findUnique({
       where: { userId: ctx.session.user.id },
       select: { pinnedModules: true },
     });
 
     // If no workspace, return default modules
-    return workspace?.pinnedModules ?? ["lorem-ipsum", "uuid", "base64"];
+    return workspace?.pinnedModules ?? DEFAULT_MODULES;
   }),
 
   // Toggle pin on/off

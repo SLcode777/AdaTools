@@ -837,6 +837,7 @@ export const UserScalarFieldEnum = {
   image: 'image',
   removeBgApiKey: 'removeBgApiKey',
   deeplApiKey: 'deeplApiKey',
+  anthropicApiKey: 'anthropicApiKey',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

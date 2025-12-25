@@ -1,4 +1,5 @@
 import { Base64Module } from "@/components/modules/base64-module";
+import { CodeReviewerModule } from "@/components/modules/code-reviewer-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { TranslationModule } from "@/components/modules/translation-module";
@@ -6,6 +7,7 @@ import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import {
   BookType,
+  Code2,
   FileText,
   Images,
   KeyRound,
@@ -74,6 +76,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <BookType className="h-5 w-5" />,
     component: TranslationModule,
     category: "Translation",
+  },
+  {
+    id: "code-reviewer",
+    name: "Code Reviewer",
+    description: "AI-powered code analysis with Claude",
+    icon: <Code2 className="h-5 w-5" />,
+    component: CodeReviewerModule,
+    category: "Development",
   },
 ];
 

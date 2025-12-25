@@ -9,9 +9,16 @@ import { db } from "../lib/db";
 //Context : will be passed to all tRPC procedures
 export const createTRPCContext = async (opts: { req: NextRequest }) => {
   // Try to get session from better-auth (uses cookies)
-  const session = await auth.api.getSession({
-    headers: opts.req.headers,
-  });
+  // Wrapped in try-catch to handle missing BETTER_AUTH_SECRET during development
+  let session = null;
+  try {
+    session = await auth.api.getSession({
+      headers: opts.req.headers,
+    });
+  } catch {
+    // Auth not configured - continue without session
+    console.warn("Auth session retrieval failed (auth may not be configured)");
+  }
 
   return {
     db,

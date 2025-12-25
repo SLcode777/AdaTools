@@ -10,6 +10,7 @@
 @import "./themes/indigo.css";
 @import "./themes/orange.css";
 @import "./themes/pink.css";
+@import "./highlight.css";
 
 @custom-variant dark (&:is(.dark *));
 

@@ -1,3 +1,4 @@
+import { codeReviewerRouter } from "./routers/code-reviewer";
 import { moduleRouter } from "./routers/module";
 import { removebgRouter } from "./routers/removebg";
 import { testRouter } from "./routers/test";
@@ -11,6 +12,7 @@ export const appRouter = createTRPCRouter({
   removeBg: removebgRouter,
   translator: translatorRouter,
   webpConverter: webpConverterRouter,
+  codeReviewer: codeReviewerRouter,
 });
 
 export type AppRouterType = typeof appRouter;

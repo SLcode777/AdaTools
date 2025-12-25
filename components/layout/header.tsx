@@ -62,26 +62,24 @@ export function Header() {
           />
         </Link>
 
-        {/* Central navigation - visible only when logged in */}
-        {session && (
-          <div className="flex items-center gap-4">
-            <ModulesNav />
-            <Button
-              asChild
-              variant="ghost"
-              size="sm"
-              className={cn(
-                pathname === "/dashboard"
-                  ? "text-base text-primary"
-                  : "text-base"
-              )}
-            >
-              <Link href="/dashboard">
-                <p className="text-base">Dashboard</p>
-              </Link>
-            </Button>
-          </div>
-        )}
+        {/* Central navigation - always visible */}
+        <div className="flex items-center gap-4">
+          <ModulesNav />
+          <Button
+            asChild
+            variant="ghost"
+            size="sm"
+            className={cn(
+              pathname === "/dashboard"
+                ? "text-base text-primary"
+                : "text-base",
+            )}
+          >
+            <Link href="/dashboard">
+              <p className="text-base">Dashboard</p>
+            </Link>
+          </Button>
+        </div>
 
         {/* Right navigation */}
         <nav className="flex items-center gap-3 ml-auto">
