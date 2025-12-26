@@ -388,7 +388,8 @@ export const ModelName = {
   User: 'User',
   Session: 'Session',
   Account: 'Account',
-  Verification: 'Verification'
+  Verification: 'Verification',
+  ColorPalette: 'ColorPalette'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -778,6 +779,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ColorPalette: {
+      payload: Prisma.$ColorPalettePayload<ExtArgs>
+      fields: Prisma.ColorPaletteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ColorPaletteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ColorPaletteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        findFirst: {
+          args: Prisma.ColorPaletteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ColorPaletteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        findMany: {
+          args: Prisma.ColorPaletteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>[]
+        }
+        create: {
+          args: Prisma.ColorPaletteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        createMany: {
+          args: Prisma.ColorPaletteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ColorPaletteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>[]
+        }
+        delete: {
+          args: Prisma.ColorPaletteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        update: {
+          args: Prisma.ColorPaletteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        deleteMany: {
+          args: Prisma.ColorPaletteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ColorPaletteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ColorPaletteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>[]
+        }
+        upsert: {
+          args: Prisma.ColorPaletteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ColorPalettePayload>
+        }
+        aggregate: {
+          args: Prisma.ColorPaletteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateColorPalette>
+        }
+        groupBy: {
+          args: Prisma.ColorPaletteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorPaletteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ColorPaletteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ColorPaletteCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -889,6 +964,19 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const ColorPaletteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  name: 'name',
+  colors: 'colors',
+  isDefault: 'isDefault',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ColorPaletteScalarFieldEnum = (typeof ColorPaletteScalarFieldEnum)[keyof typeof ColorPaletteScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -903,6 +991,13 @@ export const NullableJsonNullValueInput = {
 } as const
 
 export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1098,6 +1193,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
+  colorPalette?: Prisma.ColorPaletteOmit
 }
 
 /* Types for Logging */

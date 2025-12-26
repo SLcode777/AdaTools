@@ -1,4 +1,5 @@
 import { Base64Module } from "@/components/modules/base64-module";
+import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { TranslationModule } from "@/components/modules/translation-module";
@@ -9,6 +10,7 @@ import {
   FileText,
   Images,
   KeyRound,
+  Palette,
   Settings,
   Wallpaper,
 } from "lucide-react";
@@ -74,6 +76,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <BookType className="h-5 w-5" />,
     component: TranslationModule,
     category: "Translation",
+  },
+  {
+    id: "color-palette",
+    name: "Color Palettes",
+    description: "Handle your color palettes",
+    icon: <Palette className="h-5 w-5" />,
+    component: ColorPaletteModule,
+    category: "Design Tools",
   },
 ];
 

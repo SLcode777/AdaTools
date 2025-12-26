@@ -42,3 +42,8 @@ export type Account = Prisma.AccountModel
  * 
  */
 export type Verification = Prisma.VerificationModel
+/**
+ * Model ColorPalette
+ * 
+ */
+export type ColorPalette = Prisma.ColorPaletteModel

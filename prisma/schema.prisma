@@ -18,18 +18,19 @@ model Workspace {
 }
 
 model User {
-  id            String     @id
-  name          String
-  email         String
-  emailVerified Boolean    @default(false)
-  image         String?
+  id             String          @id
+  name           String
+  email          String
+  emailVerified  Boolean         @default(false)
+  image          String?
   removeBgApiKey String?
-  deeplApiKey   String?
-  createdAt     DateTime   @default(now())
-  updatedAt     DateTime   @updatedAt
-  sessions      Session[]
-  accounts      Account[]
-  workspace     Workspace?
+  deeplApiKey    String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  sessions       Session[]
+  accounts       Account[]
+  workspace      Workspace?
+  colorPalettes  ColorPalette[]
 
   @@unique([email])
   @@map("user")
@@ -81,4 +82,18 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model ColorPalette {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  colors    Json
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("color_palette")
 }
