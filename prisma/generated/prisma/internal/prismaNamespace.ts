@@ -389,7 +389,8 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  ColorPalette: 'ColorPalette'
+  ColorPalette: 'ColorPalette',
+  DomainName: 'DomainName'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -405,7 +406,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -853,6 +854,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    DomainName: {
+      payload: Prisma.$DomainNamePayload<ExtArgs>
+      fields: Prisma.DomainNameFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DomainNameFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DomainNameFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        findFirst: {
+          args: Prisma.DomainNameFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DomainNameFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        findMany: {
+          args: Prisma.DomainNameFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>[]
+        }
+        create: {
+          args: Prisma.DomainNameCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        createMany: {
+          args: Prisma.DomainNameCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DomainNameCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>[]
+        }
+        delete: {
+          args: Prisma.DomainNameDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        update: {
+          args: Prisma.DomainNameUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        deleteMany: {
+          args: Prisma.DomainNameDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DomainNameUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DomainNameUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>[]
+        }
+        upsert: {
+          args: Prisma.DomainNameUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DomainNamePayload>
+        }
+        aggregate: {
+          args: Prisma.DomainNameAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDomainName>
+        }
+        groupBy: {
+          args: Prisma.DomainNameGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DomainNameGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DomainNameCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DomainNameCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -975,6 +1050,24 @@ export const ColorPaletteScalarFieldEnum = {
 } as const
 
 export type ColorPaletteScalarFieldEnum = (typeof ColorPaletteScalarFieldEnum)[keyof typeof ColorPaletteScalarFieldEnum]
+
+
+export const DomainNameScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  domain: 'domain',
+  registrar: 'registrar',
+  registrarUrl: 'registrarUrl',
+  expiresAt: 'expiresAt',
+  autoRenew: 'autoRenew',
+  reminderOneMonth: 'reminderOneMonth',
+  reminderOneWeek: 'reminderOneWeek',
+  lastReminderSent: 'lastReminderSent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DomainNameScalarFieldEnum = (typeof DomainNameScalarFieldEnum)[keyof typeof DomainNameScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1194,6 +1287,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit
   colorPalette?: Prisma.ColorPaletteOmit
+  domainName?: Prisma.DomainNameOmit
 }
 
 /* Types for Logging */

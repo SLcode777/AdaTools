@@ -43,8 +43,8 @@ import {
   Edit,
   FileUp,
   ImageIcon,
-  Palette,
   Plus,
+  SwatchBook,
   Trash,
   Trash2,
   Upload,
@@ -441,7 +441,7 @@ export function ColorPaletteModule({
     if (!palettes || palettes.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-12 text-center">
-          <Palette className="h-12 w-12 text-muted-foreground mb-4" />
+          <SwatchBook className="h-12 w-12 text-muted-foreground mb-4" />
           <p className="text-muted-foreground mb-4">
             Create your first color palette to get started
           </p>
@@ -709,7 +709,7 @@ export function ColorPaletteModule({
     <Module
       title="Color Palettes"
       description="Manage your color palettes"
-      icon={<Palette className="h-5 w-5 text-primary" />}
+      icon={<SwatchBook className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
     >

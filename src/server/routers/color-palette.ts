@@ -256,6 +256,8 @@ export const colorPaletteRouter = createTRPCRouter({
         const rgbPattern = /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/gi;
         const hslPattern = /hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)/gi;
         const oklchPattern = /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*[\d.%]+)?\s*\)/gi;
+        // Tailwind/shadcn format: --name: h s% l% (space-separated HSL)
+        const hslSpacedPattern = /--([a-z0-9-]+):\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%/gi;
         const varPattern =
           /--([a-z0-9-]+):\s*(#[0-9A-F]{6}|rgb\([^)]+\)|hsl\([^)]+\)|oklch\([^)]+\))/gi;
 
@@ -263,6 +265,22 @@ export const colorPaletteRouter = createTRPCRouter({
         const hexToVarName = new Map<string, string>();
         let match;
 
+        // First, extract space-separated HSL variables (Tailwind/shadcn format)
+        while ((match = hslSpacedPattern.exec(input.cssContent)) !== null) {
+          const [, varName, h, s, l] = match;
+          try {
+            const hex = chroma
+              .hsl(parseFloat(h), parseFloat(s) / 100, parseFloat(l) / 100)
+              .hex()
+              .toUpperCase();
+            hexToVarName.set(hex, varName);
+            uniqueColors.add(hex);
+          } catch (error) {
+            console.warn('Failed to parse spaced HSL variable:', varName, error);
+          }
+        }
+
+        // Extract other CSS variables (hex, rgb, hsl, oklch with parentheses)
         while ((match = varPattern.exec(input.cssContent)) !== null) {
           const [, varName, colorValue] = match;
           try {

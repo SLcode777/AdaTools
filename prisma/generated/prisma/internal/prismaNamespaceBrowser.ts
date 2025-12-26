@@ -56,7 +56,8 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
-  ColorPalette: 'ColorPalette'
+  ColorPalette: 'ColorPalette',
+  DomainName: 'DomainName'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -158,6 +159,24 @@ export const ColorPaletteScalarFieldEnum = {
 } as const
 
 export type ColorPaletteScalarFieldEnum = (typeof ColorPaletteScalarFieldEnum)[keyof typeof ColorPaletteScalarFieldEnum]
+
+
+export const DomainNameScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  domain: 'domain',
+  registrar: 'registrar',
+  registrarUrl: 'registrarUrl',
+  expiresAt: 'expiresAt',
+  autoRenew: 'autoRenew',
+  reminderOneMonth: 'reminderOneMonth',
+  reminderOneWeek: 'reminderOneWeek',
+  lastReminderSent: 'lastReminderSent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DomainNameScalarFieldEnum = (typeof DomainNameScalarFieldEnum)[keyof typeof DomainNameScalarFieldEnum]
 
 
 export const SortOrder = {

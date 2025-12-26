@@ -1,5 +1,6 @@
 import { Base64Module } from "@/components/modules/base64-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
+import { DomainNamesModule } from "@/components/modules/domain-names-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { TranslationModule } from "@/components/modules/translation-module";
@@ -8,10 +9,11 @@ import { WebpConverterModule } from "@/components/modules/webpConverter";
 import {
   BookType,
   FileText,
+  Globe,
   Images,
   KeyRound,
-  Palette,
   Settings,
+  SwatchBook,
   Wallpaper,
 } from "lucide-react";
 import { JSX, ReactNode } from "react";
@@ -81,9 +83,17 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     id: "color-palette",
     name: "Color Palettes",
     description: "Handle your color palettes",
-    icon: <Palette className="h-5 w-5" />,
+    icon: <SwatchBook className="h-5 w-5" />,
     component: ColorPaletteModule,
     category: "Design Tools",
+  },
+  {
+    id: "domain-names-reminder",
+    name: "Domain Names Reminder",
+    description: "List your domain names and receive reminders",
+    icon: <Globe className="h-5 w-5" />,
+    component: DomainNamesModule,
+    category: "Management",
   },
 ];
 

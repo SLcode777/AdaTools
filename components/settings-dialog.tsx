@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Moon, Palette, Settings, Sun } from "lucide-react";
+import { Moon, Settings, Sun, SwatchBook } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -40,7 +40,7 @@ export function SettingsDialog({ children }: SettingsDialogProps) {
         <Tabs defaultValue="appearance" className="w-full">
           <TabsList className="grid w-full grid-cols-1">
             <TabsTrigger value="appearance" className="gap-2">
-              <Palette className="h-4 w-4" />
+              <SwatchBook className="h-4 w-4" />
               Appearance
             </TabsTrigger>
           </TabsList>

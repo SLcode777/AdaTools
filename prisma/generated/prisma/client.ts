@@ -69,3 +69,8 @@ export type Verification = Prisma.VerificationModel
  * 
  */
 export type ColorPalette = Prisma.ColorPaletteModel
+/**
+ * Model DomainName
+ * 
+ */
+export type DomainName = Prisma.DomainNameModel
