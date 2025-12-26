@@ -1,6 +1,5 @@
 "use client";
 
-import { ModulesNav } from "@/components/layout/modules-nav";
 import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
 import { signOut, useSession } from "@/src/lib/auth-client";
@@ -65,7 +64,6 @@ export function Header() {
         {/* Central navigation - visible only when logged in */}
         {session && (
           <div className="flex items-center gap-4">
-            <ModulesNav />
             <Button
               asChild
               variant="ghost"
