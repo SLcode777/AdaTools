@@ -2,6 +2,7 @@ import { colorPaletteRouter } from "./routers/color-palette";
 import { domainNamesRouter } from "./routers/domain-names";
 import { moduleRouter } from "./routers/module";
 import { removebgRouter } from "./routers/removebg";
+import { snippetsRouter } from "./routers/snippets";
 import { testRouter } from "./routers/test";
 import { translatorRouter } from "./routers/translator";
 import { webpConverterRouter } from "./routers/webp-converter";
@@ -15,6 +16,7 @@ export const appRouter = createTRPCRouter({
   webpConverter: webpConverterRouter,
   colorPalette: colorPaletteRouter,
   domainNames: domainNamesRouter,
+  snippets: snippetsRouter,
 });
 
 export type AppRouterType = typeof appRouter;
