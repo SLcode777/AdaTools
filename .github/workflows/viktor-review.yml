@@ -1,0 +1,17 @@
+name: Viktor Code Review
+on:
+  pull_request:
+    types: [opened, synchronize]
+jobs:
+  viktor-review:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/viktor-tools/docker/review:latest
+    env:
+      VIKTOR_APP_ID: ${{ secrets.VIKTOR_APP_ID }}
+      VIKTOR_APP_SECRET: ${{ secrets.VIKTOR_APP_SECRET }}
+      GITHUB_PR_ID: ${{ github.event.number }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Viktor Review
+        run: /usr/local/bin/viktor-review
