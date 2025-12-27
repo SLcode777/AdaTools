@@ -219,6 +219,7 @@ export type UserWhereInput = {
   workspace?: Prisma.XOR<Prisma.WorkspaceNullableScalarRelationFilter, Prisma.WorkspaceWhereInput> | null
   colorPalettes?: Prisma.ColorPaletteListRelationFilter
   domainNames?: Prisma.DomainNameListRelationFilter
+  snippets?: Prisma.SnippetListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -236,6 +237,7 @@ export type UserOrderByWithRelationInput = {
   workspace?: Prisma.WorkspaceOrderByWithRelationInput
   colorPalettes?: Prisma.ColorPaletteOrderByRelationAggregateInput
   domainNames?: Prisma.DomainNameOrderByRelationAggregateInput
+  snippets?: Prisma.SnippetOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -256,6 +258,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   workspace?: Prisma.XOR<Prisma.WorkspaceNullableScalarRelationFilter, Prisma.WorkspaceWhereInput> | null
   colorPalettes?: Prisma.ColorPaletteListRelationFilter
   domainNames?: Prisma.DomainNameListRelationFilter
+  snippets?: Prisma.SnippetListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -303,6 +306,7 @@ export type UserCreateInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -320,6 +324,7 @@ export type UserUncheckedCreateInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -337,6 +342,7 @@ export type UserUpdateInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -354,6 +360,7 @@ export type UserUncheckedUpdateInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -511,6 +518,20 @@ export type UserUpdateOneRequiredWithoutDomainNamesNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDomainNamesInput, Prisma.UserUpdateWithoutDomainNamesInput>, Prisma.UserUncheckedUpdateWithoutDomainNamesInput>
 }
 
+export type UserCreateNestedOneWithoutSnippetsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSnippetsInput, Prisma.UserUncheckedCreateWithoutSnippetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSnippetsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSnippetsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSnippetsInput, Prisma.UserUncheckedCreateWithoutSnippetsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSnippetsInput
+  upsert?: Prisma.UserUpsertWithoutSnippetsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSnippetsInput, Prisma.UserUpdateWithoutSnippetsInput>, Prisma.UserUncheckedUpdateWithoutSnippetsInput>
+}
+
 export type UserCreateWithoutWorkspaceInput = {
   id: string
   name: string
@@ -525,6 +546,7 @@ export type UserCreateWithoutWorkspaceInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkspaceInput = {
@@ -541,6 +563,7 @@ export type UserUncheckedCreateWithoutWorkspaceInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkspaceInput = {
@@ -573,6 +596,7 @@ export type UserUpdateWithoutWorkspaceInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkspaceInput = {
@@ -589,6 +613,7 @@ export type UserUncheckedUpdateWithoutWorkspaceInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -605,6 +630,7 @@ export type UserCreateWithoutSessionsInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -621,6 +647,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -653,6 +680,7 @@ export type UserUpdateWithoutSessionsInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -669,6 +697,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -685,6 +714,7 @@ export type UserCreateWithoutAccountsInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -701,6 +731,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -733,6 +764,7 @@ export type UserUpdateWithoutAccountsInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -749,6 +781,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutColorPalettesInput = {
@@ -765,6 +798,7 @@ export type UserCreateWithoutColorPalettesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutColorPalettesInput = {
@@ -781,6 +815,7 @@ export type UserUncheckedCreateWithoutColorPalettesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutColorPalettesInput = {
@@ -813,6 +848,7 @@ export type UserUpdateWithoutColorPalettesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutColorPalettesInput = {
@@ -829,6 +865,7 @@ export type UserUncheckedUpdateWithoutColorPalettesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDomainNamesInput = {
@@ -845,6 +882,7 @@ export type UserCreateWithoutDomainNamesInput = {
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDomainNamesInput = {
@@ -861,6 +899,7 @@ export type UserUncheckedCreateWithoutDomainNamesInput = {
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDomainNamesInput = {
@@ -893,6 +932,7 @@ export type UserUpdateWithoutDomainNamesInput = {
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDomainNamesInput = {
@@ -909,6 +949,91 @@ export type UserUncheckedUpdateWithoutDomainNamesInput = {
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutSnippetsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutSnippetsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutSnippetsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSnippetsInput, Prisma.UserUncheckedCreateWithoutSnippetsInput>
+}
+
+export type UserUpsertWithoutSnippetsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSnippetsInput, Prisma.UserUncheckedUpdateWithoutSnippetsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSnippetsInput, Prisma.UserUncheckedCreateWithoutSnippetsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSnippetsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSnippetsInput, Prisma.UserUncheckedUpdateWithoutSnippetsInput>
+}
+
+export type UserUpdateWithoutSnippetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSnippetsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -921,6 +1046,7 @@ export type UserCountOutputType = {
   accounts: number
   colorPalettes: number
   domainNames: number
+  snippets: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -928,6 +1054,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   accounts?: boolean | UserCountOutputTypeCountAccountsArgs
   colorPalettes?: boolean | UserCountOutputTypeCountColorPalettesArgs
   domainNames?: boolean | UserCountOutputTypeCountDomainNamesArgs
+  snippets?: boolean | UserCountOutputTypeCountSnippetsArgs
 }
 
 /**
@@ -968,6 +1095,13 @@ export type UserCountOutputTypeCountDomainNamesArgs<ExtArgs extends runtime.Type
   where?: Prisma.DomainNameWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSnippetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SnippetWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -984,6 +1118,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   workspace?: boolean | Prisma.User$workspaceArgs<ExtArgs>
   colorPalettes?: boolean | Prisma.User$colorPalettesArgs<ExtArgs>
   domainNames?: boolean | Prisma.User$domainNamesArgs<ExtArgs>
+  snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1030,6 +1165,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   workspace?: boolean | Prisma.User$workspaceArgs<ExtArgs>
   colorPalettes?: boolean | Prisma.User$colorPalettesArgs<ExtArgs>
   domainNames?: boolean | Prisma.User$domainNamesArgs<ExtArgs>
+  snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1043,6 +1179,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     workspace: Prisma.$WorkspacePayload<ExtArgs> | null
     colorPalettes: Prisma.$ColorPalettePayload<ExtArgs>[]
     domainNames: Prisma.$DomainNamePayload<ExtArgs>[]
+    snippets: Prisma.$SnippetPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1453,6 +1590,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   workspace<T extends Prisma.User$workspaceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$workspaceArgs<ExtArgs>>): Prisma.Prisma__WorkspaceClient<runtime.Types.Result.GetResult<Prisma.$WorkspacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   colorPalettes<T extends Prisma.User$colorPalettesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$colorPalettesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ColorPalettePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   domainNames<T extends Prisma.User$domainNamesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$domainNamesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DomainNamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  snippets<T extends Prisma.User$snippetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$snippetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SnippetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1991,6 +2129,30 @@ export type User$domainNamesArgs<ExtArgs extends runtime.Types.Extensions.Intern
   take?: number
   skip?: number
   distinct?: Prisma.DomainNameScalarFieldEnum | Prisma.DomainNameScalarFieldEnum[]
+}
+
+/**
+ * User.snippets
+ */
+export type User$snippetsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Snippet
+   */
+  select?: Prisma.SnippetSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Snippet
+   */
+  omit?: Prisma.SnippetOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SnippetInclude<ExtArgs> | null
+  where?: Prisma.SnippetWhereInput
+  orderBy?: Prisma.SnippetOrderByWithRelationInput | Prisma.SnippetOrderByWithRelationInput[]
+  cursor?: Prisma.SnippetWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SnippetScalarFieldEnum | Prisma.SnippetScalarFieldEnum[]
 }
 
 /**

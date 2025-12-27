@@ -3,11 +3,13 @@ import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
+import { SnippetManagerModule } from "@/components/modules/snippet-manager-module";
 import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import {
   BookType,
+  Code2,
   FileText,
   Globe,
   Images,
@@ -94,6 +96,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Globe className="h-5 w-5" />,
     component: DomainNamesModule,
     category: "Management",
+  },
+  {
+    id: "snippet-manager",
+    name: "Snippet Manager",
+    description: "Store and manage your code snippets",
+    icon: <Code2 className="h-5 w-5" />,
+    component: SnippetManagerModule,
+    category: "Development",
   },
 ];
 

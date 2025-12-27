@@ -57,7 +57,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   ColorPalette: 'ColorPalette',
-  DomainName: 'DomainName'
+  DomainName: 'DomainName',
+  Snippet: 'Snippet'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -177,6 +178,23 @@ export const DomainNameScalarFieldEnum = {
 } as const
 
 export type DomainNameScalarFieldEnum = (typeof DomainNameScalarFieldEnum)[keyof typeof DomainNameScalarFieldEnum]
+
+
+export const SnippetScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  language: 'language',
+  code: 'code',
+  tags: 'tags',
+  isFavorite: 'isFavorite',
+  lastUsedAt: 'lastUsedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
 
 
 export const SortOrder = {

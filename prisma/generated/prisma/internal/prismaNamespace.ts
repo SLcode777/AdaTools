@@ -390,7 +390,8 @@ export const ModelName = {
   Account: 'Account',
   Verification: 'Verification',
   ColorPalette: 'ColorPalette',
-  DomainName: 'DomainName'
+  DomainName: 'DomainName',
+  Snippet: 'Snippet'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Snippet: {
+      payload: Prisma.$SnippetPayload<ExtArgs>
+      fields: Prisma.SnippetFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SnippetFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SnippetFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        findFirst: {
+          args: Prisma.SnippetFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SnippetFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        findMany: {
+          args: Prisma.SnippetFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        create: {
+          args: Prisma.SnippetCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        createMany: {
+          args: Prisma.SnippetCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SnippetCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        delete: {
+          args: Prisma.SnippetDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        update: {
+          args: Prisma.SnippetUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        deleteMany: {
+          args: Prisma.SnippetDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SnippetUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SnippetUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>[]
+        }
+        upsert: {
+          args: Prisma.SnippetUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SnippetPayload>
+        }
+        aggregate: {
+          args: Prisma.SnippetAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSnippet>
+        }
+        groupBy: {
+          args: Prisma.SnippetGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SnippetCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SnippetCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1068,6 +1143,23 @@ export const DomainNameScalarFieldEnum = {
 } as const
 
 export type DomainNameScalarFieldEnum = (typeof DomainNameScalarFieldEnum)[keyof typeof DomainNameScalarFieldEnum]
+
+
+export const SnippetScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  title: 'title',
+  description: 'description',
+  language: 'language',
+  code: 'code',
+  tags: 'tags',
+  isFavorite: 'isFavorite',
+  lastUsedAt: 'lastUsedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1288,6 +1380,7 @@ export type GlobalOmitConfig = {
   verification?: Prisma.VerificationOmit
   colorPalette?: Prisma.ColorPaletteOmit
   domainName?: Prisma.DomainNameOmit
+  snippet?: Prisma.SnippetOmit
 }
 
 /* Types for Logging */

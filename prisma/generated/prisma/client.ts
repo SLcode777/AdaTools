@@ -74,3 +74,8 @@ export type ColorPalette = Prisma.ColorPaletteModel
  * 
  */
 export type DomainName = Prisma.DomainNameModel
+/**
+ * Model Snippet
+ * 
+ */
+export type Snippet = Prisma.SnippetModel
