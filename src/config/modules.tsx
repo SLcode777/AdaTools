@@ -1,4 +1,5 @@
 import { Base64Module } from "@/components/modules/base64-module";
+import { ColorConverterModule } from "@/components/modules/color-converter-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
@@ -14,6 +15,7 @@ import {
   Globe,
   Images,
   KeyRound,
+  Palette,
   Settings,
   SwatchBook,
   Wallpaper,
@@ -87,6 +89,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Handle your color palettes",
     icon: <SwatchBook className="h-5 w-5" />,
     component: ColorPaletteModule,
+    category: "Design Tools",
+  },
+  {
+    id: "color-converter",
+    name: "Color Converter",
+    description: "Convert between color formats (HEX, RGB, HSL, etc.)",
+    icon: <Palette className="h-5 w-5" />,
+    component: ColorConverterModule,
     category: "Design Tools",
   },
   {
