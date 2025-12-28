@@ -22,7 +22,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { api } from "@/src/lib/trpc/client";
-import { ArrowUpDown, Edit, ExternalLink, Globe, Plus, RefreshCw, Trash2 } from "lucide-react";
+import {
+  ArrowUpDown,
+  Edit,
+  ExternalLink,
+  Globe,
+  Plus,
+  RefreshCw,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Module } from "../dashboard/module";
@@ -174,7 +182,8 @@ export function DomainNamesModule({
         } else if (sortField === "registrar") {
           comparison = a.registrar.localeCompare(b.registrar);
         } else if (sortField === "expiresAt") {
-          comparison = new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime();
+          comparison =
+            new Date(a.expiresAt).getTime() - new Date(b.expiresAt).getTime();
         }
         return sortOrder === "asc" ? comparison : -comparison;
       })
@@ -183,7 +192,9 @@ export function DomainNamesModule({
   const getDaysUntilExpiry = (expiresAt: Date) => {
     const now = new Date();
     const expiry = new Date(expiresAt);
-    return Math.ceil((expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+    return Math.ceil(
+      (expiry.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)
+    );
   };
 
   return (
@@ -198,7 +209,11 @@ export function DomainNamesModule({
         <div className="flex justify-between items-center">
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button onClick={resetForm}>
+              <Button
+                onClick={resetForm}
+                className="w-full"
+                variant={"secondary"}
+              >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Domain
               </Button>
@@ -265,7 +280,10 @@ export function DomainNamesModule({
                     id="autoRenew"
                     checked={formData.autoRenew}
                     onCheckedChange={(checked) =>
-                      setFormData({ ...formData, autoRenew: checked as boolean })
+                      setFormData({
+                        ...formData,
+                        autoRenew: checked as boolean,
+                      })
                     }
                   />
                   <Label htmlFor="autoRenew" className="cursor-pointer">
@@ -285,7 +303,10 @@ export function DomainNamesModule({
                         })
                       }
                     />
-                    <Label htmlFor="reminderOneMonth" className="cursor-pointer">
+                    <Label
+                      htmlFor="reminderOneMonth"
+                      className="cursor-pointer"
+                    >
                       1 month before expiration
                     </Label>
                   </div>
@@ -318,7 +339,9 @@ export function DomainNamesModule({
                 </Button>
                 <Button
                   onClick={handleSubmit}
-                  disabled={createMutation.isPending || updateMutation.isPending}
+                  disabled={
+                    createMutation.isPending || updateMutation.isPending
+                  }
                 >
                   {editingId ? "Update" : "Add"}
                 </Button>
@@ -334,14 +357,16 @@ export function DomainNamesModule({
         ) : !domains || domains.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Globe className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>No domains added yet. Click &quot;Add Domain&quot; to get started.</p>
+            <p>
+              No domains added yet. Click &quot;Add Domain&quot; to get started.
+            </p>
           </div>
         ) : (
-          <div className="rounded-md border">
+          <div className="rounded-md ">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>
+                  <TableHead className="text-left  pl-0">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -349,10 +374,10 @@ export function DomainNamesModule({
                       className="font-semibold"
                     >
                       Registrar
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                      <ArrowUpDown className="ml-1 h-4 w-4" />
                     </Button>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className="text-left pl-0">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -360,10 +385,10 @@ export function DomainNamesModule({
                       className="font-semibold"
                     >
                       Domain
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                      <ArrowUpDown className="ml-1 h-4 w-4" />
                     </Button>
                   </TableHead>
-                  <TableHead>
+                  <TableHead className="text-left pl-0">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -371,11 +396,13 @@ export function DomainNamesModule({
                       className="font-semibold"
                     >
                       Expires
-                      <ArrowUpDown className="ml-2 h-4 w-4" />
+                      <ArrowUpDown className="ml-1 h-4 w-4" />
                     </Button>
                   </TableHead>
-                  <TableHead className="text-center">Auto Renew</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead className="text-left text-xs">
+                    Auto Renew
+                  </TableHead>
+                  <TableHead className="text-left text-xs">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -392,16 +419,16 @@ export function DomainNamesModule({
                             href={domain.registrarUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-primary hover:underline"
+                            className="flex items-center gap-1 text-primary hover:underline text-xs"
                           >
-                            {domain.registrar}
                             <ExternalLink className="h-3 w-3" />
+                            {domain.registrar}
                           </a>
                         ) : (
                           domain.registrar
                         )}
                       </TableCell>
-                      <TableCell className="font-medium">
+                      <TableCell className="font-medium text-xs">
                         {domain.domain}
                       </TableCell>
                       <TableCell>
@@ -409,13 +436,20 @@ export function DomainNamesModule({
                           <span
                             className={
                               isExpired
-                                ? "text-destructive font-semibold"
+                                ? "text-destructive text-xs font-semibold"
                                 : isExpiringSoon
-                                ? "text-orange-500 font-semibold"
-                                : ""
+                                ? "text-orange-500 text-xs font-semibold"
+                                : "text-xs"
                             }
                           >
-                            {new Date(domain.expiresAt).toLocaleDateString()}
+                            {new Date(domain.expiresAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
                           </span>
                           {isExpired ? (
                             <span className="text-xs text-destructive">
@@ -423,7 +457,8 @@ export function DomainNamesModule({
                             </span>
                           ) : isExpiringSoon ? (
                             <span className="text-xs text-orange-500">
-                              {daysUntilExpiry} day{daysUntilExpiry !== 1 ? "s" : ""} left
+                              {daysUntilExpiry} day
+                              {daysUntilExpiry !== 1 ? "s" : ""} left
                             </span>
                           ) : null}
                         </div>
@@ -436,20 +471,22 @@ export function DomainNamesModule({
                         )}
                       </TableCell>
                       <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
+                        <div className="flex">
                           <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => handleEdit(domain)}
                           >
-                            <Edit className="h-4 w-4" />
+                            <Edit />
                           </Button>
                           <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => handleDelete(domain.id, domain.domain)}
+                            onClick={() =>
+                              handleDelete(domain.id, domain.domain)
+                            }
                           >
-                            <Trash2 className="h-4 w-4 text-destructive" />
+                            <Trash2 className="text-destructive" />
                           </Button>
                         </div>
                       </TableCell>
