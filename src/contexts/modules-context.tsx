@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState } from "react";
+import { createContext, ReactNode, useContext, useState, useEffect } from "react";
 import { useModule } from "../hooks/useModule";
 
 interface ModulesContextType {
@@ -12,6 +12,8 @@ interface ModulesContextType {
   tempOpenModules: string[];
   toggleTempOpen: (moduleId: string) => void;
   isTempOpen: (moduleId: string) => boolean;
+  sidebarCollapsed: boolean;
+  setSidebarCollapsed: (collapsed: boolean) => void;
 }
 
 const ModulesContext = createContext<ModulesContextType | undefined>(undefined);
@@ -19,6 +21,20 @@ const ModulesContext = createContext<ModulesContextType | undefined>(undefined);
 export function ModulesProvider({ children }: { children: ReactNode }) {
   const { getPinnedModules, togglePin, isToggling, isLoading } = useModule();
   const [tempOpenModules, setTempOpenModules] = useState<string[]>([]);
+  const [sidebarCollapsed, setSidebarCollapsedState] = useState(false);
+
+  // Charger l'état collapsed depuis localStorage au montage
+  useEffect(() => {
+    const savedState = localStorage.getItem("sidebar-collapsed");
+    if (savedState !== null) {
+      setSidebarCollapsedState(savedState === "true");
+    }
+  }, []);
+
+  const setSidebarCollapsed = (collapsed: boolean) => {
+    setSidebarCollapsedState(collapsed);
+    localStorage.setItem("sidebar-collapsed", String(collapsed));
+  };
 
   const handleTogglePin = (moduleId: string) => {
     togglePin({ moduleId });
@@ -48,6 +64,8 @@ export function ModulesProvider({ children }: { children: ReactNode }) {
         tempOpenModules,
         toggleTempOpen,
         isTempOpen,
+        sidebarCollapsed,
+        setSidebarCollapsed,
       }}
     >
       {children}

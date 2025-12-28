@@ -11,7 +11,7 @@ import { useEffect } from "react";
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
-  const { pinnedModules, handleTogglePin, tempOpenModules, toggleTempOpen } = useModuleContext();
+  const { pinnedModules, handleTogglePin, tempOpenModules, toggleTempOpen, sidebarCollapsed } = useModuleContext();
 
   useEffect(() => {
     if (!isPending && !session) {
@@ -41,7 +41,9 @@ export default function DashboardPage() {
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
       <ModulesSidebar />
-      <div className="flex-1 container mx-auto px-4 py-8">
+      <div
+        className={`flex-1 w-full px-4 py-8 transition-all duration-300 ${sidebarCollapsed ? 'lg:pl-[calc(64px+1rem)]' : 'lg:pl-[calc(256px+1rem)]'}`}
+      >
         {allModules.length > 0 ? (
           <ModuleGrid>
             {allModules.map((moduleId) => {
