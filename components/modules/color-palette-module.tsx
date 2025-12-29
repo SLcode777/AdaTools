@@ -56,11 +56,15 @@ import { Module } from "../dashboard/module";
 interface ColorPaletteModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 export function ColorPaletteModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
 }: ColorPaletteModuleProps) {
   // State
   const [activeTab, setActiveTab] = useState<"view" | "edit">("view");
@@ -104,12 +108,17 @@ export function ColorPaletteModule({
   // Utils for invalidating queries
   const utils = api.useUtils();
 
-  // Queries
-  const { data: palettes } = api.colorPalette.getAll.useQuery();
+  // Queries - protégées pour les visiteurs
+  const { data: palettes } = api.colorPalette.getAll.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
   const { data: selectedPalette } = api.colorPalette.getById.useQuery(
     { id: selectedPaletteId! },
     { enabled: !!selectedPaletteId }
   );
+
+  // Ignore le cache pour les visiteurs - afficher des tableaux vides
+  const displayPalettes = !isAuthenticated ? [] : palettes;
 
   // Mutations
   const createMutation = api.colorPalette.create.useMutation({
@@ -190,18 +199,18 @@ export function ColorPaletteModule({
 
   // Load last selected palette from localStorage
   useEffect(() => {
-    if (palettes && palettes.length > 0 && !selectedPaletteId) {
+    if (displayPalettes && displayPalettes.length > 0 && !selectedPaletteId) {
       const lastSelected = localStorage.getItem("color-palette-last-selected");
 
       // Check if the last selected palette still exists
-      if (lastSelected && palettes.some((p) => p.id === lastSelected)) {
+      if (lastSelected && displayPalettes.some((p) => p.id === lastSelected)) {
         setSelectedPaletteId(lastSelected);
       } else {
         // Otherwise select the first palette
-        setSelectedPaletteId(palettes[0].id);
+        setSelectedPaletteId(displayPalettes[0].id);
       }
     }
-  }, [palettes, selectedPaletteId]);
+  }, [displayPalettes, selectedPaletteId]);
 
   // Save selected palette to localStorage whenever it changes
   useEffect(() => {
@@ -267,6 +276,10 @@ export function ColorPaletteModule({
   };
 
   const handleSaveImport = () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (!importPaletteName.trim()) {
       toast.error("Please enter a palette name");
       return;
@@ -288,6 +301,10 @@ export function ColorPaletteModule({
   };
 
   const handleCreateNewPalette = () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     setIsCreatingNew(true);
     setEditingName("");
     setEditingColors([]);
@@ -397,6 +414,10 @@ export function ColorPaletteModule({
   };
 
   const handleDeletePalette = () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (!selectedPaletteId) return;
     if (
       !confirm(
@@ -438,7 +459,7 @@ export function ColorPaletteModule({
   // Render content based on state
   const renderContent = () => {
     // Empty state
-    if (!palettes || palettes.length === 0) {
+    if (!displayPalettes || displayPalettes.length === 0) {
       return (
         <div className="flex flex-col items-center justify-center py-12 text-center">
           <SwatchBook className="h-12 w-12 text-muted-foreground mb-4" />
@@ -450,7 +471,16 @@ export function ColorPaletteModule({
               <Plus className="h-4 w-4 mr-2" />
               Create Palette
             </Button>
-            <Button variant="outline" onClick={() => setImportDialogOpen(true)}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (!isAuthenticated) {
+                  onAuthRequired?.();
+                  return;
+                }
+                setImportDialogOpen(true);
+              }}
+            >
               <Upload className="h-4 w-4 mr-2" />
               Import
             </Button>
@@ -480,7 +510,7 @@ export function ColorPaletteModule({
                   <SelectValue placeholder="Select palette" />
                 </SelectTrigger>
                 <SelectContent>
-                  {palettes?.map((palette) => (
+                  {displayPalettes?.map((palette) => (
                     <SelectItem key={palette.id} value={palette.id}>
                       {palette.name}
                     </SelectItem>
@@ -497,6 +527,10 @@ export function ColorPaletteModule({
                 size="icon"
                 variant="outline"
                 onClick={() => {
+                  if (!isAuthenticated) {
+                    onAuthRequired?.();
+                    return;
+                  }
                   setActiveTab("edit");
                   if (!isCreatingNew && selectedPalette) {
                     setEditingColors([...selectedPalette.colors]);
@@ -510,7 +544,13 @@ export function ColorPaletteModule({
               <Button
                 size="icon"
                 variant="outline"
-                onClick={() => setImportDialogOpen(true)}
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    onAuthRequired?.();
+                    return;
+                  }
+                  setImportDialogOpen(true);
+                }}
                 title="Import from image or CSS"
               >
                 <Upload className="h-4 w-4" />
@@ -712,6 +752,7 @@ export function ColorPaletteModule({
       icon={<SwatchBook className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       {renderContent()}
 

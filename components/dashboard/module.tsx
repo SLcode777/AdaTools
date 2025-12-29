@@ -15,6 +15,7 @@ interface ModuleProps {
   icon?: ReactNode;
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
   children: ReactNode;
 }
 
@@ -24,6 +25,7 @@ export function Module({
   icon,
   isPinned = false,
   onTogglePin,
+  isAuthenticated = true,
   children,
 }: ModuleProps) {
   return (
@@ -46,7 +48,7 @@ export function Module({
               onClick={onTogglePin}
               className="shrink-0"
             >
-              {isPinned ? (
+              {!isAuthenticated || isPinned ? (
                 <X className="h-4 w-4" />
               ) : (
                 <Pin className="h-4 w-4" />

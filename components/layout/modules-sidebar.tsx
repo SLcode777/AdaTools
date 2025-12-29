@@ -13,6 +13,8 @@ import { useModuleContext } from "@/src/contexts/modules-context";
 import { cn } from "@/src/lib/utils";
 import {
   ChevronDown,
+  Github,
+  Lock,
   Menu,
   PanelRightClose,
   PanelRightOpen,
@@ -20,6 +22,7 @@ import {
   PinOff,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 interface ModulesSidebarProps {
@@ -37,7 +40,8 @@ function SidebarContent({
   onToggleCollapse,
   showToggle = false,
 }: SidebarContentProps) {
-  const { isPinned, handleTogglePin, toggleTempOpen } = useModuleContext();
+  const { isPinned, handleTogglePin, toggleTempOpen, isAuthenticated } =
+    useModuleContext();
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     () => {
       //all categories unfolded by default
@@ -65,8 +69,16 @@ function SidebarContent({
   };
 
   return (
-    <div className="flex flex-col gap-4 h-full overflow-y-auto bg-sidebar">
-      <div className={cn("px-4 pt-4", collapsed && "self-center")}>
+    <div className="flex flex-col h-full bg-sidebar">
+      {/* fixed header */}
+      <div
+        className={cn(
+          "px-4 py-2 z-50",
+          collapsed && "self-center py-5",
+          !collapsed &&
+            "bg-background drop-shadow-b drop-shadow-sm drop-shadow-primary/15"
+        )}
+      >
         <div className="flex items-center justify-between">
           {!collapsed && (
             <div>
@@ -99,8 +111,9 @@ function SidebarContent({
         </div>
       </div>
 
+      {/* scrollable */}
       {!collapsed && (
-        <div className="flex-1 px-2">
+        <div className="flex-1 px-2 overflow-y-auto [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary">
           {Object.entries(modulesByCategory).map(([category, modules]) => {
             const isOpen = openCategories[category];
             return (
@@ -121,11 +134,13 @@ function SidebarContent({
                   <div className="space-y-1 mt-1 border-l border-primary/40 ml-4">
                     {modules.map((module) => {
                       const pinned = isPinned(module.id);
+                      const requiresAuth = module.requiresAuth;
+                      const showLock = requiresAuth && !isAuthenticated;
                       return (
                         <button
                           key={module.id}
                           className={cn(
-                            "w-full flex items-center justify-between px-3 ml-1  text-xs transition-colors text-nowrap",
+                            "w-full flex items-center justify-between px-3 py-1 ml-1  text-xs transition-colors text-nowrap",
                             "hover:bg-primary/10 hover:text-primary hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           )}
                           onClick={() => toggleTempOpen(module.id)}
@@ -133,22 +148,27 @@ function SidebarContent({
                           <div className="flex items-center gap-2">
                             <div className="">{module.icon}</div>
                             <span className="text-xs">{module.name}</span>
-                          </div>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8 shrink-0"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleTogglePin(module.id);
-                            }}
-                          >
-                            {pinned ? (
-                              <Pin className="h-4 w-4 text-primary" />
-                            ) : (
-                              <PinOff className="h-4 w-4 text-muted-foreground" />
+                            {showLock && (
+                              <Lock className="h-3 w-3 text-muted-foreground" />
                             )}
-                          </Button>
+                          </div>
+                          {isAuthenticated && (
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-4 w-4 shrink-0"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleTogglePin(module.id);
+                              }}
+                            >
+                              {pinned ? (
+                                <Pin className="h-4 w-4 text-primary" />
+                              ) : (
+                                <PinOff className="h-4 w-4 text-muted-foreground" />
+                              )}
+                            </Button>
+                          )}
                         </button>
                       );
                     })}
@@ -157,6 +177,27 @@ function SidebarContent({
               </div>
             );
           })}
+          {!collapsed && (
+            <div className="border-t py-4">
+              <div className="container mx-auto px-4">
+                <div className="text-center items-center flex flex-col">
+                  <h2 className="text-lg font-bold mb-4">
+                    Want to add your own modules?
+                  </h2>
+                  <p className="text-muted-foreground mb-2 text-pretty max-w-2xl flex justify-center text-sm">
+                    AdaTools is an OpenSource project so we can build together
+                    the most useful and customizable tool for devs!
+                  </p>
+                  <Link href="https://github.com/SLcode777/AdaTools">
+                    <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
+                      <Github />
+                      <p>See the repository</p>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -176,7 +217,7 @@ export function ModulesSidebar({ className }: ModulesSidebarProps) {
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          "hidden lg:flex fixed left-0 top-0 h-screen border-r bg-background flex-col transition-all duration-300 z-40",
+          "hidden lg:flex fixed left-0 top-0 h-screen  bg-background flex-col transition-all duration-300 z-40",
           sidebarCollapsed ? "w-16" : "w-64",
           className
         )}

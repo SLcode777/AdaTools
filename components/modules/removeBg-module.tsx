@@ -48,9 +48,16 @@ const CREDIT_COSTS: Record<OutputSize, number> = {
 interface RemoveBgModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
-export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
+export function RemoveBgModule({
+  isPinned,
+  onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
+}: RemoveBgModuleProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [size, setSize] = useState<OutputSize>("regular");
   const [type, setType] = useState<ImageType>("auto");
@@ -62,10 +69,12 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: apiKeyData, refetch: refetchApiKey } =
-    api.removeBg.getApiKey.useQuery();
+    api.removeBg.getApiKey.useQuery(undefined, {
+      enabled: isAuthenticated,
+    });
   const { data: accountBalance, refetch: refetchBalance } =
     api.removeBg.getAccountBalance.useQuery(undefined, {
-      enabled: !!apiKeyData?.hasApiKey,
+      enabled: isAuthenticated && !!apiKeyData?.hasApiKey,
     });
   const saveApiKeyMutation = api.removeBg.saveApiKey.useMutation();
   const removeBgMutation = api.removeBg.removeBackground.useMutation();
@@ -112,6 +121,10 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
   };
 
   const handleSaveApiKey = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     try {
       await saveApiKeyMutation.mutateAsync({ apiKey });
       await refetchApiKey();
@@ -125,6 +138,10 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
   };
 
   const handleRemoveBg = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (!selectedFile) return;
 
     setIsProcessing(true);
@@ -159,6 +176,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
       icon={<Wallpaper className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* API Key Settings */}
@@ -214,7 +232,7 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
                   {saveApiKeyMutation.isPending ? "Saving..." : "Save"}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground flex flex-row gap-1">
                 Get your API key from{" "}
                 <a
                   href="https://www.remove.bg/api"
@@ -224,8 +242,10 @@ export function RemoveBgModule({ isPinned, onTogglePin }: RemoveBgModuleProps) {
                 >
                   remove.bg.
                 </a>{" "}
-                Your first 50 API calls/month are free.
-              </p>
+                <p className="text-primary">
+                  Your first 50 API calls/month are free.
+                </p>
+              </div>
             </div>
           )}
         </div>

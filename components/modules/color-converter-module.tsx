@@ -11,6 +11,8 @@ import { Input } from "../ui/input";
 interface ColorConverterModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 // Comprehensive Tailwind color palette (v3.x)
@@ -308,6 +310,7 @@ function findNearestTailwindColor(color: chroma.Color): string {
 export function ColorConverterModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
 }: ColorConverterModuleProps) {
   const [currentColor, setCurrentColor] = useState(chroma("#85CC23"));
   const [hexInput, setHexInput] = useState("#85CC23");
@@ -610,6 +613,7 @@ export function ColorConverterModule({
       icon={<Palette className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* Color Picker */}

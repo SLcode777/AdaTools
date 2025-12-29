@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useState, useEffect } from "react";
+import { AuthRequiredModal } from "@/components/auth/auth-required-modal";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useModule } from "../hooks/useModule";
 
 interface ModulesContextType {
@@ -14,22 +22,52 @@ interface ModulesContextType {
   isTempOpen: (moduleId: string) => boolean;
   sidebarCollapsed: boolean;
   setSidebarCollapsed: (collapsed: boolean) => void;
+  isAuthenticated: boolean;
+  onAuthRequired: () => void;
 }
 
 const ModulesContext = createContext<ModulesContextType | undefined>(undefined);
 
-export function ModulesProvider({ children }: { children: ReactNode }) {
-  const { getPinnedModules, togglePin, isToggling, isLoading } = useModule();
-  const [tempOpenModules, setTempOpenModules] = useState<string[]>([]);
-  const [sidebarCollapsed, setSidebarCollapsedState] = useState(false);
+export function ModulesProvider({
+  children,
+  session,
+}: {
+  children: ReactNode;
+  session: any;
+}) {
+  const isAuthenticated = !!session;
+  const { getPinnedModules, togglePin, isToggling, isLoading } =
+    useModule(isAuthenticated);
 
-  // Charger l'état collapsed depuis localStorage au montage
-  useEffect(() => {
+  // tempOpenModules for visitors only
+  const [tempOpenModules, setTempOpenModules] = useState<string[]>([
+    "youtube-embed",
+    "webpConverter",
+    "lorem-ipsum",
+  ]);
+
+  //load collapsed sidebar state from localStorage
+  const [sidebarCollapsed, setSidebarCollapsedState] = useState(() => {
     const savedState = localStorage.getItem("sidebar-collapsed");
-    if (savedState !== null) {
-      setSidebarCollapsedState(savedState === "true");
+    return savedState === "true";
+  });
+
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+
+  //handle open modules based on "isAuthenticated"
+  const prevIsAuthenticated = useRef(isAuthenticated);
+
+  useEffect(() => {
+    //visitor → authenticated : empty tempOpenModules
+    if (!prevIsAuthenticated.current && isAuthenticated) {
+      setTempOpenModules([]);
+
+      //authenticated → visitor : set back default modules
+    } else if (prevIsAuthenticated.current && !isAuthenticated) {
+      setTempOpenModules(["youtube-embed", "webpConverter", "lorem-ipsum"]);
     }
-  }, []);
+    prevIsAuthenticated.current = isAuthenticated;
+  }, [isAuthenticated]);
 
   const setSidebarCollapsed = (collapsed: boolean) => {
     setSidebarCollapsedState(collapsed);
@@ -37,11 +75,21 @@ export function ModulesProvider({ children }: { children: ReactNode }) {
   };
 
   const handleTogglePin = (moduleId: string) => {
+    if (!isAuthenticated) {
+      setAuthModalOpen(true);
+      return;
+    }
     togglePin({ moduleId });
   };
 
-  const isPinned = (moduleId: string) =>
-    getPinnedModules?.includes(moduleId) ?? false;
+  const onAuthRequired = () => {
+    setAuthModalOpen(true);
+  };
+
+  const isPinned = (moduleId: string) => {
+    if (!isAuthenticated) return false;
+    return getPinnedModules?.includes(moduleId) ?? false;
+  };
 
   const toggleTempOpen = (moduleId: string) => {
     setTempOpenModules((prev) =>
@@ -56,19 +104,26 @@ export function ModulesProvider({ children }: { children: ReactNode }) {
   return (
     <ModulesContext.Provider
       value={{
-        pinnedModules: getPinnedModules ?? [],
+        pinnedModules: isAuthenticated ? getPinnedModules ?? [] : [],
         handleTogglePin,
         isPinned,
-        isLoading,
+        isLoading: isAuthenticated ? isLoading : false,
         isToggling,
         tempOpenModules,
         toggleTempOpen,
         isTempOpen,
         sidebarCollapsed,
         setSidebarCollapsed,
+        isAuthenticated,
+        onAuthRequired,
       }}
     >
       {children}
+      <AuthRequiredModal
+        open={authModalOpen}
+        onOpenChange={setAuthModalOpen}
+        action="pin modules"
+      />
     </ModulesContext.Provider>
   );
 }

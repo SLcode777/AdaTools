@@ -13,7 +13,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { api } from "@/src/lib/trpc/client";
-import { AlertCircle, Edit, ListVideo, Play, Plus, Trash2, Video } from "lucide-react";
+import {
+  AlertCircle,
+  Edit,
+  ListVideo,
+  Play,
+  Plus,
+  Trash2,
+  Video,
+} from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Module } from "../dashboard/module";
@@ -21,6 +29,8 @@ import { Module } from "../dashboard/module";
 interface YouTubeEmbedModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 interface VideoFormData {
@@ -31,6 +41,8 @@ interface VideoFormData {
 export function YouTubeEmbedModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
 }: YouTubeEmbedModuleProps) {
   // State
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -40,16 +52,61 @@ export function YouTubeEmbedModule({
   const [currentVideoIndex, setCurrentVideoIndex] = useState<number>(0);
   const [hasUserInteracted, setHasUserInteracted] = useState<boolean>(false);
 
-  // Form state
   const [formData, setFormData] = useState<VideoFormData>({
     url: "",
     title: "",
   });
 
-  // Queries
-  const { data: videos, isLoading } = api.youtubeVideos.getAll.useQuery();
+  //default videos for non-authenticated users
+  const DEFAULT_VIDEOS = [
+    {
+      id: "default-1",
+      title: "Lofi Girl - beats to relax/study to",
+      url: "https://www.youtube.com/watch?v=jfKfPfyJRdk",
+      videoId: "jfKfPfyJRdk",
+      playlistId: null,
+      isPlaylist: false,
+      userId: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "default-2",
+      title:
+        "3-HOUR STUDY WITH ME🏡 / calm lofi / A Rainy Evening in Tokyo / with countdown+alarm",
+      url: "https://www.youtube.com/watch?v=grBFMP3HDZA",
+      videoId: "grBFMP3HDZA",
+      playlistId: null,
+      isPlaylist: false,
+      userId: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "default-3",
+      title: "3Deep Focus - Music For Studying, Concentration and Work",
+      url: "https://www.youtube.com/watch?v=oPVte6aMprI",
+      videoId: "oPVte6aMprI",
+      playlistId: null,
+      isPlaylist: false,
+      userId: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ];
 
-  // Mutations
+  
+  const { data: videos, isLoading } = api.youtubeVideos.getAll.useQuery(
+    undefined,
+    {
+      enabled: isAuthenticated,
+    }
+  );
+
+  //use default videos for non-authenticated users
+  const displayVideos = !isAuthenticated ? DEFAULT_VIDEOS : videos;
+
+  //mutations
   const utils = api.useUtils();
 
   const createMutation = api.youtubeVideos.create.useMutation({
@@ -80,7 +137,7 @@ export function YouTubeEmbedModule({
       utils.youtubeVideos.getAll.invalidate();
       setDeleteDialogOpen(false);
       setVideoToDelete(null);
-      // Reset to first video if current was deleted
+      //reset to first video if current was deleted
       setCurrentVideoIndex(0);
     },
     onError: (error) => {
@@ -88,8 +145,12 @@ export function YouTubeEmbedModule({
     },
   });
 
-  // Handlers
+  //handlers
   const handleOpenDialog = (videoId?: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (videoId) {
       const video = videos?.find((v) => v.id === videoId);
       if (video) {
@@ -139,6 +200,10 @@ export function YouTubeEmbedModule({
   };
 
   const handleDeleteClick = (id: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     setVideoToDelete(id);
     setDeleteDialogOpen(true);
   };
@@ -154,26 +219,29 @@ export function YouTubeEmbedModule({
     setHasUserInteracted(true);
   };
 
-  // Get current video to display
-  const currentVideo = videos && videos.length > 0 ? videos[currentVideoIndex] : null;
+  //get current video to display
+  const currentVideo =
+    displayVideos && displayVideos.length > 0
+      ? displayVideos[currentVideoIndex]
+      : null;
 
-  // Generate YouTube embed URL based on video type
+  //generate YouTube embed URL based on video type
   const getEmbedUrl = (video: typeof currentVideo) => {
     if (!video) return null;
 
     const autoplay = hasUserInteracted ? 1 : 0;
 
+    //for playlists
     if (video.isPlaylist && video.playlistId) {
-      // For playlists
       if (video.videoId) {
-        // Playlist with starting video
+        //playlist with starting video
         return `https://www.youtube.com/embed/${video.videoId}?list=${video.playlistId}&autoplay=${autoplay}&rel=0`;
       } else {
-        // Pure playlist
+        //pure playlist
         return `https://www.youtube.com/embed/videoseries?list=${video.playlistId}&autoplay=${autoplay}&rel=0`;
       }
     } else {
-      // Regular video
+      //regular video
       return `https://www.youtube.com/embed/${video.videoId}?autoplay=${autoplay}&rel=0`;
     }
   };
@@ -187,6 +255,7 @@ export function YouTubeEmbedModule({
       icon={<Video className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* YouTube Player */}
@@ -226,59 +295,64 @@ export function YouTubeEmbedModule({
             <div className="text-center text-sm text-muted-foreground py-4">
               Loading videos...
             </div>
-          ) : videos && videos.length > 0 ? (
-            videos.map((video, index) => (
-              <div
-                key={video.id}
-                className={`border p-3 rounded-lg flex items-center justify-between gap-2 transition-colors hover:border-primary/50 ${
-                  currentVideoIndex === index
-                    ? "border-primary bg-primary/5"
-                    : "bg-card"
-                }`}
-              >
-                <button
-                  onClick={() => handlePlayVideo(index)}
-                  className="flex-1 flex items-center gap-3 text-left min-w-0"
+          ) : displayVideos && displayVideos.length > 0 ? (
+            displayVideos.map((video, index) => {
+              const isDefaultVideo = video.id.startsWith("default-");
+              return (
+                <div
+                  key={video.id}
+                  className={`border p-3 rounded-lg flex items-center justify-between gap-2 transition-colors hover:border-primary/50 ${
+                    currentVideoIndex === index
+                      ? "border-primary bg-primary/5"
+                      : "bg-card"
+                  }`}
                 >
-                  {video.isPlaylist ? (
-                    <ListVideo
-                      className={`h-4 w-4 shrink-0 ${
-                        currentVideoIndex === index
-                          ? "text-primary"
-                          : "text-muted-foreground"
-                      }`}
-                    />
-                  ) : (
-                    <Play
-                      className={`h-4 w-4 shrink-0 ${
-                        currentVideoIndex === index
-                          ? "text-primary fill-primary"
-                          : "text-muted-foreground"
-                      }`}
-                    />
+                  <button
+                    onClick={() => handlePlayVideo(index)}
+                    className="flex-1 flex items-center gap-3 text-left min-w-0"
+                  >
+                    {video.isPlaylist ? (
+                      <ListVideo
+                        className={`h-4 w-4 shrink-0 ${
+                          currentVideoIndex === index
+                            ? "text-primary"
+                            : "text-muted-foreground"
+                        }`}
+                      />
+                    ) : (
+                      <Play
+                        className={`h-4 w-4 shrink-0 ${
+                          currentVideoIndex === index
+                            ? "text-primary fill-primary"
+                            : "text-muted-foreground"
+                        }`}
+                      />
+                    )}
+                    <span className="text-sm truncate">{video.title}</span>
+                  </button>
+                  {!isDefaultVideo && (
+                    <div className="flex gap-1 shrink-0">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleOpenDialog(video.id)}
+                        className="h-7 w-7 p-0"
+                      >
+                        <Edit className="h-3.5 w-3.5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDeleteClick(video.id)}
+                        className="h-7 w-7 p-0 text-destructive"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </Button>
+                    </div>
                   )}
-                  <span className="text-sm truncate">{video.title}</span>
-                </button>
-                <div className="flex gap-1 shrink-0">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleOpenDialog(video.id)}
-                    className="h-7 w-7 p-0"
-                  >
-                    <Edit className="h-3.5 w-3.5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDeleteClick(video.id)}
-                    className="h-7 w-7 p-0 text-destructive"
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
                 </div>
-              </div>
-            ))
+              );
+            })
           ) : (
             <Alert>
               <AlertCircle className="h-4 w-4" />

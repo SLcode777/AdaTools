@@ -13,6 +13,8 @@ import { Module } from "../dashboard/module";
 interface WebpConverterModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 interface ConversionResult {
@@ -25,6 +27,7 @@ interface ConversionResult {
 export function WebpConverterModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
 }: WebpConverterModuleProps) {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -113,6 +116,7 @@ export function WebpConverterModule({
       icon={<Images className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* File Upload Zone */}

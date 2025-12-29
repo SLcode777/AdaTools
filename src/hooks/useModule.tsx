@@ -1,11 +1,13 @@
 import { toast } from "sonner";
 import { api } from "../lib/trpc/client";
 
-export function useModule() {
+export function useModule(isAuthenticated: boolean) {
   const utils = api.useUtils();
 
-  //list pinned modules
-  const getPinnedModules = api.module.getPinned.useQuery();
+  //list pinned modules - only query if authenticated
+  const getPinnedModules = api.module.getPinned.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
 
   //toggle pin on/off
   const togglePinMutation = api.module.togglePin.useMutation({

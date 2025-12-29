@@ -1,10 +1,10 @@
 import sharp from "sharp";
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 
 export const webpConverterRouter = createTRPCRouter({
   // Convert image (PNG/JPG) to WebP format
-  convertToWebp: protectedProcedure
+  convertToWebp: publicProcedure
     .input(
       z.object({
         imageBase64: z.string(),

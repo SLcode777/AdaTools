@@ -32,8 +32,11 @@ export interface ModuleConfig {
   component: (props: {
     isPinned?: boolean;
     onTogglePin?: () => void;
+    isAuthenticated?: boolean;
+    onAuthRequired?: () => void;
   }) => JSX.Element;
   category: string;
+  requiresAuth: boolean;
 }
 
 export const AVAILABLE_MODULES: ModuleConfig[] = [
@@ -44,6 +47,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <FileText className="h-5 w-5" />,
     component: LoremIpsumModule,
     category: "Generators",
+    requiresAuth: false,
   },
   {
     id: "uuid",
@@ -52,6 +56,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <KeyRound className="h-5 w-5" />,
     component: UuidModule,
     category: "Generators",
+    requiresAuth: false,
   },
   {
     id: "base64",
@@ -60,6 +65,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Settings className="h-5 w-5" />,
     component: Base64Module,
     category: "Encoding",
+    requiresAuth: false,
   },
   {
     id: "removebg",
@@ -68,6 +74,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Wallpaper className="h-5 w-5" />,
     component: RemoveBgModule,
     category: "Image processing",
+    requiresAuth: true,
   },
   {
     id: "webpConverter",
@@ -76,6 +83,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Images className="h-5 w-5" />,
     component: WebpConverterModule,
     category: "Image processing",
+    requiresAuth: false,
   },
   {
     id: "translation",
@@ -84,6 +92,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <BookType className="h-5 w-5" />,
     component: TranslationModule,
     category: "Translation",
+    requiresAuth: true,
   },
   {
     id: "color-palette",
@@ -92,6 +101,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <SwatchBook className="h-5 w-5" />,
     component: ColorPaletteModule,
     category: "Design Tools",
+    requiresAuth: true,
   },
   {
     id: "color-converter",
@@ -100,6 +110,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Palette className="h-5 w-5" />,
     component: ColorConverterModule,
     category: "Design Tools",
+    requiresAuth: false,
   },
   {
     id: "domain-names-reminder",
@@ -108,6 +119,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Globe className="h-5 w-5" />,
     component: DomainNamesModule,
     category: "Management",
+    requiresAuth: true,
   },
   {
     id: "snippet-manager",
@@ -116,6 +128,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Code2 className="h-5 w-5" />,
     component: SnippetManagerModule,
     category: "Development",
+    requiresAuth: true,
   },
   {
     id: "youtube-embed",
@@ -124,6 +137,7 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Video className="h-5 w-5" />,
     component: YouTubeEmbedModule,
     category: "Productivity",
+    requiresAuth: true,
   },
 ];
 

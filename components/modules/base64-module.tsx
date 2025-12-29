@@ -9,9 +9,15 @@ import { Textarea } from "../ui/textarea";
 interface Base64ModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
-export function Base64Module({ isPinned, onTogglePin }: Base64ModuleProps) {
+export function Base64Module({
+  isPinned,
+  onTogglePin,
+  isAuthenticated = true,
+}: Base64ModuleProps) {
   const [input, setInput] = useState("");
   const [output, setOutput] = useState("");
   const [mode, setMode] = useState<"encode" | "decode">("encode");
@@ -41,6 +47,7 @@ export function Base64Module({ isPinned, onTogglePin }: Base64ModuleProps) {
       icon={<MessageSquareLock className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         <div>

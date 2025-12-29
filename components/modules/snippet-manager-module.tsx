@@ -51,6 +51,8 @@ import { Module } from "../dashboard/module";
 interface SnippetManagerModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 interface SnippetFormData {
@@ -114,6 +116,8 @@ const getLanguageId = (language: string): string => {
 export function SnippetManagerModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
 }: SnippetManagerModuleProps) {
   // Theme
   const { theme } = useTheme();
@@ -140,20 +144,36 @@ export function SnippetManagerModule({
     isFavorite: false,
   });
 
-  // Queries
-  const { data: snippets, isLoading } = api.snippets.getAll.useQuery({
-    search: searchQuery || undefined,
-    language: languageFilter || undefined,
-    tag: tagFilter || undefined,
-    favoritesOnly,
+  // Queries - protégées pour les visiteurs
+  const { data: snippets, isLoading } = api.snippets.getAll.useQuery(
+    {
+      search: searchQuery || undefined,
+      language: languageFilter || undefined,
+      tag: tagFilter || undefined,
+      favoritesOnly,
+    },
+    { enabled: isAuthenticated }
+  );
+
+  const { data: recentlyUsed } = api.snippets.getRecentlyUsed.useQuery(
+    {
+      limit: 5,
+    },
+    { enabled: isAuthenticated }
+  );
+
+  const { data: languages } = api.snippets.getLanguages.useQuery(undefined, {
+    enabled: isAuthenticated,
+  });
+  const { data: tags } = api.snippets.getTags.useQuery(undefined, {
+    enabled: isAuthenticated,
   });
 
-  const { data: recentlyUsed } = api.snippets.getRecentlyUsed.useQuery({
-    limit: 5,
-  });
-
-  const { data: languages } = api.snippets.getLanguages.useQuery();
-  const { data: tags } = api.snippets.getTags.useQuery();
+  // Ignore le cache pour les visiteurs - afficher des tableaux vides
+  const displaySnippets = !isAuthenticated ? [] : snippets;
+  const displayRecentlyUsed = !isAuthenticated ? [] : recentlyUsed;
+  const displayLanguages = !isAuthenticated ? [] : languages;
+  const displayTags = !isAuthenticated ? [] : tags;
 
   // Mutations
   const utils = api.useUtils();
@@ -227,8 +247,12 @@ export function SnippetManagerModule({
 
   // Handlers
   const handleOpenDialog = (snippetId?: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (snippetId) {
-      const snippet = snippets?.find((s) => s.id === snippetId);
+      const snippet = displaySnippets?.find((s) => s.id === snippetId);
       if (snippet) {
         setFormData({
           title: snippet.title,
@@ -293,6 +317,10 @@ export function SnippetManagerModule({
   };
 
   const handleDeleteClick = (id: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     setSnippetToDelete(id);
     setDeleteDialogOpen(true);
   };
@@ -312,10 +340,18 @@ export function SnippetManagerModule({
   };
 
   const handleToggleFavorite = (id: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     toggleFavoriteMutation.mutate({ id });
   };
 
   const handleExport = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     try {
       const data = await utils.snippets.exportAll.fetch();
       const jsonString = JSON.stringify(data, null, 2);
@@ -337,6 +373,10 @@ export function SnippetManagerModule({
   };
 
   const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     const file = event.target.files?.[0];
     if (!file) return;
 
@@ -388,6 +428,7 @@ export function SnippetManagerModule({
       icon={<Code2 className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* Header Actions */}
@@ -408,7 +449,13 @@ export function SnippetManagerModule({
               Export JSON
             </Button>
             <Button
-              onClick={() => document.getElementById("import-file")?.click()}
+              onClick={() => {
+                if (!isAuthenticated) {
+                  onAuthRequired?.();
+                  return;
+                }
+                document.getElementById("import-file")?.click();
+              }}
               variant="outline"
               size="sm"
               className="w-full"
@@ -445,7 +492,7 @@ export function SnippetManagerModule({
                   <SelectValue placeholder="All Languages" />
                 </SelectTrigger>
                 <SelectContent>
-                  {languages?.map((lang) => (
+                  {displayLanguages?.map((lang) => (
                     <SelectItem key={lang} value={lang}>
                       {lang}
                     </SelectItem>
@@ -458,7 +505,7 @@ export function SnippetManagerModule({
                   <SelectValue placeholder="All Tags" />
                 </SelectTrigger>
                 <SelectContent>
-                  {tags?.map((tag) => (
+                  {displayTags?.map((tag) => (
                     <SelectItem key={tag} value={tag}>
                       {tag}
                     </SelectItem>
@@ -499,7 +546,7 @@ export function SnippetManagerModule({
         <Separator />
 
         {/* Recently Used Section */}
-        {recentlyUsed && recentlyUsed.length > 0 && (
+        {displayRecentlyUsed && displayRecentlyUsed.length > 0 && (
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
@@ -508,7 +555,7 @@ export function SnippetManagerModule({
               </h3>
             </div>
             <div className="grid grid-cols-1 gap-2">
-              {recentlyUsed.map((snippet) => (
+              {displayRecentlyUsed.map((snippet) => (
                 <button
                   key={snippet.id}
                   onClick={() => handleCopy(snippet.code, snippet.id)}
@@ -540,8 +587,8 @@ export function SnippetManagerModule({
             <div className="text-center text-sm text-muted-foreground py-8">
               Loading snippets...
             </div>
-          ) : snippets && snippets.length > 0 ? (
-            snippets.map((snippet) => (
+          ) : displaySnippets && displaySnippets.length > 0 ? (
+            displaySnippets.map((snippet) => (
               <div
                 key={snippet.id}
                 className="border p-3 space-y-2 bg-card hover:border-primary/50 transition-colors"

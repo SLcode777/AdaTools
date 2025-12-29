@@ -26,11 +26,15 @@ import { Module } from "../dashboard/module";
 interface TranslationModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 export function TranslationModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
 }: TranslationModuleProps) {
   const [showSettings, setShowSettings] = useState(false);
   const [apiKey, setApiKey] = useState("");
@@ -41,14 +45,16 @@ export function TranslationModule({
   const [targetLang, setTargetLang] = useState<string>("");
 
   const { data: apiKeyData, refetch: refetchApiKey } =
-    api.translator.getApiKey.useQuery();
+    api.translator.getApiKey.useQuery(undefined, {
+      enabled: isAuthenticated,
+    });
   const { data: sourceLanguages } =
     api.translator.getSupportedSourceLanguages.useQuery(undefined, {
-      enabled: !!apiKeyData?.hasApiKey,
+      enabled: isAuthenticated && !!apiKeyData?.hasApiKey,
     });
   const { data: targetLanguages } =
     api.translator.getSupportedTargetLanguages.useQuery(undefined, {
-      enabled: !!apiKeyData?.hasApiKey,
+      enabled: isAuthenticated && !!apiKeyData?.hasApiKey,
     });
   const saveApiKeyMutation = api.translator.saveApiKey.useMutation();
   const translateMutation = api.translator.translate.useMutation();
@@ -79,6 +85,10 @@ export function TranslationModule({
   }, [targetLanguages, targetLang]);
 
   const handleSaveApiKey = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     try {
       await saveApiKeyMutation.mutateAsync({ apiKey });
       await refetchApiKey();
@@ -91,6 +101,10 @@ export function TranslationModule({
   };
 
   const handleTranslate = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (!textToTranslate.trim()) return;
 
     try {
@@ -124,6 +138,7 @@ export function TranslationModule({
       icon={<BookType className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* API Key Settings */}
@@ -179,7 +194,7 @@ export function TranslationModule({
                   {saveApiKeyMutation.isPending ? "Saving..." : "Save"}
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground">
+              <div className="text-xs text-muted-foreground flex flex-row gap-1">
                 Get your API key from{" "}
                 <a
                   href="https://www.deepl.com/fr/pro-api#api-pricing"
@@ -189,8 +204,10 @@ export function TranslationModule({
                 >
                   Deepl.
                 </a>{" "}
-                Your first 500&apos;000 characters/month are free.
-              </p>
+                <p className="text-primary">
+                  Your first 500&apos;000 characters/month are free.
+                </p>
+              </div>
             </div>
           )}
         </div>

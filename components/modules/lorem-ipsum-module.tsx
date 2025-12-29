@@ -75,6 +75,8 @@ const LOREM_WORDS = [
 interface LoremIpsumModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 type GenerationType = "words" | "characters";
@@ -82,6 +84,7 @@ type GenerationType = "words" | "characters";
 export function LoremIpsumModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
 }: LoremIpsumModuleProps) {
   const [copied, setCopied] = useState(false);
   const [amount, setAmount] = useState(50);
@@ -171,6 +174,7 @@ export function LoremIpsumModule({
       icon={<TextInitial className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         {/* Type selector */}

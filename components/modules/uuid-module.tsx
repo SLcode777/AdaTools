@@ -13,9 +13,15 @@ function generateUUID() {
 interface UuidModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
-export function UuidModule({ isPinned, onTogglePin }: UuidModuleProps) {
+export function UuidModule({
+  isPinned,
+  onTogglePin,
+  isAuthenticated = true,
+}: UuidModuleProps) {
   const [uuid, setUuid] = useState(generateUUID());
   const [copied, setCopied] = useState(false);
 
@@ -37,6 +43,7 @@ export function UuidModule({ isPinned, onTogglePin }: UuidModuleProps) {
       icon={<KeyRound className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         <Input value={uuid} readOnly className="font-sans text-sm" />

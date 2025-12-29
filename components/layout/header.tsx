@@ -2,9 +2,9 @@
 
 import { SettingsDialog } from "@/components/settings-dialog";
 import { Button } from "@/components/ui/button";
-import { signOut, useSession } from "@/src/lib/auth-client";
 import { useColorTheme } from "@/src/contexts/color-theme-context";
 import { useModuleContext } from "@/src/contexts/modules-context";
+import { signOut, useSession } from "@/src/lib/auth-client";
 import { cn } from "@/src/lib/utils";
 import { LogOut, Settings } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -49,11 +49,14 @@ export function Header() {
   const isDashboard = pathname === "/dashboard";
 
   return (
-    <header className="border-b">
+    <header className="border-b w-full bg-background z-40 fixed drop-shadow-sm drop-shadow-primary/15">
       <div
         className={cn(
           "w-full px-4 h-16 flex items-center justify-between gap-8 transition-all duration-300",
-          isDashboard && (sidebarCollapsed ? 'lg:pl-[calc(64px+1rem)]' : 'lg:pl-[calc(256px+1rem)]')
+          isDashboard &&
+            (sidebarCollapsed
+              ? "lg:pl-[calc(64px+1rem)]"
+              : "lg:pl-[calc(256px+1rem)]")
         )}
       >
         <Link href="/" className="text-xl font-bold shrink-0">
@@ -61,7 +64,9 @@ export function Header() {
             src={
               !mounted
                 ? "/logo-cyan-dark.webp"
-                : `/logo-${colorTheme}-${theme === "dark" ? "dark" : "light"}.webp`
+                : `/logo-${colorTheme}-${
+                    theme === "dark" ? "dark" : "light"
+                  }.webp`
             }
             alt="AdaTools logo"
             width={200}

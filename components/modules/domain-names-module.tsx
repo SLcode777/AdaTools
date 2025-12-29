@@ -38,6 +38,8 @@ import { Module } from "../dashboard/module";
 interface DomainNamesModuleProps {
   isPinned?: boolean;
   onTogglePin?: () => void;
+  isAuthenticated?: boolean;
+  onAuthRequired?: () => void;
 }
 
 type SortField = "domain" | "expiresAt" | "registrar";
@@ -46,6 +48,8 @@ type SortOrder = "asc" | "desc";
 export function DomainNamesModule({
   isPinned,
   onTogglePin,
+  isAuthenticated = true,
+  onAuthRequired,
 }: DomainNamesModuleProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -64,7 +68,15 @@ export function DomainNamesModule({
 
   const utils = api.useUtils();
 
-  const { data: domains, isLoading } = api.domainNames.getAll.useQuery();
+  const { data: domains, isLoading } = api.domainNames.getAll.useQuery(
+    undefined,
+    {
+      enabled: isAuthenticated,
+    }
+  );
+
+  // Ignore le cache pour les visiteurs - afficher un tableau vide
+  const displayDomains = !isAuthenticated ? [] : domains;
 
   const createMutation = api.domainNames.create.useMutation({
     onSuccess: () => {
@@ -146,6 +158,10 @@ export function DomainNamesModule({
     reminderOneMonth: boolean;
     reminderOneWeek: boolean;
   }) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     setEditingId(domain.id);
     setFormData({
       domain: domain.domain,
@@ -160,6 +176,10 @@ export function DomainNamesModule({
   };
 
   const handleDelete = (id: string, domainName: string) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
     if (confirm(`Delete "${domainName}"? This action cannot be undone.`)) {
       deleteMutation.mutate({ id });
     }
@@ -174,8 +194,8 @@ export function DomainNamesModule({
     }
   };
 
-  const sortedDomains = domains
-    ? [...domains].sort((a, b) => {
+  const sortedDomains = displayDomains
+    ? [...displayDomains].sort((a, b) => {
         let comparison = 0;
         if (sortField === "domain") {
           comparison = a.domain.localeCompare(b.domain);
@@ -204,20 +224,26 @@ export function DomainNamesModule({
       icon={<Globe className="h-5 w-5 text-primary" />}
       isPinned={isPinned}
       onTogglePin={onTogglePin}
+      isAuthenticated={isAuthenticated}
     >
       <div className="space-y-4">
         <div className="flex justify-between items-center">
+          <Button
+            onClick={() => {
+              if (!isAuthenticated) {
+                onAuthRequired?.();
+                return;
+              }
+              resetForm();
+              setIsDialogOpen(true);
+            }}
+            className="w-full"
+            variant={"secondary"}
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add Domain
+          </Button>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-            <DialogTrigger asChild>
-              <Button
-                onClick={resetForm}
-                className="w-full"
-                variant={"secondary"}
-              >
-                <Plus className="h-4 w-4 mr-2" />
-                Add Domain
-              </Button>
-            </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>
@@ -354,7 +380,7 @@ export function DomainNamesModule({
           <div className="text-center py-8 text-muted-foreground">
             Loading domains...
           </div>
-        ) : !domains || domains.length === 0 ? (
+        ) : !displayDomains || displayDomains.length === 0 ? (
           <div className="text-center py-8 text-muted-foreground">
             <Globe className="h-12 w-12 mx-auto mb-4 opacity-50" />
             <p>
