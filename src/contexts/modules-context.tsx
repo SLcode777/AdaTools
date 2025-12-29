@@ -48,6 +48,7 @@ export function ModulesProvider({
 
   //load collapsed sidebar state from localStorage
   const [sidebarCollapsed, setSidebarCollapsedState] = useState(() => {
+    if (typeof window === "undefined") return false;
     const savedState = localStorage.getItem("sidebar-collapsed");
     return savedState === "true";
   });
