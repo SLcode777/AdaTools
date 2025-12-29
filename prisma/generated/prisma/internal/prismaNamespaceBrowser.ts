@@ -58,7 +58,8 @@ export const ModelName = {
   Verification: 'Verification',
   ColorPalette: 'ColorPalette',
   DomainName: 'DomainName',
-  Snippet: 'Snippet'
+  Snippet: 'Snippet',
+  YouTubeVideo: 'YouTubeVideo'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -195,6 +196,21 @@ export const SnippetScalarFieldEnum = {
 } as const
 
 export type SnippetScalarFieldEnum = (typeof SnippetScalarFieldEnum)[keyof typeof SnippetScalarFieldEnum]
+
+
+export const YouTubeVideoScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  url: 'url',
+  title: 'title',
+  videoId: 'videoId',
+  playlistId: 'playlistId',
+  isPlaylist: 'isPlaylist',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type YouTubeVideoScalarFieldEnum = (typeof YouTubeVideoScalarFieldEnum)[keyof typeof YouTubeVideoScalarFieldEnum]
 
 
 export const SortOrder = {

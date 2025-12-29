@@ -79,3 +79,8 @@ export type DomainName = Prisma.DomainNameModel
  * 
  */
 export type Snippet = Prisma.SnippetModel
+/**
+ * Model YouTubeVideo
+ * 
+ */
+export type YouTubeVideo = Prisma.YouTubeVideoModel

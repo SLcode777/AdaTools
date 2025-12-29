@@ -33,6 +33,7 @@ model User {
   colorPalettes  ColorPalette[]
   domainNames    DomainName[]
   snippets       Snippet[]
+  youtubeVideos  YouTubeVideo[]
 
   @@unique([email])
   @@map("user")
@@ -138,4 +139,21 @@ model Snippet {
   @@index([isFavorite])
   @@index([lastUsedAt])
   @@map("snippet")
+}
+
+model YouTubeVideo {
+  id         String   @id @default(cuid())
+  userId     String
+  url        String
+  title      String
+  videoId    String
+  playlistId String?
+  isPlaylist Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("youtube_video")
 }

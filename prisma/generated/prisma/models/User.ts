@@ -220,6 +220,7 @@ export type UserWhereInput = {
   colorPalettes?: Prisma.ColorPaletteListRelationFilter
   domainNames?: Prisma.DomainNameListRelationFilter
   snippets?: Prisma.SnippetListRelationFilter
+  youtubeVideos?: Prisma.YouTubeVideoListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -238,6 +239,7 @@ export type UserOrderByWithRelationInput = {
   colorPalettes?: Prisma.ColorPaletteOrderByRelationAggregateInput
   domainNames?: Prisma.DomainNameOrderByRelationAggregateInput
   snippets?: Prisma.SnippetOrderByRelationAggregateInput
+  youtubeVideos?: Prisma.YouTubeVideoOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +261,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   colorPalettes?: Prisma.ColorPaletteListRelationFilter
   domainNames?: Prisma.DomainNameListRelationFilter
   snippets?: Prisma.SnippetListRelationFilter
+  youtubeVideos?: Prisma.YouTubeVideoListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -307,6 +310,7 @@ export type UserCreateInput = {
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -325,6 +329,7 @@ export type UserUncheckedCreateInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -343,6 +348,7 @@ export type UserUpdateInput = {
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -361,6 +367,7 @@ export type UserUncheckedUpdateInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -532,6 +539,20 @@ export type UserUpdateOneRequiredWithoutSnippetsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSnippetsInput, Prisma.UserUpdateWithoutSnippetsInput>, Prisma.UserUncheckedUpdateWithoutSnippetsInput>
 }
 
+export type UserCreateNestedOneWithoutYoutubeVideosInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutYoutubeVideosInput, Prisma.UserUncheckedCreateWithoutYoutubeVideosInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutYoutubeVideosInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutYoutubeVideosNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutYoutubeVideosInput, Prisma.UserUncheckedCreateWithoutYoutubeVideosInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutYoutubeVideosInput
+  upsert?: Prisma.UserUpsertWithoutYoutubeVideosInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutYoutubeVideosInput, Prisma.UserUpdateWithoutYoutubeVideosInput>, Prisma.UserUncheckedUpdateWithoutYoutubeVideosInput>
+}
+
 export type UserCreateWithoutWorkspaceInput = {
   id: string
   name: string
@@ -547,6 +568,7 @@ export type UserCreateWithoutWorkspaceInput = {
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkspaceInput = {
@@ -564,6 +586,7 @@ export type UserUncheckedCreateWithoutWorkspaceInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkspaceInput = {
@@ -597,6 +620,7 @@ export type UserUpdateWithoutWorkspaceInput = {
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkspaceInput = {
@@ -614,6 +638,7 @@ export type UserUncheckedUpdateWithoutWorkspaceInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -631,6 +656,7 @@ export type UserCreateWithoutSessionsInput = {
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -648,6 +674,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -681,6 +708,7 @@ export type UserUpdateWithoutSessionsInput = {
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -698,6 +726,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -715,6 +744,7 @@ export type UserCreateWithoutAccountsInput = {
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -732,6 +762,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -765,6 +796,7 @@ export type UserUpdateWithoutAccountsInput = {
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -782,6 +814,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutColorPalettesInput = {
@@ -799,6 +832,7 @@ export type UserCreateWithoutColorPalettesInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutColorPalettesInput = {
@@ -816,6 +850,7 @@ export type UserUncheckedCreateWithoutColorPalettesInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutColorPalettesInput = {
@@ -849,6 +884,7 @@ export type UserUpdateWithoutColorPalettesInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutColorPalettesInput = {
@@ -866,6 +902,7 @@ export type UserUncheckedUpdateWithoutColorPalettesInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDomainNamesInput = {
@@ -883,6 +920,7 @@ export type UserCreateWithoutDomainNamesInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDomainNamesInput = {
@@ -900,6 +938,7 @@ export type UserUncheckedCreateWithoutDomainNamesInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDomainNamesInput = {
@@ -933,6 +972,7 @@ export type UserUpdateWithoutDomainNamesInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDomainNamesInput = {
@@ -950,6 +990,7 @@ export type UserUncheckedUpdateWithoutDomainNamesInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSnippetsInput = {
@@ -967,6 +1008,7 @@ export type UserCreateWithoutSnippetsInput = {
   workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSnippetsInput = {
@@ -984,6 +1026,7 @@ export type UserUncheckedCreateWithoutSnippetsInput = {
   workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
   colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSnippetsInput = {
@@ -1017,6 +1060,7 @@ export type UserUpdateWithoutSnippetsInput = {
   workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSnippetsInput = {
@@ -1034,6 +1078,95 @@ export type UserUncheckedUpdateWithoutSnippetsInput = {
   workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
   colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutYoutubeVideosInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutYoutubeVideosInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutYoutubeVideosInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutYoutubeVideosInput, Prisma.UserUncheckedCreateWithoutYoutubeVideosInput>
+}
+
+export type UserUpsertWithoutYoutubeVideosInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutYoutubeVideosInput, Prisma.UserUncheckedUpdateWithoutYoutubeVideosInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutYoutubeVideosInput, Prisma.UserUncheckedCreateWithoutYoutubeVideosInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutYoutubeVideosInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutYoutubeVideosInput, Prisma.UserUncheckedUpdateWithoutYoutubeVideosInput>
+}
+
+export type UserUpdateWithoutYoutubeVideosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutYoutubeVideosInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1047,6 +1180,7 @@ export type UserCountOutputType = {
   colorPalettes: number
   domainNames: number
   snippets: number
+  youtubeVideos: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1055,6 +1189,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   colorPalettes?: boolean | UserCountOutputTypeCountColorPalettesArgs
   domainNames?: boolean | UserCountOutputTypeCountDomainNamesArgs
   snippets?: boolean | UserCountOutputTypeCountSnippetsArgs
+  youtubeVideos?: boolean | UserCountOutputTypeCountYoutubeVideosArgs
 }
 
 /**
@@ -1102,6 +1237,13 @@ export type UserCountOutputTypeCountSnippetsArgs<ExtArgs extends runtime.Types.E
   where?: Prisma.SnippetWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountYoutubeVideosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.YouTubeVideoWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1119,6 +1261,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   colorPalettes?: boolean | Prisma.User$colorPalettesArgs<ExtArgs>
   domainNames?: boolean | Prisma.User$domainNamesArgs<ExtArgs>
   snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
+  youtubeVideos?: boolean | Prisma.User$youtubeVideosArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1166,6 +1309,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   colorPalettes?: boolean | Prisma.User$colorPalettesArgs<ExtArgs>
   domainNames?: boolean | Prisma.User$domainNamesArgs<ExtArgs>
   snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
+  youtubeVideos?: boolean | Prisma.User$youtubeVideosArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1180,6 +1324,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     colorPalettes: Prisma.$ColorPalettePayload<ExtArgs>[]
     domainNames: Prisma.$DomainNamePayload<ExtArgs>[]
     snippets: Prisma.$SnippetPayload<ExtArgs>[]
+    youtubeVideos: Prisma.$YouTubeVideoPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1591,6 +1736,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   colorPalettes<T extends Prisma.User$colorPalettesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$colorPalettesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ColorPalettePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   domainNames<T extends Prisma.User$domainNamesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$domainNamesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DomainNamePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   snippets<T extends Prisma.User$snippetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$snippetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SnippetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  youtubeVideos<T extends Prisma.User$youtubeVideosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$youtubeVideosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$YouTubeVideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2153,6 +2299,30 @@ export type User$snippetsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.SnippetScalarFieldEnum | Prisma.SnippetScalarFieldEnum[]
+}
+
+/**
+ * User.youtubeVideos
+ */
+export type User$youtubeVideosArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the YouTubeVideo
+   */
+  select?: Prisma.YouTubeVideoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the YouTubeVideo
+   */
+  omit?: Prisma.YouTubeVideoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.YouTubeVideoInclude<ExtArgs> | null
+  where?: Prisma.YouTubeVideoWhereInput
+  orderBy?: Prisma.YouTubeVideoOrderByWithRelationInput | Prisma.YouTubeVideoOrderByWithRelationInput[]
+  cursor?: Prisma.YouTubeVideoWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.YouTubeVideoScalarFieldEnum | Prisma.YouTubeVideoScalarFieldEnum[]
 }
 
 /**

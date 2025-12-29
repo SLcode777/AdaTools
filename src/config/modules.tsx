@@ -8,6 +8,7 @@ import { SnippetManagerModule } from "@/components/modules/snippet-manager-modul
 import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
+import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
 import {
   BookType,
   Code2,
@@ -18,6 +19,7 @@ import {
   Palette,
   Settings,
   SwatchBook,
+  Video,
   Wallpaper,
 } from "lucide-react";
 import { JSX, ReactNode } from "react";
@@ -114,6 +116,14 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Code2 className="h-5 w-5" />,
     component: SnippetManagerModule,
     category: "Development",
+  },
+  {
+    id: "youtube-embed",
+    name: "YouTube Embed",
+    description: "Easily launch your favorite focus videos",
+    icon: <Video className="h-5 w-5" />,
+    component: YouTubeEmbedModule,
+    category: "Productivity",
   },
 ];
 
