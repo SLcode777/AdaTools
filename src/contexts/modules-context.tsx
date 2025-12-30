@@ -44,6 +44,7 @@ export function ModulesProvider({
     "youtube-embed",
     "webpConverter",
     "lorem-ipsum",
+    "pomodoro-timer",
   ]);
 
   //load collapsed sidebar state from localStorage

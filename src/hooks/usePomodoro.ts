@@ -153,7 +153,7 @@ export function usePomodoro({
   );
 
   // Define tick first to avoid forward reference
-  const tickRef = useRef<() => void>();
+  const tickRef = useRef<() => void>(() => {});
 
   const handleTimerComplete = useCallback(() => {
     setSession((prev) => {
