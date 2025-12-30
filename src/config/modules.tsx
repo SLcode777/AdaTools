@@ -9,8 +9,10 @@ import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
+import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import {
   BookType,
+  Clock,
   Code2,
   FileText,
   Globe,
@@ -138,6 +140,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     component: YouTubeEmbedModule,
     category: "Productivity",
     requiresAuth: true,
+  },
+  {
+    id: "pomodoro-timer",
+    name: "Pomodoro Timer",
+    description: "Stay focused with the Pomodoro Technique",
+    icon: <Clock className="h-5 w-5" />,
+    component: PomodoroTimerModule,
+    category: "Productivity",
+    requiresAuth: false,
   },
 ];
 

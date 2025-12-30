@@ -59,7 +59,8 @@ export const ModelName = {
   ColorPalette: 'ColorPalette',
   DomainName: 'DomainName',
   Snippet: 'Snippet',
-  YouTubeVideo: 'YouTubeVideo'
+  YouTubeVideo: 'YouTubeVideo',
+  PomodoroSettings: 'PomodoroSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -211,6 +212,29 @@ export const YouTubeVideoScalarFieldEnum = {
 } as const
 
 export type YouTubeVideoScalarFieldEnum = (typeof YouTubeVideoScalarFieldEnum)[keyof typeof YouTubeVideoScalarFieldEnum]
+
+
+export const PomodoroSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workDuration: 'workDuration',
+  breakDuration: 'breakDuration',
+  cycles: 'cycles',
+  sessionStartSound: 'sessionStartSound',
+  breakStartSound: 'breakStartSound',
+  breakEndSound: 'breakEndSound',
+  sessionEndSound: 'sessionEndSound',
+  backgroundImage: 'backgroundImage',
+  backgroundType: 'backgroundType',
+  textColor: 'textColor',
+  autoStartBreaks: 'autoStartBreaks',
+  autoStartPomodoros: 'autoStartPomodoros',
+  soundEnabled: 'soundEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PomodoroSettingsScalarFieldEnum = (typeof PomodoroSettingsScalarFieldEnum)[keyof typeof PomodoroSettingsScalarFieldEnum]
 
 
 export const SortOrder = {

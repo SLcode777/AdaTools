@@ -25,15 +25,20 @@ model User {
   image          String?
   removeBgApiKey String?
   deeplApiKey    String?
+
   createdAt      DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
+  
   sessions       Session[]
   accounts       Account[]
+  
+  //relations
   workspace      Workspace?
   colorPalettes  ColorPalette[]
   domainNames    DomainName[]
   snippets       Snippet[]
   youtubeVideos  YouTubeVideo[]
+  pomodoroSettings PomodoroSettings?
 
   @@unique([email])
   @@map("user")
@@ -157,3 +162,38 @@ model YouTubeVideo {
   @@index([createdAt])
   @@map("youtube_video")
 }
+
+
+model PomodoroSettings {
+   id                  String   @id @default(cuid())
+   userId              String   @unique
+
+   //lengths in minutes
+   workDuration        Int      @default(50)
+   breakDuration       Int      @default(10)
+   cycles              Int      @default(3)
+
+   //predefined sound IDs
+   sessionStartSound   String   @default("rythm-bell")
+   breakStartSound     String   @default("completed")
+   breakEndSound       String   @default("triangle")
+   sessionEndSound     String   @default("victory-dance")
+
+   //background customization
+   backgroundImage     String?  @default("cyan") // Base64 ou ID image galerie
+   backgroundType      String   @default("gallery") // "gallery" | "custom" | "none"
+   textColor           String   @default("#FFFFFF")
+
+   //options
+   autoStartBreaks     Boolean  @default(false)
+   autoStartPomodoros  Boolean  @default(false)
+   soundEnabled        Boolean  @default(true)
+
+   createdAt           DateTime @default(now())
+   updatedAt           DateTime @updatedAt
+
+   user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+   @@index([userId])
+   @@map("pomodoro_settings")
+ }

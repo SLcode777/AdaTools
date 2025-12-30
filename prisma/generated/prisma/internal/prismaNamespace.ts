@@ -392,7 +392,8 @@ export const ModelName = {
   ColorPalette: 'ColorPalette',
   DomainName: 'DomainName',
   Snippet: 'Snippet',
-  YouTubeVideo: 'YouTubeVideo'
+  YouTubeVideo: 'YouTubeVideo',
+  PomodoroSettings: 'PomodoroSettings'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo" | "pomodoroSettings"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    PomodoroSettings: {
+      payload: Prisma.$PomodoroSettingsPayload<ExtArgs>
+      fields: Prisma.PomodoroSettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PomodoroSettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PomodoroSettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.PomodoroSettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PomodoroSettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        findMany: {
+          args: Prisma.PomodoroSettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>[]
+        }
+        create: {
+          args: Prisma.PomodoroSettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        createMany: {
+          args: Prisma.PomodoroSettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PomodoroSettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.PomodoroSettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        update: {
+          args: Prisma.PomodoroSettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.PomodoroSettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PomodoroSettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PomodoroSettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.PomodoroSettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PomodoroSettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.PomodoroSettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePomodoroSettings>
+        }
+        groupBy: {
+          args: Prisma.PomodoroSettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PomodoroSettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PomodoroSettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PomodoroSettingsCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1252,6 +1327,29 @@ export const YouTubeVideoScalarFieldEnum = {
 export type YouTubeVideoScalarFieldEnum = (typeof YouTubeVideoScalarFieldEnum)[keyof typeof YouTubeVideoScalarFieldEnum]
 
 
+export const PomodoroSettingsScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  workDuration: 'workDuration',
+  breakDuration: 'breakDuration',
+  cycles: 'cycles',
+  sessionStartSound: 'sessionStartSound',
+  breakStartSound: 'breakStartSound',
+  breakEndSound: 'breakEndSound',
+  sessionEndSound: 'sessionEndSound',
+  backgroundImage: 'backgroundImage',
+  backgroundType: 'backgroundType',
+  textColor: 'textColor',
+  autoStartBreaks: 'autoStartBreaks',
+  autoStartPomodoros: 'autoStartPomodoros',
+  soundEnabled: 'soundEnabled',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PomodoroSettingsScalarFieldEnum = (typeof PomodoroSettingsScalarFieldEnum)[keyof typeof PomodoroSettingsScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1368,6 +1466,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
     
 
+
+/**
+ * Reference to a field of type 'Float'
+ */
+export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
+    
+
+
+/**
+ * Reference to a field of type 'Float[]'
+ */
+export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1472,6 +1584,7 @@ export type GlobalOmitConfig = {
   domainName?: Prisma.DomainNameOmit
   snippet?: Prisma.SnippetOmit
   youTubeVideo?: Prisma.YouTubeVideoOmit
+  pomodoroSettings?: Prisma.PomodoroSettingsOmit
 }
 
 /* Types for Logging */

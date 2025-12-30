@@ -1,6 +1,7 @@
 import { colorPaletteRouter } from "./routers/color-palette";
 import { domainNamesRouter } from "./routers/domain-names";
 import { moduleRouter } from "./routers/module";
+import { pomodoroRouter } from "./routers/pomodoro";
 import { removebgRouter } from "./routers/removebg";
 import { snippetsRouter } from "./routers/snippets";
 import { testRouter } from "./routers/test";
@@ -12,6 +13,7 @@ import { createTRPCRouter } from "./trpc";
 export const appRouter = createTRPCRouter({
   test: testRouter,
   module: moduleRouter,
+  pomodoro: pomodoroRouter,
   removeBg: removebgRouter,
   translator: translatorRouter,
   webpConverter: webpConverterRouter,

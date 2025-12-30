@@ -228,11 +228,15 @@ AdaTools/
    interface YourToolModuleProps {
      isPinned?: boolean;
      onTogglePin?: () => void;
+     isAuthenticated: boolean;
+     onAuthRequired: () => void;
    }
 
    export function YourToolModule({
      isPinned,
      onTogglePin,
+     isAuthenticated,
+     onAuthRequired,
    }: YourToolModuleProps) {
      return (
        <Module
@@ -241,6 +245,8 @@ AdaTools/
          icon={<YourIcon className="h-5 w-5 text-primary" />}
          isPinned={isPinned}
          onTogglePin={onTogglePin}
+         isAuthenticated={isAuthenticated}
+         onAuthRequired={onAuthRequired}
        >
          {/* Your tool UI here */}
        </Module>
@@ -251,7 +257,6 @@ AdaTools/
 2. Add it to the modules registry in `src/contexts/modules-context.tsx`
 
 3. If your tool needs server-side processing, create a tRPC router in `src/server/api/routers/`
-
 
 ## 🤝 Contributing
 
@@ -274,6 +279,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [shadcn/ui](https://ui.shadcn.com/) for the beautiful UI components
 - [Lucide](https://lucide.dev/) for the icons
 - All the amazing open source libraries that make this project possible
+- For the pomodoro sounds, see [Pomodoro-sounds-attribution.md](Pomodoro-sounds-attribution.md) for author credits
 
 ## 📧 Contact
 

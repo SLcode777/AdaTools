@@ -62,3 +62,8 @@ export type Snippet = Prisma.SnippetModel
  * 
  */
 export type YouTubeVideo = Prisma.YouTubeVideoModel
+/**
+ * Model PomodoroSettings
+ * 
+ */
+export type PomodoroSettings = Prisma.PomodoroSettingsModel
