@@ -222,6 +222,7 @@ export type UserWhereInput = {
   snippets?: Prisma.SnippetListRelationFilter
   youtubeVideos?: Prisma.YouTubeVideoListRelationFilter
   pomodoroSettings?: Prisma.XOR<Prisma.PomodoroSettingsNullableScalarRelationFilter, Prisma.PomodoroSettingsWhereInput> | null
+  stickyNote?: Prisma.XOR<Prisma.StickyNoteNullableScalarRelationFilter, Prisma.StickyNoteWhereInput> | null
 }
 
 export type UserOrderByWithRelationInput = {
@@ -242,6 +243,7 @@ export type UserOrderByWithRelationInput = {
   snippets?: Prisma.SnippetOrderByRelationAggregateInput
   youtubeVideos?: Prisma.YouTubeVideoOrderByRelationAggregateInput
   pomodoroSettings?: Prisma.PomodoroSettingsOrderByWithRelationInput
+  stickyNote?: Prisma.StickyNoteOrderByWithRelationInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -265,6 +267,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   snippets?: Prisma.SnippetListRelationFilter
   youtubeVideos?: Prisma.YouTubeVideoListRelationFilter
   pomodoroSettings?: Prisma.XOR<Prisma.PomodoroSettingsNullableScalarRelationFilter, Prisma.PomodoroSettingsWhereInput> | null
+  stickyNote?: Prisma.XOR<Prisma.StickyNoteNullableScalarRelationFilter, Prisma.StickyNoteWhereInput> | null
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -315,6 +318,7 @@ export type UserCreateInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -335,6 +339,7 @@ export type UserUncheckedCreateInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -355,6 +360,7 @@ export type UserUpdateInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -375,6 +381,7 @@ export type UserUncheckedUpdateInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -574,6 +581,20 @@ export type UserUpdateOneRequiredWithoutPomodoroSettingsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPomodoroSettingsInput, Prisma.UserUpdateWithoutPomodoroSettingsInput>, Prisma.UserUncheckedUpdateWithoutPomodoroSettingsInput>
 }
 
+export type UserCreateNestedOneWithoutStickyNoteInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStickyNoteInput, Prisma.UserUncheckedCreateWithoutStickyNoteInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStickyNoteInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutStickyNoteNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutStickyNoteInput, Prisma.UserUncheckedCreateWithoutStickyNoteInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutStickyNoteInput
+  upsert?: Prisma.UserUpsertWithoutStickyNoteInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutStickyNoteInput, Prisma.UserUpdateWithoutStickyNoteInput>, Prisma.UserUncheckedUpdateWithoutStickyNoteInput>
+}
+
 export type UserCreateWithoutWorkspaceInput = {
   id: string
   name: string
@@ -591,6 +612,7 @@ export type UserCreateWithoutWorkspaceInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutWorkspaceInput = {
@@ -610,6 +632,7 @@ export type UserUncheckedCreateWithoutWorkspaceInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutWorkspaceInput = {
@@ -645,6 +668,7 @@ export type UserUpdateWithoutWorkspaceInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWorkspaceInput = {
@@ -664,6 +688,7 @@ export type UserUncheckedUpdateWithoutWorkspaceInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -683,6 +708,7 @@ export type UserCreateWithoutSessionsInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -702,6 +728,7 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -737,6 +764,7 @@ export type UserUpdateWithoutSessionsInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -756,6 +784,7 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -775,6 +804,7 @@ export type UserCreateWithoutAccountsInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -794,6 +824,7 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -829,6 +860,7 @@ export type UserUpdateWithoutAccountsInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -848,6 +880,7 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutColorPalettesInput = {
@@ -867,6 +900,7 @@ export type UserCreateWithoutColorPalettesInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutColorPalettesInput = {
@@ -886,6 +920,7 @@ export type UserUncheckedCreateWithoutColorPalettesInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutColorPalettesInput = {
@@ -921,6 +956,7 @@ export type UserUpdateWithoutColorPalettesInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutColorPalettesInput = {
@@ -940,6 +976,7 @@ export type UserUncheckedUpdateWithoutColorPalettesInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutDomainNamesInput = {
@@ -959,6 +996,7 @@ export type UserCreateWithoutDomainNamesInput = {
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutDomainNamesInput = {
@@ -978,6 +1016,7 @@ export type UserUncheckedCreateWithoutDomainNamesInput = {
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutDomainNamesInput = {
@@ -1013,6 +1052,7 @@ export type UserUpdateWithoutDomainNamesInput = {
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDomainNamesInput = {
@@ -1032,6 +1072,7 @@ export type UserUncheckedUpdateWithoutDomainNamesInput = {
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSnippetsInput = {
@@ -1051,6 +1092,7 @@ export type UserCreateWithoutSnippetsInput = {
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSnippetsInput = {
@@ -1070,6 +1112,7 @@ export type UserUncheckedCreateWithoutSnippetsInput = {
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSnippetsInput = {
@@ -1105,6 +1148,7 @@ export type UserUpdateWithoutSnippetsInput = {
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSnippetsInput = {
@@ -1124,6 +1168,7 @@ export type UserUncheckedUpdateWithoutSnippetsInput = {
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutYoutubeVideosInput = {
@@ -1143,6 +1188,7 @@ export type UserCreateWithoutYoutubeVideosInput = {
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutYoutubeVideosInput = {
@@ -1162,6 +1208,7 @@ export type UserUncheckedCreateWithoutYoutubeVideosInput = {
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutYoutubeVideosInput = {
@@ -1197,6 +1244,7 @@ export type UserUpdateWithoutYoutubeVideosInput = {
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutYoutubeVideosInput = {
@@ -1216,6 +1264,7 @@ export type UserUncheckedUpdateWithoutYoutubeVideosInput = {
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
 }
 
 export type UserCreateWithoutPomodoroSettingsInput = {
@@ -1235,6 +1284,7 @@ export type UserCreateWithoutPomodoroSettingsInput = {
   domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
+  stickyNote?: Prisma.StickyNoteCreateNestedOneWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPomodoroSettingsInput = {
@@ -1254,6 +1304,7 @@ export type UserUncheckedCreateWithoutPomodoroSettingsInput = {
   domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
   snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
+  stickyNote?: Prisma.StickyNoteUncheckedCreateNestedOneWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutPomodoroSettingsInput = {
@@ -1289,6 +1340,7 @@ export type UserUpdateWithoutPomodoroSettingsInput = {
   domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUpdateOneWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutPomodoroSettingsInput = {
@@ -1308,6 +1360,103 @@ export type UserUncheckedUpdateWithoutPomodoroSettingsInput = {
   domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
   snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
   youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
+  stickyNote?: Prisma.StickyNoteUncheckedUpdateOneWithoutUserNestedInput
+}
+
+export type UserCreateWithoutStickyNoteInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoCreateNestedManyWithoutUserInput
+  pomodoroSettings?: Prisma.PomodoroSettingsCreateNestedOneWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutStickyNoteInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified?: boolean
+  image?: string | null
+  removeBgApiKey?: string | null
+  deeplApiKey?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  workspace?: Prisma.WorkspaceUncheckedCreateNestedOneWithoutUserInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedCreateNestedManyWithoutUserInput
+  domainNames?: Prisma.DomainNameUncheckedCreateNestedManyWithoutUserInput
+  snippets?: Prisma.SnippetUncheckedCreateNestedManyWithoutUserInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedCreateNestedManyWithoutUserInput
+  pomodoroSettings?: Prisma.PomodoroSettingsUncheckedCreateNestedOneWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutStickyNoteInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutStickyNoteInput, Prisma.UserUncheckedCreateWithoutStickyNoteInput>
+}
+
+export type UserUpsertWithoutStickyNoteInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutStickyNoteInput, Prisma.UserUncheckedUpdateWithoutStickyNoteInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutStickyNoteInput, Prisma.UserUncheckedCreateWithoutStickyNoteInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutStickyNoteInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutStickyNoteInput, Prisma.UserUncheckedUpdateWithoutStickyNoteInput>
+}
+
+export type UserUpdateWithoutStickyNoteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUpdateManyWithoutUserNestedInput
+  pomodoroSettings?: Prisma.PomodoroSettingsUpdateOneWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutStickyNoteInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  removeBgApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deeplApiKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  workspace?: Prisma.WorkspaceUncheckedUpdateOneWithoutUserNestedInput
+  colorPalettes?: Prisma.ColorPaletteUncheckedUpdateManyWithoutUserNestedInput
+  domainNames?: Prisma.DomainNameUncheckedUpdateManyWithoutUserNestedInput
+  snippets?: Prisma.SnippetUncheckedUpdateManyWithoutUserNestedInput
+  youtubeVideos?: Prisma.YouTubeVideoUncheckedUpdateManyWithoutUserNestedInput
+  pomodoroSettings?: Prisma.PomodoroSettingsUncheckedUpdateOneWithoutUserNestedInput
 }
 
 
@@ -1404,6 +1553,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
   youtubeVideos?: boolean | Prisma.User$youtubeVideosArgs<ExtArgs>
   pomodoroSettings?: boolean | Prisma.User$pomodoroSettingsArgs<ExtArgs>
+  stickyNote?: boolean | Prisma.User$stickyNoteArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1453,6 +1603,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   snippets?: boolean | Prisma.User$snippetsArgs<ExtArgs>
   youtubeVideos?: boolean | Prisma.User$youtubeVideosArgs<ExtArgs>
   pomodoroSettings?: boolean | Prisma.User$pomodoroSettingsArgs<ExtArgs>
+  stickyNote?: boolean | Prisma.User$stickyNoteArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1469,6 +1620,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     snippets: Prisma.$SnippetPayload<ExtArgs>[]
     youtubeVideos: Prisma.$YouTubeVideoPayload<ExtArgs>[]
     pomodoroSettings: Prisma.$PomodoroSettingsPayload<ExtArgs> | null
+    stickyNote: Prisma.$StickyNotePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1882,6 +2034,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   snippets<T extends Prisma.User$snippetsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$snippetsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SnippetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   youtubeVideos<T extends Prisma.User$youtubeVideosArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$youtubeVideosArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$YouTubeVideoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   pomodoroSettings<T extends Prisma.User$pomodoroSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$pomodoroSettingsArgs<ExtArgs>>): Prisma.Prisma__PomodoroSettingsClient<runtime.Types.Result.GetResult<Prisma.$PomodoroSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  stickyNote<T extends Prisma.User$stickyNoteArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$stickyNoteArgs<ExtArgs>>): Prisma.Prisma__StickyNoteClient<runtime.Types.Result.GetResult<Prisma.$StickyNotePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2487,6 +2640,25 @@ export type User$pomodoroSettingsArgs<ExtArgs extends runtime.Types.Extensions.I
    */
   include?: Prisma.PomodoroSettingsInclude<ExtArgs> | null
   where?: Prisma.PomodoroSettingsWhereInput
+}
+
+/**
+ * User.stickyNote
+ */
+export type User$stickyNoteArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the StickyNote
+   */
+  select?: Prisma.StickyNoteSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the StickyNote
+   */
+  omit?: Prisma.StickyNoteOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.StickyNoteInclude<ExtArgs> | null
+  where?: Prisma.StickyNoteWhereInput
 }
 
 /**

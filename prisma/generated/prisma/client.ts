@@ -89,3 +89,8 @@ export type YouTubeVideo = Prisma.YouTubeVideoModel
  * 
  */
 export type PomodoroSettings = Prisma.PomodoroSettingsModel
+/**
+ * Model StickyNote
+ * 
+ */
+export type StickyNote = Prisma.StickyNoteModel

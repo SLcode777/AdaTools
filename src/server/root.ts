@@ -4,6 +4,7 @@ import { moduleRouter } from "./routers/module";
 import { pomodoroRouter } from "./routers/pomodoro";
 import { removebgRouter } from "./routers/removebg";
 import { snippetsRouter } from "./routers/snippets";
+import { stickyNoteRouter } from "./routers/sticky-note";
 import { testRouter } from "./routers/test";
 import { translatorRouter } from "./routers/translator";
 import { webpConverterRouter } from "./routers/webp-converter";
@@ -20,6 +21,7 @@ export const appRouter = createTRPCRouter({
   colorPalette: colorPaletteRouter,
   domainNames: domainNamesRouter,
   snippets: snippetsRouter,
+  stickyNote: stickyNoteRouter,
   youtubeVideos: youtubeVideosRouter,
 });
 

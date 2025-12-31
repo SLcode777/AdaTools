@@ -393,7 +393,8 @@ export const ModelName = {
   DomainName: 'DomainName',
   Snippet: 'Snippet',
   YouTubeVideo: 'YouTubeVideo',
-  PomodoroSettings: 'PomodoroSettings'
+  PomodoroSettings: 'PomodoroSettings',
+  StickyNote: 'StickyNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -409,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo" | "pomodoroSettings"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo" | "pomodoroSettings" | "stickyNote"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1153,6 +1154,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    StickyNote: {
+      payload: Prisma.$StickyNotePayload<ExtArgs>
+      fields: Prisma.StickyNoteFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StickyNoteFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StickyNoteFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        findFirst: {
+          args: Prisma.StickyNoteFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StickyNoteFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        findMany: {
+          args: Prisma.StickyNoteFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>[]
+        }
+        create: {
+          args: Prisma.StickyNoteCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        createMany: {
+          args: Prisma.StickyNoteCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StickyNoteCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>[]
+        }
+        delete: {
+          args: Prisma.StickyNoteDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        update: {
+          args: Prisma.StickyNoteUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        deleteMany: {
+          args: Prisma.StickyNoteDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StickyNoteUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StickyNoteUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>[]
+        }
+        upsert: {
+          args: Prisma.StickyNoteUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StickyNotePayload>
+        }
+        aggregate: {
+          args: Prisma.StickyNoteAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStickyNote>
+        }
+        groupBy: {
+          args: Prisma.StickyNoteGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StickyNoteGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StickyNoteCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StickyNoteCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1348,6 +1423,17 @@ export const PomodoroSettingsScalarFieldEnum = {
 } as const
 
 export type PomodoroSettingsScalarFieldEnum = (typeof PomodoroSettingsScalarFieldEnum)[keyof typeof PomodoroSettingsScalarFieldEnum]
+
+
+export const StickyNoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StickyNoteScalarFieldEnum = (typeof StickyNoteScalarFieldEnum)[keyof typeof StickyNoteScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1585,6 +1671,7 @@ export type GlobalOmitConfig = {
   snippet?: Prisma.SnippetOmit
   youTubeVideo?: Prisma.YouTubeVideoOmit
   pomodoroSettings?: Prisma.PomodoroSettingsOmit
+  stickyNote?: Prisma.StickyNoteOmit
 }
 
 /* Types for Logging */

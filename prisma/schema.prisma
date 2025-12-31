@@ -39,6 +39,7 @@ model User {
   snippets       Snippet[]
   youtubeVideos  YouTubeVideo[]
   pomodoroSettings PomodoroSettings?
+  stickyNote     StickyNote?
 
   @@unique([email])
   @@map("user")
@@ -197,3 +198,15 @@ model PomodoroSettings {
    @@index([userId])
    @@map("pomodoro_settings")
  }
+
+model StickyNote {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sticky_note")
+}

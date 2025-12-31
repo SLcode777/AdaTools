@@ -60,7 +60,8 @@ export const ModelName = {
   DomainName: 'DomainName',
   Snippet: 'Snippet',
   YouTubeVideo: 'YouTubeVideo',
-  PomodoroSettings: 'PomodoroSettings'
+  PomodoroSettings: 'PomodoroSettings',
+  StickyNote: 'StickyNote'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -235,6 +236,17 @@ export const PomodoroSettingsScalarFieldEnum = {
 } as const
 
 export type PomodoroSettingsScalarFieldEnum = (typeof PomodoroSettingsScalarFieldEnum)[keyof typeof PomodoroSettingsScalarFieldEnum]
+
+
+export const StickyNoteScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StickyNoteScalarFieldEnum = (typeof StickyNoteScalarFieldEnum)[keyof typeof StickyNoteScalarFieldEnum]
 
 
 export const SortOrder = {

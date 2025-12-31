@@ -3,13 +3,14 @@ import { ColorConverterModule } from "@/components/modules/color-converter-modul
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
+import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { SnippetManagerModule } from "@/components/modules/snippet-manager-module";
+import { StickyNoteModule } from "@/components/modules/stickynote-module";
 import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
-import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import {
   BookType,
   Clock,
@@ -20,6 +21,7 @@ import {
   KeyRound,
   Palette,
   Settings,
+  StickyNote,
   SwatchBook,
   Video,
   Wallpaper,
@@ -147,6 +149,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Stay focused with the Pomodoro Technique",
     icon: <Clock className="h-5 w-5" />,
     component: PomodoroTimerModule,
+    category: "Productivity",
+    requiresAuth: false,
+  },
+  {
+    id: "stick-note",
+    name: "Sticky Note",
+    description: "Use this space as a stick note !",
+    icon: <StickyNote className="h-5 w-5" />,
+    component: StickyNoteModule,
     category: "Productivity",
     requiresAuth: false,
   },
