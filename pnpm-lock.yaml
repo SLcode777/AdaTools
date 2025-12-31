@@ -11,6 +11,15 @@ importers:
       '@base-ui/react':
         specifier: ^1.0.0
         version: 1.0.0(@types/react@19.2.7)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@dnd-kit/core':
+        specifier: ^6.3.1
+        version: 6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@dnd-kit/sortable':
+        specifier: ^10.0.0
+        version: 10.0.0(@dnd-kit/core@6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)
+      '@dnd-kit/utilities':
+        specifier: ^3.2.2
+        version: 3.2.2(react@19.2.3)
       '@prisma/adapter-pg':
         specifier: ^7.2.0
         version: 7.2.0
@@ -356,6 +365,28 @@ packages:
 
   '@chevrotain/utils@10.5.0':
     resolution: {integrity: sha512-hBzuU5+JjB2cqNZyszkDHZgOSrUUT8V3dhgRl8Q9Gp6dAj/H5+KILGjbhDpc3Iy9qmqlm/akuOI2ut9VUtzJxQ==}
+
+  '@dnd-kit/accessibility@3.1.1':
+    resolution: {integrity: sha512-2P+YgaXF+gRsIihwwY1gCsQSYnu9Zyj2py8kY5fFvUM1qm2WA2u639R6YNVfU4GWr+ZM5mqEsfHZZLoRONbemw==}
+    peerDependencies:
+      react: '>=16.8.0'
+
+  '@dnd-kit/core@6.3.1':
+    resolution: {integrity: sha512-xkGBRQQab4RLwgXxoqETICr6S5JlogafbhNsidmrkVv2YRs5MLwpjoF2qpiGjQt8S9AoxtIV603s0GIUpY5eYQ==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+
+  '@dnd-kit/sortable@10.0.0':
+    resolution: {integrity: sha512-+xqhmIIzvAYMGfBYYnbKuNicfSsk4RksY2XdmJhT+HAC01nix6fHCztU68jooFiMUB01Ky3F0FyOvhG/BZrWkg==}
+    peerDependencies:
+      '@dnd-kit/core': ^6.3.0
+      react: '>=16.8.0'
+
+  '@dnd-kit/utilities@3.2.2':
+    resolution: {integrity: sha512-+MKAJEOfaBe5SmV6t34p80MMKhjvUz0vRrvVJbPT0WElzaOJ/1xs+D+KDv+tD/NE5ujfrChEcshd4fLn0wpiqg==}
+    peerDependencies:
+      react: '>=16.8.0'
 
   '@dotenvx/dotenvx@1.51.2':
     resolution: {integrity: sha512-+693mNflujDZxudSEqSNGpn92QgFhJlBn9q2mDQ9yGWyHuz3hZ8B5g3EXCwdAz4DMJAI+OFCIbfEFZS+YRdrEA==}
@@ -5791,6 +5822,31 @@ snapshots:
   '@chevrotain/types@10.5.0': {}
 
   '@chevrotain/utils@10.5.0': {}
+
+  '@dnd-kit/accessibility@3.1.1(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      tslib: 2.8.1
+
+  '@dnd-kit/core@6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@dnd-kit/accessibility': 3.1.1(react@19.2.3)
+      '@dnd-kit/utilities': 3.2.2(react@19.2.3)
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
+      tslib: 2.8.1
+
+  '@dnd-kit/sortable@10.0.0(@dnd-kit/core@6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      '@dnd-kit/core': 6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@dnd-kit/utilities': 3.2.2(react@19.2.3)
+      react: 19.2.3
+      tslib: 2.8.1
+
+  '@dnd-kit/utilities@3.2.2(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      tslib: 2.8.1
 
   '@dotenvx/dotenvx@1.51.2':
     dependencies:

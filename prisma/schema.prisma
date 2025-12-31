@@ -10,7 +10,7 @@ datasource db {
 model Workspace {
   id             String   @id
   userId         String   @unique
-  layout         Json?
+  moduleLayouts  Json?
   pinnedModules  String[] @default([])
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt

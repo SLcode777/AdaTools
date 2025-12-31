@@ -1,11 +1,13 @@
 "use client";
 
-import { ModuleGrid } from "@/components/dashboard/module-grid";
+import { MultiColumnGrid } from "@/components/dashboard/multi-column-grid";
+import { SortableModuleItem } from "@/components/dashboard/sortable-module-item";
 import { ModulesSidebar } from "@/components/layout/modules-sidebar";
 import { MarketingSections } from "@/components/marketing/marketing-sections";
 import { getModuleById } from "@/src/config/modules";
 import { useModuleContext } from "@/src/contexts/modules-context";
 import { useSession } from "@/src/lib/auth-client";
+import { useMemo } from "react";
 
 export default function DashboardPage() {
   const { data: session, isPending } = useSession();
@@ -17,7 +19,19 @@ export default function DashboardPage() {
     sidebarCollapsed,
     isAuthenticated,
     onAuthRequired,
+    moduleOrder,
+    handleReorderModules,
+    visibleColumns,
   } = useModuleContext();
+
+  // Get all modules that should be displayed
+  const allModules = useMemo(
+    () =>
+      isAuthenticated
+        ? Array.from(new Set([...pinnedModules, ...tempOpenModules]))
+        : tempOpenModules,
+    [isAuthenticated, pinnedModules, tempOpenModules]
+  );
 
   if (isPending) {
     return (
@@ -29,12 +43,40 @@ export default function DashboardPage() {
     );
   }
 
-  //modules to display :
-  //Visitors = tempOpenModules (3 default modules + the ones the visitor chooses to open)
-  //Auth users : pinnedModules + tempOpenModules
-  const allModules = isAuthenticated
-    ? Array.from(new Set([...pinnedModules, ...tempOpenModules]))
-    : tempOpenModules;
+  // Render a single module
+  const renderModule = (moduleId: string) => {
+    const moduleConfig = getModuleById(moduleId);
+    if (!moduleConfig) return null;
+    const ModuleComponent = moduleConfig.component;
+    const isPinned = pinnedModules.includes(moduleId);
+    const isTemp = tempOpenModules.includes(moduleId);
+
+    return (
+      <SortableModuleItem key={moduleId} id={moduleId}>
+        <ModuleComponent
+          isPinned={isPinned}
+          onTogglePin={() => {
+            //visitors : close module
+            if (!isAuthenticated) {
+              toggleTempOpen(moduleId);
+
+              //auth user
+            } else if (isPinned) {
+              //pinned module : unpin
+              handleTogglePin(moduleId);
+
+              //unpinned module : can pin then can close
+            } else if (isTemp) {
+              handleTogglePin(moduleId);
+              toggleTempOpen(moduleId);
+            }
+          }}
+          isAuthenticated={isAuthenticated}
+          onAuthRequired={onAuthRequired}
+        />
+      </SortableModuleItem>
+    );
+  };
 
   return (
     <div className="flex min-h-[calc(100vh-4rem)]">
@@ -48,40 +90,13 @@ export default function DashboardPage() {
           }`}
         >
           {allModules.length > 0 ? (
-            <ModuleGrid>
-              {allModules.map((moduleId) => {
-                const moduleConfig = getModuleById(moduleId);
-                if (!moduleConfig) return null;
-                const ModuleComponent = moduleConfig.component;
-                const isPinned = pinnedModules.includes(moduleId);
-                const isTemp = tempOpenModules.includes(moduleId);
-
-                return (
-                  <ModuleComponent
-                    key={moduleId}
-                    isPinned={isPinned}
-                    onTogglePin={() => {
-                      //visitors : close module
-                      if (!isAuthenticated) {
-                        toggleTempOpen(moduleId);
-
-                        //auth user
-                      } else if (isPinned) {
-                        //pinned module : unpin
-                        handleTogglePin(moduleId);
-
-                        //unpinned module : can pin then can close
-                      } else if (isTemp) {
-                        handleTogglePin(moduleId);
-                        toggleTempOpen(moduleId);
-                      }
-                    }}
-                    isAuthenticated={isAuthenticated}
-                    onAuthRequired={onAuthRequired}
-                  />
-                );
-              })}
-            </ModuleGrid>
+            <MultiColumnGrid
+              moduleOrder={moduleOrder}
+              visibleColumns={visibleColumns}
+              onReorder={handleReorderModules}
+              renderModule={renderModule}
+              allModules={allModules}
+            />
           ) : (
             <div className="border-2 border-dashed rounded-lg p-12 text-center">
               <p className="text-muted-foreground mb-2">No pinned modules</p>

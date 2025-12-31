@@ -41,7 +41,7 @@ export type WorkspaceMaxAggregateOutputType = {
 export type WorkspaceCountAggregateOutputType = {
   id: number
   userId: number
-  layout: number
+  moduleLayouts: number
   pinnedModules: number
   createdAt: number
   updatedAt: number
@@ -66,7 +66,7 @@ export type WorkspaceMaxAggregateInputType = {
 export type WorkspaceCountAggregateInputType = {
   id?: true
   userId?: true
-  layout?: true
+  moduleLayouts?: true
   pinnedModules?: true
   createdAt?: true
   updatedAt?: true
@@ -148,7 +148,7 @@ export type WorkspaceGroupByArgs<ExtArgs extends runtime.Types.Extensions.Intern
 export type WorkspaceGroupByOutputType = {
   id: string
   userId: string
-  layout: runtime.JsonValue | null
+  moduleLayouts: runtime.JsonValue | null
   pinnedModules: string[]
   createdAt: Date
   updatedAt: Date
@@ -178,7 +178,7 @@ export type WorkspaceWhereInput = {
   NOT?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[]
   id?: Prisma.StringFilter<"Workspace"> | string
   userId?: Prisma.StringFilter<"Workspace"> | string
-  layout?: Prisma.JsonNullableFilter<"Workspace">
+  moduleLayouts?: Prisma.JsonNullableFilter<"Workspace">
   pinnedModules?: Prisma.StringNullableListFilter<"Workspace">
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
@@ -188,7 +188,7 @@ export type WorkspaceWhereInput = {
 export type WorkspaceOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  layout?: Prisma.SortOrderInput | Prisma.SortOrder
+  moduleLayouts?: Prisma.SortOrderInput | Prisma.SortOrder
   pinnedModules?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -201,7 +201,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[]
   OR?: Prisma.WorkspaceWhereInput[]
   NOT?: Prisma.WorkspaceWhereInput | Prisma.WorkspaceWhereInput[]
-  layout?: Prisma.JsonNullableFilter<"Workspace">
+  moduleLayouts?: Prisma.JsonNullableFilter<"Workspace">
   pinnedModules?: Prisma.StringNullableListFilter<"Workspace">
   createdAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Workspace"> | Date | string
@@ -211,7 +211,7 @@ export type WorkspaceWhereUniqueInput = Prisma.AtLeast<{
 export type WorkspaceOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  layout?: Prisma.SortOrderInput | Prisma.SortOrder
+  moduleLayouts?: Prisma.SortOrderInput | Prisma.SortOrder
   pinnedModules?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -226,7 +226,7 @@ export type WorkspaceScalarWhereWithAggregatesInput = {
   NOT?: Prisma.WorkspaceScalarWhereWithAggregatesInput | Prisma.WorkspaceScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Workspace"> | string
   userId?: Prisma.StringWithAggregatesFilter<"Workspace"> | string
-  layout?: Prisma.JsonNullableWithAggregatesFilter<"Workspace">
+  moduleLayouts?: Prisma.JsonNullableWithAggregatesFilter<"Workspace">
   pinnedModules?: Prisma.StringNullableListFilter<"Workspace">
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Workspace"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Workspace"> | Date | string
@@ -234,7 +234,7 @@ export type WorkspaceScalarWhereWithAggregatesInput = {
 
 export type WorkspaceCreateInput = {
   id: string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceCreatepinnedModulesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -244,7 +244,7 @@ export type WorkspaceCreateInput = {
 export type WorkspaceUncheckedCreateInput = {
   id: string
   userId: string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceCreatepinnedModulesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -252,7 +252,7 @@ export type WorkspaceUncheckedCreateInput = {
 
 export type WorkspaceUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -262,7 +262,7 @@ export type WorkspaceUpdateInput = {
 export type WorkspaceUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -271,7 +271,7 @@ export type WorkspaceUncheckedUpdateInput = {
 export type WorkspaceCreateManyInput = {
   id: string
   userId: string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceCreatepinnedModulesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -279,7 +279,7 @@ export type WorkspaceCreateManyInput = {
 
 export type WorkspaceUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -288,7 +288,7 @@ export type WorkspaceUpdateManyMutationInput = {
 export type WorkspaceUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -305,7 +305,7 @@ export type StringNullableListFilter<$PrismaModel = never> = {
 export type WorkspaceCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  layout?: Prisma.SortOrder
+  moduleLayouts?: Prisma.SortOrder
   pinnedModules?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -381,7 +381,7 @@ export type WorkspaceUncheckedUpdateOneWithoutUserNestedInput = {
 
 export type WorkspaceCreateWithoutUserInput = {
   id: string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceCreatepinnedModulesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -389,7 +389,7 @@ export type WorkspaceCreateWithoutUserInput = {
 
 export type WorkspaceUncheckedCreateWithoutUserInput = {
   id: string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceCreatepinnedModulesInput | string[]
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -413,7 +413,7 @@ export type WorkspaceUpdateToOneWithWhereWithoutUserInput = {
 
 export type WorkspaceUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -421,7 +421,7 @@ export type WorkspaceUpdateWithoutUserInput = {
 
 export type WorkspaceUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  layout?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  moduleLayouts?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   pinnedModules?: Prisma.WorkspaceUpdatepinnedModulesInput | string[]
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -432,7 +432,7 @@ export type WorkspaceUncheckedUpdateWithoutUserInput = {
 export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  layout?: boolean
+  moduleLayouts?: boolean
   pinnedModules?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -442,7 +442,7 @@ export type WorkspaceSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type WorkspaceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  layout?: boolean
+  moduleLayouts?: boolean
   pinnedModules?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -452,7 +452,7 @@ export type WorkspaceSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type WorkspaceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  layout?: boolean
+  moduleLayouts?: boolean
   pinnedModules?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -462,13 +462,13 @@ export type WorkspaceSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
 export type WorkspaceSelectScalar = {
   id?: boolean
   userId?: boolean
-  layout?: boolean
+  moduleLayouts?: boolean
   pinnedModules?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WorkspaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "layout" | "pinnedModules" | "createdAt" | "updatedAt", ExtArgs["result"]["workspace"]>
+export type WorkspaceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "moduleLayouts" | "pinnedModules" | "createdAt" | "updatedAt", ExtArgs["result"]["workspace"]>
 export type WorkspaceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   User?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -487,7 +487,7 @@ export type $WorkspacePayload<ExtArgs extends runtime.Types.Extensions.InternalA
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    layout: runtime.JsonValue | null
+    moduleLayouts: runtime.JsonValue | null
     pinnedModules: string[]
     createdAt: Date
     updatedAt: Date
@@ -917,7 +917,7 @@ export interface Prisma__WorkspaceClient<T, Null = never, ExtArgs extends runtim
 export interface WorkspaceFieldRefs {
   readonly id: Prisma.FieldRef<"Workspace", 'String'>
   readonly userId: Prisma.FieldRef<"Workspace", 'String'>
-  readonly layout: Prisma.FieldRef<"Workspace", 'Json'>
+  readonly moduleLayouts: Prisma.FieldRef<"Workspace", 'Json'>
   readonly pinnedModules: Prisma.FieldRef<"Workspace", 'String[]'>
   readonly createdAt: Prisma.FieldRef<"Workspace", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Workspace", 'DateTime'>
