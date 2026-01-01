@@ -40,8 +40,13 @@ function SidebarContent({
   onToggleCollapse,
   showToggle = false,
 }: SidebarContentProps) {
-  const { isPinned, handleTogglePin, toggleTempOpen, isAuthenticated } =
-    useModuleContext();
+  const {
+    isPinned,
+    handleTogglePin,
+    toggleTempOpen,
+    isTempOpen,
+    isAuthenticated,
+  } = useModuleContext();
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
     () => {
       //all categories unfolded by default
@@ -83,9 +88,15 @@ function SidebarContent({
           {!collapsed && (
             <div>
               <h2 className="text-lg font-semibold">Modules</h2>
-              <p className="text-sm text-muted-foreground">
-                Pin your favorite tools
-              </p>
+              {isAuthenticated ? (
+                <p className="text-sm text-muted-foreground">
+                  Pin your favorite tools
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground">
+                  Browse our tools
+                </p>
+              )}
             </div>
           )}
           {showToggle && onToggleCollapse && (
@@ -113,7 +124,12 @@ function SidebarContent({
 
       {/* scrollable */}
       {!collapsed && (
-        <div className="flex-1 px-2 overflow-y-auto [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary">
+        <div
+          className={cn(
+            "flex-1 px-2 overflow-y-auto [&::-webkit-scrollbar]:w-0.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary",
+            !isAuthenticated && "pb-64"
+          )}
+        >
           {Object.entries(modulesByCategory).map(([category, modules]) => {
             const isOpen = openCategories[category];
             return (
@@ -134,12 +150,14 @@ function SidebarContent({
                   <div className="space-y-1 mt-1 border-l border-primary/40 ml-4">
                     {modules.map((module) => {
                       const pinned = isPinned(module.id);
+                      const tempOpen = isTempOpen(module.id);
                       const requiresAuth = module.requiresAuth;
                       const showLock = requiresAuth && !isAuthenticated;
                       return (
                         <button
                           key={module.id}
                           className={cn(
+                            !isAuthenticated && tempOpen && "bg-primary/10",
                             "w-full flex items-center justify-between px-3 py-1 ml-1  text-xs transition-colors text-nowrap",
                             "hover:bg-primary/10 hover:text-primary hover:cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                           )}
@@ -178,7 +196,13 @@ function SidebarContent({
             );
           })}
           {!collapsed && (
-            <div className="border-t py-4">
+            <div
+              className={cn(
+                "border-t py-4",
+                !isAuthenticated && "fixed bottom-0 left-0 bg-card",
+                !isAuthenticated && (collapsed ? "w-16" : "w-64")
+              )}
+            >
               <div className="container mx-auto px-4">
                 <div className="text-center items-center flex flex-col">
                   <h2 className="text-lg font-bold mb-4">

@@ -3,7 +3,9 @@
 import { MultiColumnGrid } from "@/components/dashboard/multi-column-grid";
 import { SortableModuleItem } from "@/components/dashboard/sortable-module-item";
 import { ModulesSidebar } from "@/components/layout/modules-sidebar";
-import { MarketingSections } from "@/components/marketing/marketing-sections";
+import {
+  CtaSection,
+} from "@/components/landing/cta-section";
 import { getModuleById } from "@/src/config/modules";
 import { useModuleContext } from "@/src/contexts/modules-context";
 import { useSession } from "@/src/lib/auth-client";
@@ -83,7 +85,7 @@ export default function DashboardPage() {
       <ModulesSidebar />
       <div className="flex flex-col w-full">
         <div
-          className={`flex-1 border w-full px-4 py-8 transition-all duration-300 ${
+          className={`flex-1  w-full px-4 py-8 transition-all duration-300 ${
             sidebarCollapsed
               ? "lg:pl-[calc(64px+1rem)]"
               : "lg:pl-[calc(256px+1rem)]"
@@ -107,7 +109,7 @@ export default function DashboardPage() {
           )}
         </div>
 
-        {/* Marketing sections only for visitors */}
+        {/* CTA section only for visitors */}
         {!session && (
           <div
             className={`${
@@ -116,7 +118,7 @@ export default function DashboardPage() {
                 : "lg:pl-[calc(256px+1rem)]"
             }`}
           >
-            <MarketingSections />
+            <CtaSection />
           </div>
         )}
       </div>

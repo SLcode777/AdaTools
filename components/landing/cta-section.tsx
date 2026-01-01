@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Github, Key, Palette, Pin, Sparkles } from "lucide-react";
+import { Key, Palette, Pin, Sparkles } from "lucide-react";
 import Link from "next/link";
 
-export function MarketingSections() {
+export function CtaSection() {
   return (
-    <div className="border-t">
+    <div className="">
       {/* CTA Section */}
       <div className="container mx-auto px-4">
         <div className="text-center py-12">
@@ -87,27 +87,6 @@ export function MarketingSections() {
           <Button asChild size="lg">
             <Link href="/signup">Create Account</Link>
           </Button>
-        </div>
-      </div>
-
-      {/* OpenSource Section */}
-      <div className="border-t">
-        <div className="container mx-auto px-4">
-          <div className="text-center py-12 items-center flex flex-col">
-            <h2 className="text-2xl font-bold mb-4">
-              Want to add your own modules?
-            </h2>
-            <p className="text-muted-foreground mb-2 text-pretty max-w-2xl flex justify-center">
-              AdaTools is an OpenSource project so we can build together the
-              most useful and customizable tool for devs!
-            </p>
-            <Link href="https://github.com/SLcode777/AdaTools">
-              <div className="flex flex-row gap-2 border border-primary p-2 mt-4 hover:cursor-pointer bg-primary/10 hover:bg-primary/20">
-                <Github />
-                <p>See the repository</p>
-              </div>
-            </Link>
-          </div>
         </div>
       </div>
     </div>
