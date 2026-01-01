@@ -1,9 +1,10 @@
 ---
 name: Feature Request
 about: Suggest a new feature or tool for AdaTools
-title: '[FEATURE] '
+title: "[FEATURE] "
 labels: enhancement
 assignees: ''
+
 ---
 
 ## Feature Description
@@ -26,5 +27,6 @@ Have you considered any alternative solutions or features?
 
 ## Would you like to implement this?
 - [ ] Yes, I'd like to work on this
+- [ ] Yes, I can but I don't mind if somebody else does
 - [ ] No, but I'd be happy to help test it
 - [ ] No, just suggesting
