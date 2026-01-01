@@ -1,0 +1,695 @@
+{
+  "project_type": "feature_addition",
+  "existing_project": "AdaTools",
+  "new_feature": "Image Resize Module",
+  "analyzed_patterns": {
+    "import_style": "Path alias @/ for root, relative imports for local",
+    "component_convention": "Function components with explicit interfaces",
+    "module_props": "isPinned, onTogglePin, isAuthenticated, onAuthRequired",
+    "indentation": "2 spaces",
+    "quotes": "Double quotes",
+    "semicolons": true,
+    "export_style": "Named exports"
+  },
+  "files_to_create": [
+    "src/lib/image-resize-utils.ts",
+    "src/lib/image-resize-presets.ts",
+    "components/modules/image-resize/resize-controls.tsx",
+    "components/modules/image-resize/preset-selector.tsx",
+    "components/modules/image-resize/image-preview.tsx",
+    "components/modules/image-resize/output-settings.tsx",
+    "components/modules/image-resize/batch-processor.tsx",
+    "components/modules/image-resize-module.tsx"
+  ],
+  "files_to_modify": [
+    "src/contexts/modules-context.tsx"
+  ],
+  "tests": [
+    {
+      "id": 1,
+      "description": "[Utilities] Create image-resize-utils.ts with resizeImage function using Canvas API",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Function takes image data and target dimensions",
+        "Uses Canvas API for client-side processing",
+        "Returns resized image as Blob/Base64",
+        "Handles aspect ratio preservation option"
+      ]
+    },
+    {
+      "id": 2,
+      "description": "[Utilities] Add loadImageFromFile function to read image files",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Uses FileReader API",
+        "Returns Promise with HTMLImageElement",
+        "Handles file validation",
+        "Returns original dimensions"
+      ]
+    },
+    {
+      "id": 3,
+      "description": "[Utilities] Add getImageDimensions function for dimension extraction",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Extracts width and height from image",
+        "Works with File or base64 input",
+        "Async function returning dimensions object"
+      ]
+    },
+    {
+      "id": 4,
+      "description": "[Utilities] Add calculateDimensions function with aspect ratio math",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Calculates new dimensions from percentage",
+        "Calculates constrained dimension when one is locked",
+        "Fits to max dimensions while preserving ratio"
+      ]
+    },
+    {
+      "id": 5,
+      "description": "[Utilities] Add convertToFormat function for PNG/JPEG/WebP output",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Converts canvas to PNG lossless",
+        "Converts to JPEG with quality parameter",
+        "Converts to WebP with quality parameter",
+        "Returns base64 data URL"
+      ]
+    },
+    {
+      "id": 6,
+      "description": "[Utilities] Add estimateFileSize function for size preview",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Estimates output size before full conversion",
+        "Uses sampling for quick estimation",
+        "Returns size in bytes"
+      ]
+    },
+    {
+      "id": 7,
+      "description": "[Utilities] Add rotateImage function for 90/180/270 degree rotation",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Rotates image by specified degrees",
+        "Uses Canvas transformation",
+        "Adjusts canvas size for 90/270 rotation"
+      ]
+    },
+    {
+      "id": 8,
+      "description": "[Utilities] Add flipImage function for horizontal/vertical flip",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-utils.ts"],
+      "acceptance_criteria": [
+        "Flips image horizontally",
+        "Flips image vertically",
+        "Uses Canvas scale transformation"
+      ]
+    },
+    {
+      "id": 9,
+      "description": "[Presets] Create image-resize-presets.ts with social media presets",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-presets.ts"],
+      "acceptance_criteria": [
+        "Instagram Post: 1080x1080",
+        "Instagram Story: 1080x1920",
+        "Facebook Post: 1200x630",
+        "Twitter/X Post: 1600x900",
+        "LinkedIn Post: 1200x627",
+        "YouTube Thumbnail: 1280x720"
+      ]
+    },
+    {
+      "id": 10,
+      "description": "[Presets] Add common size presets to presets file",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-presets.ts"],
+      "acceptance_criteria": [
+        "Thumbnail Small: 150x150",
+        "Thumbnail Medium: 300x300",
+        "HD: 1280x720",
+        "Full HD: 1920x1080",
+        "4K: 3840x2160",
+        "Icon: 64x64",
+        "Favicon: 32x32"
+      ]
+    },
+    {
+      "id": 11,
+      "description": "[Presets] Add custom preset save/load functions with localStorage",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-presets.ts"],
+      "acceptance_criteria": [
+        "saveCustomPreset function stores to localStorage",
+        "loadCustomPresets function retrieves from localStorage",
+        "deleteCustomPreset function removes from localStorage",
+        "Presets have name, width, height properties"
+      ]
+    },
+    {
+      "id": 12,
+      "description": "[Presets] Add TypeScript types for presets",
+      "category": "utilities",
+      "status": "pending",
+      "files": ["src/lib/image-resize-presets.ts"],
+      "acceptance_criteria": [
+        "ImagePreset interface defined",
+        "PresetCategory type defined",
+        "Presets organized by category"
+      ]
+    },
+    {
+      "id": 13,
+      "description": "[Component] Create resize-controls.tsx with dimension inputs",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/resize-controls.tsx"],
+      "acceptance_criteria": [
+        "Width input with px label",
+        "Height input with px label",
+        "Inputs are numeric only",
+        "Props for onChange callbacks"
+      ]
+    },
+    {
+      "id": 14,
+      "description": "[Component] Add aspect ratio lock toggle to resize-controls",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/resize-controls.tsx"],
+      "acceptance_criteria": [
+        "Lock/unlock toggle button with chain icon",
+        "When locked, changing one dimension updates the other",
+        "Visual indicator of lock state"
+      ]
+    },
+    {
+      "id": 15,
+      "description": "[Component] Add swap dimensions button to resize-controls",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/resize-controls.tsx"],
+      "acceptance_criteria": [
+        "Swap button between width/height inputs",
+        "Swaps width and height values",
+        "Uses ArrowDownUp or similar icon"
+      ]
+    },
+    {
+      "id": 16,
+      "description": "[Component] Add percentage mode to resize-controls",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/resize-controls.tsx"],
+      "acceptance_criteria": [
+        "Percentage dropdown/buttons: 25%, 50%, 75%, 100%, 125%, 150%, 200%",
+        "Shows calculated pixel dimensions",
+        "Updates when percentage changes"
+      ]
+    },
+    {
+      "id": 17,
+      "description": "[Component] Add mode tabs to resize-controls (Dimensions/Percentage/Presets)",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/resize-controls.tsx"],
+      "acceptance_criteria": [
+        "Tab navigation for modes",
+        "Uses shadcn Tabs component",
+        "Shows appropriate controls per mode"
+      ]
+    },
+    {
+      "id": 18,
+      "description": "[Component] Create preset-selector.tsx with preset grid",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/preset-selector.tsx"],
+      "acceptance_criteria": [
+        "Grid layout of preset buttons",
+        "Shows preset name and dimensions",
+        "Grouped by category (Social Media, Common)"
+      ]
+    },
+    {
+      "id": 19,
+      "description": "[Component] Add custom preset management to preset-selector",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/preset-selector.tsx"],
+      "acceptance_criteria": [
+        "Button to save current dimensions as preset",
+        "Input for preset name",
+        "List of custom presets with delete option"
+      ]
+    },
+    {
+      "id": 20,
+      "description": "[Component] Add preset visual indicators to preset-selector",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/preset-selector.tsx"],
+      "acceptance_criteria": [
+        "Aspect ratio visual preview (small rectangle)",
+        "Selected preset highlighted",
+        "Clear visual distinction between categories"
+      ]
+    },
+    {
+      "id": 21,
+      "description": "[Component] Create image-preview.tsx with canvas display",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/image-preview.tsx"],
+      "acceptance_criteria": [
+        "Canvas element showing resized image",
+        "Responsive container that fits available space",
+        "Centered image within container"
+      ]
+    },
+    {
+      "id": 22,
+      "description": "[Component] Add zoom controls to image-preview",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/image-preview.tsx"],
+      "acceptance_criteria": [
+        "Zoom in button (magnifier plus)",
+        "Zoom out button (magnifier minus)",
+        "Fit to view button",
+        "Zoom level display (percentage)"
+      ]
+    },
+    {
+      "id": 23,
+      "description": "[Component] Add before/after comparison to image-preview",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/image-preview.tsx"],
+      "acceptance_criteria": [
+        "Toggle between original and resized",
+        "Or slider comparison mode",
+        "Shows dimension labels for both"
+      ]
+    },
+    {
+      "id": 24,
+      "description": "[Component] Add dimension info display to image-preview",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/image-preview.tsx"],
+      "acceptance_criteria": [
+        "Shows original dimensions",
+        "Shows new dimensions",
+        "Shows file size comparison"
+      ]
+    },
+    {
+      "id": 25,
+      "description": "[Component] Create output-settings.tsx with format selector",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "PNG/JPEG/WebP toggle buttons",
+        "Uses Button component with variant toggle",
+        "Shows format description"
+      ]
+    },
+    {
+      "id": 26,
+      "description": "[Component] Add quality slider to output-settings",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "Slider 1-100 for JPEG/WebP",
+        "Disabled for PNG",
+        "Shows current quality value",
+        "Uses shadcn Slider component"
+      ]
+    },
+    {
+      "id": 27,
+      "description": "[Component] Add estimated file size display to output-settings",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "Shows estimated output size in KB/MB",
+        "Updates when quality changes",
+        "Shows comparison with original"
+      ]
+    },
+    {
+      "id": 28,
+      "description": "[Component] Add download button to output-settings",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "Primary action button",
+        "Downloads resized image",
+        "Uses appropriate file extension",
+        "Uses Download icon from lucide"
+      ]
+    },
+    {
+      "id": 29,
+      "description": "[Component] Add copy to clipboard button to output-settings",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "Clipboard button with Copy icon",
+        "Copies image to clipboard",
+        "Shows 'Copied!' feedback"
+      ]
+    },
+    {
+      "id": 30,
+      "description": "[Component] Add reset button to output-settings",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/output-settings.tsx"],
+      "acceptance_criteria": [
+        "Reset button clears current image",
+        "Returns to upload state",
+        "Uses RefreshCw or similar icon"
+      ]
+    },
+    {
+      "id": 31,
+      "description": "[Component] Create batch-processor.tsx with multi-file list",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/batch-processor.tsx"],
+      "acceptance_criteria": [
+        "List of uploaded files with thumbnails",
+        "File name and size display",
+        "Individual remove button per file",
+        "Clear all button"
+      ]
+    },
+    {
+      "id": 32,
+      "description": "[Component] Add batch progress indicator to batch-processor",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/batch-processor.tsx"],
+      "acceptance_criteria": [
+        "Shows processing progress (X of Y)",
+        "Visual progress bar",
+        "Current file being processed"
+      ]
+    },
+    {
+      "id": 33,
+      "description": "[Component] Add download all as ZIP to batch-processor",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/batch-processor.tsx"],
+      "acceptance_criteria": [
+        "Button to download all as ZIP",
+        "Uses client-side ZIP generation",
+        "Progress indicator for ZIP creation"
+      ]
+    },
+    {
+      "id": 34,
+      "description": "[Component] Add individual download buttons to batch-processor",
+      "category": "components",
+      "status": "pending",
+      "files": ["components/modules/image-resize/batch-processor.tsx"],
+      "acceptance_criteria": [
+        "Download button per processed image",
+        "Shows before/after file sizes",
+        "Filename with extension"
+      ]
+    },
+    {
+      "id": 35,
+      "description": "[Main Module] Create image-resize-module.tsx with Module wrapper",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Uses Module component wrapper",
+        "ImageResizeModuleProps interface matches pattern",
+        "Title: 'Image Resize'",
+        "Description: 'Resize images with presets and custom dimensions'",
+        "Icon from lucide-react"
+      ]
+    },
+    {
+      "id": 36,
+      "description": "[Main Module] Add drag-and-drop upload zone",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Dashed border drop zone",
+        "Click to upload functionality",
+        "onDrop handler",
+        "onDragOver prevention",
+        "Hidden file input with ref"
+      ]
+    },
+    {
+      "id": 37,
+      "description": "[Main Module] Add paste from clipboard support",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Paste event listener",
+        "Extracts image from clipboard",
+        "Works with Ctrl+V/Cmd+V"
+      ]
+    },
+    {
+      "id": 38,
+      "description": "[Main Module] Integrate all sub-components",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Imports and renders ResizeControls",
+        "Imports and renders PresetSelector",
+        "Imports and renders ImagePreview",
+        "Imports and renders OutputSettings",
+        "Conditional rendering based on upload state"
+      ]
+    },
+    {
+      "id": 39,
+      "description": "[Main Module] Add state management for resize options",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "useState for image file",
+        "useState for dimensions (width, height)",
+        "useState for output format",
+        "useState for quality",
+        "useState for aspect ratio lock",
+        "useState for processed result"
+      ]
+    },
+    {
+      "id": 40,
+      "description": "[Main Module] Add real-time preview updates with debouncing",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Preview updates when dimensions change",
+        "Debounced to prevent excessive processing",
+        "Uses requestAnimationFrame for smooth updates"
+      ]
+    },
+    {
+      "id": 41,
+      "description": "[Main Module] Add rotation and flip controls",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Rotate 90° button",
+        "Flip horizontal button",
+        "Flip vertical button",
+        "Updates preview after transformation"
+      ]
+    },
+    {
+      "id": 42,
+      "description": "[Main Module] Add batch mode toggle",
+      "category": "main_module",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Toggle between single/batch mode",
+        "Shows BatchProcessor when in batch mode",
+        "Allows multi-file upload in batch mode"
+      ]
+    },
+    {
+      "id": 43,
+      "description": "[Integration] Add ImageResizeModule to modules-context.tsx",
+      "category": "integration",
+      "status": "pending",
+      "files": ["src/contexts/modules-context.tsx"],
+      "acceptance_criteria": [
+        "Import ImageResizeModule component",
+        "Add to tempOpenModules if needed",
+        "Follow exact pattern of existing module registrations"
+      ]
+    },
+    {
+      "id": 44,
+      "description": "[Integration] Verify module appears in dashboard",
+      "category": "integration",
+      "status": "pending",
+      "files": [],
+      "acceptance_criteria": [
+        "Module card visible in dashboard",
+        "Correct title and description",
+        "Icon displays properly",
+        "Pin button works"
+      ]
+    },
+    {
+      "id": 45,
+      "description": "[Integration] Verify pinning functionality works",
+      "category": "integration",
+      "status": "pending",
+      "files": [],
+      "acceptance_criteria": [
+        "Click pin button saves preference",
+        "Module persists across page refresh when pinned",
+        "Auth required modal shows for non-authenticated users"
+      ]
+    },
+    {
+      "id": 46,
+      "description": "[Integration] Verify theme colors apply correctly",
+      "category": "integration",
+      "status": "pending",
+      "files": [],
+      "acceptance_criteria": [
+        "Uses primary color from theme",
+        "Works in light mode",
+        "Works in dark mode",
+        "Matches other module styling"
+      ]
+    },
+    {
+      "id": 47,
+      "description": "[Edge Case] Handle large image files gracefully",
+      "category": "edge_cases",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Shows loading state for large files",
+        "Doesn't freeze browser",
+        "Handles memory efficiently",
+        "Shows warning for very large files"
+      ]
+    },
+    {
+      "id": 48,
+      "description": "[Edge Case] Handle invalid file types",
+      "category": "edge_cases",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Only accepts image files",
+        "Shows error for non-image files",
+        "File input has accept attribute"
+      ]
+    },
+    {
+      "id": 49,
+      "description": "[Edge Case] Handle empty state properly",
+      "category": "edge_cases",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Upload zone visible when no image",
+        "Controls hidden when no image",
+        "Clear messaging for user"
+      ]
+    },
+    {
+      "id": 50,
+      "description": "[Edge Case] Handle error states gracefully",
+      "category": "edge_cases",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Shows error message on failure",
+        "Allows retry after error",
+        "Doesn't crash on corrupted files"
+      ]
+    },
+    {
+      "id": 51,
+      "description": "[Responsive] Test responsive design on mobile",
+      "category": "responsive",
+      "status": "pending",
+      "files": [],
+      "acceptance_criteria": [
+        "Layout stacks vertically on mobile",
+        "Controls are touch-friendly",
+        "Preview is visible and scrollable",
+        "All functionality works on touch devices"
+      ]
+    },
+    {
+      "id": 52,
+      "description": "[Performance] Implement memory cleanup for large images",
+      "category": "performance",
+      "status": "pending",
+      "files": ["components/modules/image-resize-module.tsx"],
+      "acceptance_criteria": [
+        "Revoke object URLs when done",
+        "Clear canvas when switching images",
+        "Use useEffect cleanup functions"
+      ]
+    }
+  ],
+  "summary": {
+    "total_tests": 52,
+    "categories": {
+      "utilities": 12,
+      "components": 22,
+      "main_module": 8,
+      "integration": 4,
+      "edge_cases": 4,
+      "responsive": 1,
+      "performance": 1
+    }
+  }
+}
