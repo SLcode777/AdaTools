@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "Viktor": {
+      "type": "http",
+      "url": "https://api.viktor.tools/mcp",
+      "headers": {
+        "x-app-id": "i4vpznik961gjm16e90gict3",
+        "x-app-secret": "6f65691a383cdeb99100e9982d5b30ee0aa4c90423447f2936f416a8cdb2796d",
+        "Accept": "application/json, text/event-stream"
+      }
+    }
+  }
+}

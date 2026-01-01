@@ -7,11 +7,13 @@ import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module"
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
 import { SnippetManagerModule } from "@/components/modules/snippet-manager-module";
 import { StickyNoteModule } from "@/components/modules/stickynote-module";
+import { TextStatsModule } from "@/components/modules/text-stats-module";
 import { TranslationModule } from "@/components/modules/translation-module";
 import { UuidModule } from "@/components/modules/uuid-module";
 import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
 import {
+  BarChart3,
   BookType,
   Clock,
   Code2,
@@ -158,6 +160,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Use this space as a stick note !",
     icon: <StickyNote className="h-5 w-5" />,
     component: StickyNoteModule,
+    category: "Productivity",
+    requiresAuth: false,
+  },
+  {
+    id: "text-stats",
+    name: "Text Statistics",
+    description: "Real-time text analysis and statistics",
+    icon: <BarChart3 className="h-5 w-5" />,
+    component: TextStatsModule,
     category: "Productivity",
     requiresAuth: false,
   },
