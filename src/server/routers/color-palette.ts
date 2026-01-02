@@ -1,6 +1,6 @@
 import { db } from "@/src/lib/db";
 import type { ColorEntry } from "@/src/types/color-palette";
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/prisma/generated/prisma/client";
 import chroma from "chroma-js";
 import { Vibrant } from "node-vibrant/node";
 import { z } from "zod";
