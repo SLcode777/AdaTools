@@ -2,6 +2,7 @@ import { Base64Module } from "@/components/modules/base64-module";
 import { ColorConverterModule } from "@/components/modules/color-converter-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
+import { ImageResizeModule } from "@/components/modules/image-resize-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
@@ -19,6 +20,7 @@ import {
   Code2,
   FileText,
   Globe,
+  ImageIcon,
   Images,
   KeyRound,
   Palette,
@@ -88,6 +90,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Convert a jpg/png image to webp format",
     icon: <Images className="h-5 w-5" />,
     component: WebpConverterModule,
+    category: "Image processing",
+    requiresAuth: false,
+  },
+  {
+    id: "image-resize",
+    name: "Image Resize",
+    description: "Resize images with presets and custom dimensions",
+    icon: <ImageIcon className="h-5 w-5" />,
+    component: ImageResizeModule,
     category: "Image processing",
     requiresAuth: false,
   },
