@@ -210,3 +210,16 @@ model StickyNote {
   @@index([userId])
   @@map("sticky_note")
 }
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  eventType String
+  userId    String?  // Optional: track user ID if authenticated
+  metadata  Json?    // Optional: store additional data (module name, video ID, etc.)
+  createdAt DateTime @default(now())
+
+  @@index([eventType])
+  @@index([createdAt])
+  @@index([userId])
+  @@map("analytics_event")
+}

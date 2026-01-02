@@ -157,6 +157,8 @@ export function YouTubeEmbedModule({
     },
   });
 
+  const trackEventMutation = api.analytics.trackEvent.useMutation();
+
   //handlers
   const handleOpenDialog = (videoId?: string) => {
     if (!isAuthenticated) {
@@ -256,6 +258,23 @@ export function YouTubeEmbedModule({
   const handlePlayVideo = (index: number) => {
     setCurrentVideoIndex(index);
     setHasUserInteracted(true);
+
+    // Check if this is the Rickroll video
+    const video = displayVideos?.[index];
+    if (video?.videoId === "dQw4w9WgXcQ") {
+      toast.success("🎵 You have been Rickrolled! 🎵", {
+        duration: 5000,
+      });
+
+      // Track the rickroll event
+      trackEventMutation.mutate({
+        eventType: "rickroll",
+        metadata: {
+          videoTitle: video.title,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    }
   };
 
   //get current video to display

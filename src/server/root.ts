@@ -1,3 +1,4 @@
+import { analyticsRouter } from "./routers/analytics";
 import { colorPaletteRouter } from "./routers/color-palette";
 import { domainNamesRouter } from "./routers/domain-names";
 import { moduleRouter } from "./routers/module";
@@ -13,6 +14,7 @@ import { createTRPCRouter } from "./trpc";
 
 export const appRouter = createTRPCRouter({
   test: testRouter,
+  analytics: analyticsRouter,
   module: moduleRouter,
   pomodoro: pomodoroRouter,
   removeBg: removebgRouter,

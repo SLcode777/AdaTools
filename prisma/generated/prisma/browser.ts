@@ -72,3 +72,8 @@ export type PomodoroSettings = Prisma.PomodoroSettingsModel
  * 
  */
 export type StickyNote = Prisma.StickyNoteModel
+/**
+ * Model AnalyticsEvent
+ * 
+ */
+export type AnalyticsEvent = Prisma.AnalyticsEventModel

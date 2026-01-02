@@ -61,7 +61,8 @@ export const ModelName = {
   Snippet: 'Snippet',
   YouTubeVideo: 'YouTubeVideo',
   PomodoroSettings: 'PomodoroSettings',
-  StickyNote: 'StickyNote'
+  StickyNote: 'StickyNote',
+  AnalyticsEvent: 'AnalyticsEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -247,6 +248,17 @@ export const StickyNoteScalarFieldEnum = {
 } as const
 
 export type StickyNoteScalarFieldEnum = (typeof StickyNoteScalarFieldEnum)[keyof typeof StickyNoteScalarFieldEnum]
+
+
+export const AnalyticsEventScalarFieldEnum = {
+  id: 'id',
+  eventType: 'eventType',
+  userId: 'userId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type AnalyticsEventScalarFieldEnum = (typeof AnalyticsEventScalarFieldEnum)[keyof typeof AnalyticsEventScalarFieldEnum]
 
 
 export const SortOrder = {
