@@ -95,6 +95,11 @@ export type PomodoroSettings = Prisma.PomodoroSettingsModel
  */
 export type StickyNote = Prisma.StickyNoteModel
 /**
+ * Model Bookmark
+ * 
+ */
+export type Bookmark = Prisma.BookmarkModel
+/**
  * Model AnalyticsEvent
  * 
  */
