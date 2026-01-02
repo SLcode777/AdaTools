@@ -2,7 +2,7 @@
 
 import chroma from "chroma-js";
 import { Copy, Palette, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Module } from "../dashboard/module";
 import { Button } from "../ui/button";
@@ -312,14 +312,53 @@ export function ColorConverterModule({
   onTogglePin,
   isAuthenticated = true,
 }: ColorConverterModuleProps) {
-  const [currentColor, setCurrentColor] = useState(chroma("#85CC23"));
-  const [hexInput, setHexInput] = useState("#85CC23");
-  const [rgbInput, setRgbInput] = useState("rgb(133, 204, 35)");
-  const [hslInput, setHslInput] = useState("hsl(85, 71%, 47%)");
-  const [hwbInput, setHwbInput] = useState("hwb(85 14% 20%)");
-  const [lchInput, setLchInput] = useState("lch(75.01% 82.93 123.70)");
-  const [cmykInput, setCmykInput] = useState("device-cmyk(35% 0% 83% 20%)");
-  const [tailwindInput, setTailwindInput] = useState("lime-800");
+  // Get initial color from CSS variable or fallback to default
+  const getInitialColor = () => {
+    if (typeof window === 'undefined') return chroma("#85CC23");
+
+    try {
+      const primaryColor = getComputedStyle(
+        document.documentElement
+      ).getPropertyValue("--primary");
+      if (primaryColor) {
+        return chroma(primaryColor.trim());
+      }
+    } catch (error) {
+      console.log("Could not parse primary color, using default");
+    }
+    return chroma("#85CC23");
+  };
+
+  const [currentColor, setCurrentColor] = useState(getInitialColor);
+
+  // Initialize all input fields based on the initial color
+  const initColor = getInitialColor();
+  const [r, g, b] = initColor.rgb();
+  const [h, s, l] = initColor.hsl();
+  const rgb2 = initColor.rgb();
+  const max = Math.max(...rgb2);
+  const min = Math.min(...rgb2);
+  const whiteness = (min / 255) * 100;
+  const blackness = (1 - max / 255) * 100;
+  const hue = initColor.hsl()[0] || 0;
+  const [lchL, lchC, lchH] = initColor.lch();
+  const rgbForCmyk = initColor.rgb();
+  const rCmyk = rgbForCmyk[0] / 255;
+  const gCmyk = rgbForCmyk[1] / 255;
+  const bCmyk = rgbForCmyk[2] / 255;
+  const k = 1 - Math.max(rCmyk, gCmyk, bCmyk);
+  const c = (1 - rCmyk - k) / (1 - k) || 0;
+  const m = (1 - gCmyk - k) / (1 - k) || 0;
+  const y = (1 - bCmyk - k) / (1 - k) || 0;
+  const nearestTailwind = findNearestTailwindColor(initColor);
+
+  const [hexInput, setHexInput] = useState(initColor.hex());
+  const [rgbInput, setRgbInput] = useState(`rgb(${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)})`);
+  const [hslInput, setHslInput] = useState(`hsl(${Math.round(h || 0)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`);
+  const [hwbInput, setHwbInput] = useState(`hwb(${Math.round(hue)} ${Math.round(whiteness)}% ${Math.round(blackness)}%)`);
+  const [lchInput, setLchInput] = useState(`lch(${lchL.toFixed(2)}% ${lchC.toFixed(2)} ${lchH.toFixed(2)})`);
+  const [cmykInput, setCmykInput] = useState(`device-cmyk(${Math.round(c * 100)}% ${Math.round(m * 100)}% ${Math.round(y * 100)}% ${Math.round(k * 100)}%)`);
+  const [tailwindInput, setTailwindInput] = useState(nearestTailwind);
 
   // Error states
   const [hexError, setHexError] = useState("");
@@ -588,23 +627,6 @@ export function ColorConverterModule({
     e.target.select();
   };
 
-  // Get primary color from theme on mount
-  useEffect(() => {
-    try {
-      const primaryColor = getComputedStyle(
-        document.documentElement
-      ).getPropertyValue("--primary");
-      if (primaryColor) {
-        // CSS variables can be in different formats (hsl, rgb, etc.)
-        // Try to parse it with chroma
-        const color = chroma(primaryColor.trim());
-        updateAllInputs(color);
-      }
-    } catch (error) {
-      // Fallback to default color if parsing fails
-      console.log("Could not parse primary color, using default");
-    }
-  }, []);
 
   return (
     <Module

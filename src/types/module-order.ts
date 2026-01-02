@@ -106,15 +106,15 @@ export function getLayoutForColumnCount(
   layouts: ModuleLayouts,
   columnCount: ColumnCount
 ): ModuleOrder {
-  const layout = layouts[columnCount];
+  const layout = layouts[columnCount] as Partial<ModuleOrder>;
 
   // Extend layout to full ModuleOrder structure
   return {
     col1: layout.col1 || [],
-    col2: (layout as any).col2 || [],
-    col3: (layout as any).col3 || [],
-    col4: (layout as any).col4 || [],
-    col5: (layout as any).col5 || [],
+    col2: layout.col2 || [],
+    col3: layout.col3 || [],
+    col4: layout.col4 || [],
+    col5: layout.col5 || [],
   };
 }
 

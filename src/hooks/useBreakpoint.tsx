@@ -12,22 +12,20 @@ import { useEffect, useState } from "react";
  * - >= 2400px (4xl/extreme): 5 columns
  */
 export function useBreakpoint(): number {
-  const [columnCount, setColumnCount] = useState(3); // Default to 3 columns
+  const getColumnCount = () => {
+    if (typeof window === "undefined") return 3; //SSR default
+    const width = window.innerWidth;
+
+    if (width < 768) return 1; //mobile
+    if (width < 1280) return 2; //tablet
+    if (width < 1920) return 3; //desktop
+    if (width < 2400) return 4; //ultra-wide
+    return 5; // extreme
+  };
+
+  const [columnCount, setColumnCount] = useState(getColumnCount);
 
   useEffect(() => {
-    const getColumnCount = () => {
-      const width = window.innerWidth;
-
-      if (width < 768) return 1; // mobile
-      if (width < 1024) return 2; // tablet
-      if (width < 1920) return 3; // desktop
-      if (width < 2400) return 4; // ultra-wide
-      return 5; // extreme
-    };
-
-    // Set initial value
-    setColumnCount(getColumnCount());
-
     // Update on resize
     const handleResize = () => {
       setColumnCount(getColumnCount());

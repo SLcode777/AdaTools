@@ -2,28 +2,9 @@
 
 import { useColorTheme } from "@/src/contexts/color-theme-context";
 import { cn } from "@/src/lib/utils";
-import { useEffect, useState } from "react";
 
 export function ColorThemeSwitcher() {
   const { colorTheme, setColorTheme, availableThemes } = useColorTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="flex gap-2 p-2">
-        {availableThemes.map((theme) => (
-          <div
-            key={theme.id}
-            className="size-8 rounded-full border-2 border-border bg-muted animate-pulse"
-          />
-        ))}
-      </div>
-    );
-  }
 
   return (
     <div className="flex gap-2 p-2">

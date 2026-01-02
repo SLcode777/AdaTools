@@ -63,6 +63,7 @@ export function usePomodoro({
 
   // Update session when settings change (only if idle)
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSession((prev) => {
       // Only update if timer is idle to avoid disrupting active sessions
       if (prev.state === "idle") {
@@ -246,7 +247,9 @@ export function usePomodoro({
   }, [handleTimerComplete]);
 
   // Store tick in ref to avoid forward reference
-  tickRef.current = tick;
+  useEffect(() => {
+    tickRef.current = tick;
+  }, [tick]);
 
   const start = useCallback(() => {
     if (session.state === "idle") {
@@ -337,6 +340,7 @@ export function usePomodoro({
         (session.state === "work" && settings.autoStartPomodoros) ||
         (session.state === "break" && settings.autoStartBreaks)
       ) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         start();
       }
     }

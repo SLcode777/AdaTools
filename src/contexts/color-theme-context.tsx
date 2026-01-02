@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 interface ThemeOption {
   id: string;
@@ -36,6 +42,7 @@ export function ColorThemeProvider({ children }: { children: ReactNode }) {
 
   // Hydration
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
     const saved = localStorage.getItem("color-theme");
     if (saved && availableThemes.find((t) => t.id === saved)) {

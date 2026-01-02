@@ -49,7 +49,7 @@ import {
   Trash2,
   Upload,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Module } from "../dashboard/module";
 
@@ -118,7 +118,10 @@ export function ColorPaletteModule({
   );
 
   // Ignore le cache pour les visiteurs - afficher des tableaux vides
-  const displayPalettes = !isAuthenticated ? [] : palettes;
+  const displayPalettes = useMemo(
+    () => (!isAuthenticated ? [] : palettes),
+    [isAuthenticated, palettes]
+  );
 
   // Mutations
   const createMutation = api.colorPalette.create.useMutation({
@@ -198,19 +201,28 @@ export function ColorPaletteModule({
   });
 
   // Load last selected palette from localStorage
+  const hasInitializedRef = useRef(false);
+
   useEffect(() => {
-    if (displayPalettes && displayPalettes.length > 0 && !selectedPaletteId) {
+    if (
+      displayPalettes &&
+      displayPalettes.length > 0 &&
+      !hasInitializedRef.current
+    ) {
+      hasInitializedRef.current = true;
       const lastSelected = localStorage.getItem("color-palette-last-selected");
 
       // Check if the last selected palette still exists
       if (lastSelected && displayPalettes.some((p) => p.id === lastSelected)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setSelectedPaletteId(lastSelected);
       } else {
         // Otherwise select the first palette
+
         setSelectedPaletteId(displayPalettes[0].id);
       }
     }
-  }, [displayPalettes, selectedPaletteId]);
+  }, [displayPalettes]);
 
   // Save selected palette to localStorage whenever it changes
   useEffect(() => {
@@ -222,7 +234,9 @@ export function ColorPaletteModule({
   // Initialize edit mode when switching
   useEffect(() => {
     if (activeTab === "edit" && selectedPalette && !isCreatingNew) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setEditingColors([...selectedPalette.colors]);
+
       setEditingName(selectedPalette.name);
     }
   }, [activeTab, selectedPalette, isCreatingNew]);
@@ -235,6 +249,8 @@ export function ColorPaletteModule({
         exportFormat,
         selectedPalette.name
       );
+
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setExportContent(content);
     }
   }, [selectedPalette, exportFormat, exportDialogOpen]);

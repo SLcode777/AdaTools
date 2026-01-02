@@ -51,7 +51,7 @@ export function ModulesProvider({
   session,
 }: {
   children: ReactNode;
-  session: any;
+  session: unknown;
 }) {
   const isAuthenticated = !!session;
 
@@ -101,14 +101,20 @@ export function ModulesProvider({
   const prevIsAuthenticated = useRef(isAuthenticated);
 
   useEffect(() => {
+    // Skip on initial mount
+    if (prevIsAuthenticated.current === isAuthenticated) return;
+
     //visitor → authenticated : empty tempOpenModules
     if (!prevIsAuthenticated.current && isAuthenticated) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTempOpenModules([]);
-
-      //authenticated → visitor : set back default modules
-    } else if (prevIsAuthenticated.current && !isAuthenticated) {
+    }
+    //authenticated → visitor : set back default modules
+    else if (prevIsAuthenticated.current && !isAuthenticated) {
+       
       setTempOpenModules(["youtube-embed", "webpConverter", "lorem-ipsum"]);
     }
+
     prevIsAuthenticated.current = isAuthenticated;
   }, [isAuthenticated]);
 

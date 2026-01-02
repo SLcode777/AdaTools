@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Moon, Settings, Sun, SwatchBook } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface SettingsDialogProps {
   children: React.ReactNode;
@@ -76,30 +76,6 @@ export function SettingsDialog({ children }: SettingsDialogProps) {
 
 function ThemeModeToggle() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return (
-      <div className="flex gap-2">
-        <Button variant="outline" className="flex-1 h-20" disabled>
-          <div className="flex flex-col items-center gap-2">
-            <Sun className="h-5 w-5" />
-            <span className="text-sm">Light</span>
-          </div>
-        </Button>
-        <Button variant="outline" className="flex-1 h-20" disabled>
-          <div className="flex flex-col items-center gap-2">
-            <Moon className="h-5 w-5" />
-            <span className="text-sm">Dark</span>
-          </div>
-        </Button>
-      </div>
-    );
-  }
 
   return (
     <div className="flex gap-2">

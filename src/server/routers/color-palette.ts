@@ -1,5 +1,6 @@
 import { db } from "@/src/lib/db";
 import type { ColorEntry } from "@/src/types/color-palette";
+import type { Prisma } from "@prisma/client";
 import chroma from "chroma-js";
 import { Vibrant } from "node-vibrant/node";
 import { z } from "zod";
@@ -68,7 +69,7 @@ export const colorPaletteRouter = createTRPCRouter({
         data: {
           userId,
           name: input.name,
-          colors: input.colors as any,
+          colors: input.colors as Prisma.InputJsonValue,
           isDefault: existingCount === 0,
         },
       });
@@ -104,7 +105,9 @@ export const colorPaletteRouter = createTRPCRouter({
         where: { id },
         data: {
           ...updateData,
-          colors: updateData.colors as any,
+          ...(updateData.colors && {
+            colors: updateData.colors as Prisma.InputJsonValue,
+          }),
         },
       });
 
@@ -195,8 +198,7 @@ export const colorPaletteRouter = createTRPCRouter({
     .mutation(async ({ input }) => {
       try {
         // Extract base64 data
-        const base64Data =
-          input.imageBase64.split(",")[1] || input.imageBase64;
+        const base64Data = input.imageBase64.split(",")[1] || input.imageBase64;
         const buffer = Buffer.from(base64Data, "base64");
 
         // Extract colors using Vibrant
@@ -255,9 +257,11 @@ export const colorPaletteRouter = createTRPCRouter({
         const hexPattern = /#([0-9A-F]{6}|[0-9A-F]{3})\b/gi;
         const rgbPattern = /rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)/gi;
         const hslPattern = /hsl\(\s*(\d+)\s*,\s*(\d+)%\s*,\s*(\d+)%\s*\)/gi;
-        const oklchPattern = /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*[\d.%]+)?\s*\)/gi;
+        const oklchPattern =
+          /oklch\(\s*([\d.]+)\s+([\d.]+)\s+([\d.]+)(?:\s*\/\s*[\d.%]+)?\s*\)/gi;
         // Tailwind/shadcn format: --name: h s% l% (space-separated HSL)
-        const hslSpacedPattern = /--([a-z0-9-]+):\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%/gi;
+        const hslSpacedPattern =
+          /--([a-z0-9-]+):\s*([\d.]+)\s+([\d.]+)%\s+([\d.]+)%/gi;
         const varPattern =
           /--([a-z0-9-]+):\s*(#[0-9A-F]{6}|rgb\([^)]+\)|hsl\([^)]+\)|oklch\([^)]+\))/gi;
 
@@ -276,7 +280,11 @@ export const colorPaletteRouter = createTRPCRouter({
             hexToVarName.set(hex, varName);
             uniqueColors.add(hex);
           } catch (error) {
-            console.warn('Failed to parse spaced HSL variable:', varName, error);
+            console.warn(
+              "Failed to parse spaced HSL variable:",
+              varName,
+              error
+            );
           }
         }
 
@@ -288,7 +296,12 @@ export const colorPaletteRouter = createTRPCRouter({
             const hex = chroma(colorValue).hex().toUpperCase();
             hexToVarName.set(hex, varName);
           } catch (error) {
-            console.warn('Failed to parse CSS variable color:', varName, colorValue);
+            console.warn(
+              "Failed to parse CSS variable color:",
+              varName,
+              colorValue,
+              error
+            );
           }
         }
 
@@ -297,8 +310,7 @@ export const colorPaletteRouter = createTRPCRouter({
           let hex = matchStr.toUpperCase();
           // Convert 3-digit hex to 6-digit
           if (hex.length === 4) {
-            hex =
-              "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+            hex = "#" + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
           }
           if (!uniqueColors.has(hex)) {
             uniqueColors.add(hex);
@@ -340,7 +352,7 @@ export const colorPaletteRouter = createTRPCRouter({
               uniqueColors.add(hex);
             }
           } catch (error) {
-            console.warn('Failed to parse OKLCH color:', matchStr, error);
+            console.warn("Failed to parse OKLCH color:", matchStr, error);
           }
           return matchStr;
         });
@@ -396,11 +408,15 @@ export const colorPaletteRouter = createTRPCRouter({
 
         // HSL
         const [h, s, l] = color.hsl();
-        const hsl = `hsl(${Math.round(h || 0)}deg, ${Math.round((s || 0) * 100)}%, ${Math.round(l * 100)}%)`;
+        const hsl = `hsl(${Math.round(h || 0)}deg, ${Math.round(
+          (s || 0) * 100
+        )}%, ${Math.round(l * 100)}%)`;
 
         // OKLCH
         const [lOk, c, hOk] = color.oklch();
-        const oklch = `oklch(${lOk.toFixed(2)} ${c.toFixed(3)} ${(hOk || 0).toFixed(1)})`;
+        const oklch = `oklch(${lOk.toFixed(2)} ${c.toFixed(3)} ${(
+          hOk || 0
+        ).toFixed(1)})`;
 
         // CSS variable name (kebab-case)
         const cssVarName = input.name.toLowerCase().replace(/\s+/g, "-");

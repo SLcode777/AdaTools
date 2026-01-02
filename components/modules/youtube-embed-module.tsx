@@ -57,6 +57,8 @@ export function YouTubeEmbedModule({
     title: "",
   });
 
+  const [urlError, setUrlError] = useState<string>("");
+
   //default videos for non-authenticated users
   const DEFAULT_VIDEOS = [
     {
@@ -93,9 +95,19 @@ export function YouTubeEmbedModule({
       createdAt: new Date(),
       updatedAt: new Date(),
     },
+    {
+      id: "default-4",
+      title: "⚡⚡ ULTIMATE FOCUS PLAYLIST ⚡⚡",
+      url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      videoId: "dQw4w9WgXcQ",
+      playlistId: null,
+      isPlaylist: false,
+      userId: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ];
 
-  
   const { data: videos, isLoading } = api.youtubeVideos.getAll.useQuery(
     undefined,
     {
@@ -177,6 +189,28 @@ export function YouTubeEmbedModule({
       url: "",
       title: "",
     });
+    setUrlError("");
+  };
+
+  const validateUrl = (url: string) => {
+    if (!url.trim()) {
+      setUrlError("");
+      return false;
+    }
+
+    try {
+      new URL(url);
+      setUrlError("");
+      return true;
+    } catch {
+      setUrlError("Invalid URL format");
+      return false;
+    }
+  };
+
+  const handleUrlChange = (url: string) => {
+    setFormData({ ...formData, url });
+    validateUrl(url);
   };
 
   const handleSubmit = () => {
@@ -184,6 +218,11 @@ export function YouTubeEmbedModule({
       toast.error("URL is required");
       return;
     }
+
+    if (urlError || !validateUrl(formData.url)) {
+      return;
+    }
+
     if (!formData.title.trim()) {
       toast.error("Title is required");
       return;
@@ -386,11 +425,13 @@ export function YouTubeEmbedModule({
                 <Input
                   id="url"
                   value={formData.url}
-                  onChange={(e) =>
-                    setFormData({ ...formData, url: e.target.value })
-                  }
+                  onChange={(e) => handleUrlChange(e.target.value)}
                   placeholder="https://www.youtube.com/watch?v=..."
+                  className={urlError ? "border-destructive" : ""}
                 />
+                {urlError && (
+                  <p className="text-sm text-destructive">{urlError}</p>
+                )}
               </div>
 
               <div className="space-y-2">

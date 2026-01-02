@@ -56,14 +56,16 @@ function extractYouTubeInfo(url: string): {
 
 const youtubeVideoSchema = z.object({
   url: z
-    .string()
-    .url("Invalid URL format")
-    .refine((url) => {
-      const info = extractYouTubeInfo(url);
-      return info.videoId !== null || info.isPlaylist;
-    }, {
-      message: "Invalid YouTube URL",
-    }),
+    .url({ error: "Invalid URL format" })
+    .refine(
+      (url) => {
+        const info = extractYouTubeInfo(url);
+        return info.videoId !== null || info.isPlaylist;
+      },
+      {
+        message: "Invalid YouTube URL",
+      }
+    ),
   title: z.string().min(1, "Title is required").max(200),
 });
 
@@ -133,7 +135,13 @@ export const youtubeVideosRouter = createTRPCRouter({
         throw new Error("Video not found");
       }
 
-      const updateData: any = { ...input.data };
+      const updateData: {
+        url?: string;
+        title?: string;
+        videoId?: string;
+        playlistId?: string | null;
+        isPlaylist?: boolean;
+      } = { ...input.data };
 
       // If URL is being updated, re-extract info
       if (input.data.url) {

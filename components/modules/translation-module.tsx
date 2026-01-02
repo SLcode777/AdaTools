@@ -61,24 +61,27 @@ export function TranslationModule({
 
   useEffect(() => {
     if (apiKeyData?.apiKey) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setApiKey(apiKeyData.apiKey);
     }
-  }, [apiKeyData?.apiKey]); // Dépend seulement de la valeur string, pas de l'objet entier
+  }, [apiKeyData?.apiKey]); 
 
   // Set default target language once languages are loaded
   useEffect(() => {
     if (targetLanguages && targetLanguages.length > 0 && !targetLang) {
       const defaultLang = targetLanguages.find(
-        (lang: any) => lang.language === "EN-US" || lang.language === "en-US"
+        (lang: { language: string; name: string }) => lang.language === "EN-US" || lang.language === "en-US"
       );
       if (defaultLang) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setTargetLang(defaultLang.language);
       } else {
         // Fallback to first English variant or first language
         const englishLang = targetLanguages.find(
-          (lang: any) =>
+          (lang: { language: string; name: string }) =>
             lang.language.startsWith("EN") || lang.language.startsWith("en")
         );
+         
         setTargetLang(englishLang?.language || targetLanguages[0].language);
       }
     }
@@ -224,7 +227,7 @@ export function TranslationModule({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="auto">Auto-detect</SelectItem>
-                  {sourceLanguages?.map((lang: any) => (
+                  {sourceLanguages?.map((lang: { language: string; name: string }) => (
                     <SelectItem key={lang.language} value={lang.language}>
                       {lang.name}
                     </SelectItem>
@@ -250,7 +253,7 @@ export function TranslationModule({
                   <SelectValue placeholder="Select target language" />
                 </SelectTrigger>
                 <SelectContent>
-                  {targetLanguages?.map((lang: any) => (
+                  {targetLanguages?.map((lang: { language: string; name: string }) => (
                     <SelectItem key={lang.language} value={lang.language}>
                       {lang.name}
                     </SelectItem>

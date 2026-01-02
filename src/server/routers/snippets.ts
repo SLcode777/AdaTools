@@ -25,7 +25,17 @@ export const snippetsRouter = createTRPCRouter({
         .optional()
     )
     .query(async ({ ctx, input }) => {
-      const where: any = {
+      const where: {
+        userId: string;
+        isFavorite?: boolean;
+        language?: string;
+        tags?: { has: string };
+        OR?: Array<{
+          title?: { contains: string; mode: "insensitive" };
+          description?: { contains: string; mode: "insensitive" };
+          code?: { contains: string; mode: "insensitive" };
+        }>;
+      } = {
         userId: ctx.userId,
       };
 

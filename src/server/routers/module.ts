@@ -1,4 +1,5 @@
 import { db } from "@/src/lib/db";
+import type { Prisma } from "@prisma/client";
 import {
   DEFAULT_MODULE_LAYOUTS,
   type ModuleLayouts,
@@ -140,14 +141,14 @@ export const moduleRouter = createTRPCRouter({
             id: crypto.randomUUID(),
             userId,
             pinnedModules: [],
-            moduleLayouts: updatedLayouts as any,
+            moduleLayouts: updatedLayouts as unknown as Prisma.InputJsonValue,
           },
           select: { moduleLayouts: true, id: true },
         });
       } else {
         workspace = await db.workspace.update({
           where: { userId },
-          data: { moduleLayouts: updatedLayouts as any },
+          data: { moduleLayouts: updatedLayouts as unknown as Prisma.InputJsonValue },
           select: { moduleLayouts: true, id: true },
         });
       }

@@ -51,6 +51,7 @@ export function StickyNoteModule({
     if (!isAuthenticated && typeof window !== "undefined") {
       const savedNote = localStorage.getItem(LOCALSTORAGE_KEY);
       if (savedNote) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setNote(savedNote);
       }
     }
@@ -59,8 +60,10 @@ export function StickyNoteModule({
   useEffect(() => {
     if (isAuthenticated && !isLoading && !hasLoadedFromDb) {
       if (stickyNoteData) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setNote(stickyNoteData.content);
       }
+       
       setHasLoadedFromDb(true);
     }
   }, [isAuthenticated, stickyNoteData, hasLoadedFromDb, isLoading]);
