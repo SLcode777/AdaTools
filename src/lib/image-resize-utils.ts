@@ -1,7 +1,10 @@
+import Pica from "pica";
+
 export interface ResizeOptions {
   width: number;
   height: number;
   maintainAspectRatio?: boolean;
+  algorithm?: ResizeAlgorithm;
 }
 
 export interface CalculateDimensionsOptions {
@@ -17,17 +20,114 @@ export interface CalculateDimensionsOptions {
 
 export type ImageFormat = "png" | "jpeg" | "webp";
 
+export type ResizeAlgorithm = "lanczos" | "bicubic" | "bilinear" | "nearest" | "pica";
+
+export const RESIZE_ALGORITHMS = [
+  {
+    id: "pica" as const,
+    name: "Ultra Quality (Pica)",
+    description: "True Lanczos3 resampling, best for downscaling photos",
+    quality: "ultra" as const,
+    recommendedUse: "Meilleure qualité pour le downscaling de photos - utilise un vrai algorithme Lanczos3",
+  },
+  {
+    id: "lanczos" as const,
+    name: "High Quality",
+    description: "Best for photos, slower processing",
+    quality: "high" as const,
+    recommendedUse:
+      "Best for photos and detailed images where quality is paramount",
+  },
+  {
+    id: "bicubic" as const,
+    name: "Standard",
+    description: "Good balance of quality and speed, default choice",
+    quality: "medium" as const,
+    recommendedUse:
+      "Recommended for most use cases, provides good quality with reasonable speed",
+  },
+  {
+    id: "bilinear" as const,
+    name: "Fast",
+    description: "Quick processing, acceptable quality",
+    quality: "low" as const,
+    recommendedUse: "Ideal when speed is more important than maximum quality",
+  },
+  {
+    id: "nearest" as const,
+    name: "Pixel Perfect",
+    description: "No interpolation, ideal for pixel art",
+    quality: "pixelated" as const,
+    recommendedUse:
+      "Perfect for pixel art and images that need sharp, unblurred edges",
+  },
+] as const;
+
+/**
+ * Performs multi-step downscaling for better quality when resizing to less than 50% of original size.
+ * Uses iterative halving technique to produce sharper results than single-step resize.
+ *
+ * @param image - Source image or canvas to resize
+ * @param targetWidth - Final target width
+ * @param targetHeight - Final target height
+ * @returns Canvas with the resized image
+ */
+function stepDownResize(
+  image: HTMLImageElement | HTMLCanvasElement,
+  targetWidth: number,
+  targetHeight: number,
+): HTMLCanvasElement {
+  let currentWidth = image.width;
+  let currentHeight = image.height;
+  let currentImage: HTMLImageElement | HTMLCanvasElement = image;
+
+  // Iteratively halve dimensions until within 2x of target size
+  while (currentWidth > targetWidth * 2 || currentHeight > targetHeight * 2) {
+    const stepWidth = Math.max(Math.floor(currentWidth / 2), targetWidth);
+    const stepHeight = Math.max(Math.floor(currentHeight / 2), targetHeight);
+
+    const stepCanvas = document.createElement("canvas");
+    const stepCtx = stepCanvas.getContext("2d");
+
+    if (!stepCtx) {
+      throw new Error("Failed to get canvas context for step-down resize");
+    }
+
+    stepCanvas.width = stepWidth;
+    stepCanvas.height = stepHeight;
+
+    stepCtx.imageSmoothingEnabled = true;
+    stepCtx.imageSmoothingQuality = "high";
+    stepCtx.drawImage(currentImage, 0, 0, stepWidth, stepHeight);
+
+    currentImage = stepCanvas;
+    currentWidth = stepWidth;
+    currentHeight = stepHeight;
+  }
+
+  // Final step: resize to exact target dimensions
+  const finalCanvas = document.createElement("canvas");
+  const finalCtx = finalCanvas.getContext("2d");
+
+  if (!finalCtx) {
+    throw new Error("Failed to get canvas context for final resize");
+  }
+
+  finalCanvas.width = targetWidth;
+  finalCanvas.height = targetHeight;
+
+  finalCtx.imageSmoothingEnabled = true;
+  finalCtx.imageSmoothingQuality = "high";
+  finalCtx.drawImage(currentImage, 0, 0, targetWidth, targetHeight);
+
+  return finalCanvas;
+}
+
 export async function resizeImage(
   image: HTMLImageElement,
   options: ResizeOptions,
 ): Promise<HTMLCanvasElement> {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-
-  if (!ctx) {
-    throw new Error("Failed to get canvas context");
-  }
-
+  const { algorithm = "bicubic" } = options;
   let { width, height } = options;
 
   if (options.maintainAspectRatio) {
@@ -39,8 +139,74 @@ export async function resizeImage(
     }
   }
 
+  // Use pica for ultra-high quality resizing with true Lanczos3
+  if (algorithm === "pica") {
+    const pica = new Pica({
+      features: ['js', 'wasm', 'ww'],
+    });
+
+    // Create source canvas from image
+    const sourceCanvas = document.createElement("canvas");
+    sourceCanvas.width = image.width;
+    sourceCanvas.height = image.height;
+    const sourceCtx = sourceCanvas.getContext("2d");
+    if (!sourceCtx) throw new Error("Failed to get source canvas context");
+    sourceCtx.drawImage(image, 0, 0);
+
+    // Create destination canvas
+    const destCanvas = document.createElement("canvas");
+    destCanvas.width = width;
+    destCanvas.height = height;
+
+    // Resize with pica (Lanczos3 by default)
+    await pica.resize(sourceCanvas, destCanvas, {
+      quality: 3,  // 0-3, 3 is highest (Lanczos3)
+      alpha: true,
+      unsharpAmount: 80,
+      unsharpRadius: 0.6,
+      unsharpThreshold: 2,
+    });
+
+    return destCanvas;
+  }
+
+  // For lanczos algorithm with large downscale (target < 50% of original),
+  // use multi-step downscaling for better quality
+  if (algorithm === "lanczos") {
+    const scaleFactorWidth = width / image.width;
+    const scaleFactorHeight = height / image.height;
+
+    if (scaleFactorWidth < 0.5 || scaleFactorHeight < 0.5) {
+      return stepDownResize(image, width, height);
+    }
+  }
+
+  // Standard single-step resize for other cases
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  if (!ctx) {
+    throw new Error("Failed to get canvas context");
+  }
+
   canvas.width = width;
   canvas.height = height;
+
+  // Apply algorithm-specific canvas smoothing settings
+  if (algorithm === "nearest") {
+    ctx.imageSmoothingEnabled = false;
+  } else {
+    ctx.imageSmoothingEnabled = true;
+
+    // Map algorithm to imageSmoothingQuality
+    if (algorithm === "lanczos") {
+      ctx.imageSmoothingQuality = "high";
+    } else if (algorithm === "bicubic") {
+      ctx.imageSmoothingQuality = "medium";
+    } else if (algorithm === "bilinear") {
+      ctx.imageSmoothingQuality = "low";
+    }
+  }
 
   ctx.drawImage(image, 0, 0, width, height);
 

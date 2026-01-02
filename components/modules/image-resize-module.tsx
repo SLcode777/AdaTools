@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { ResizeControls } from "./image-resize/resize-controls";
 import { PresetSelector } from "./image-resize/preset-selector";
+import { AlgorithmSelector } from "./image-resize/algorithm-selector";
 import { ImagePreview } from "./image-resize/image-preview";
 import { OutputSettings } from "./image-resize/output-settings";
 import { BatchProcessor, type BatchFile } from "./image-resize/batch-processor";
@@ -24,6 +25,7 @@ import {
   rotateImage,
   flipImage,
   type ImageFormat,
+  type ResizeAlgorithm,
 } from "@/src/lib/image-resize-utils";
 
 interface ImageResizeModuleProps {
@@ -50,6 +52,7 @@ export function ImageResizeModule({
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
   const [aspectRatioLocked, setAspectRatioLocked] = useState(true);
+  const [algorithm, setAlgorithm] = useState<ResizeAlgorithm>("bicubic");
   const [format, setFormat] = useState<ImageFormat>("png");
   const [quality, setQuality] = useState(92);
   const [processedCanvas, setProcessedCanvas] =
@@ -75,12 +78,14 @@ export function ImageResizeModule({
       newHeight: number,
       outputFormat: ImageFormat,
       outputQuality: number,
+      algorithmValue: ResizeAlgorithm,
     ) => {
       try {
         const canvas = await resizeImage(img, {
           width: newWidth,
           height: newHeight,
           maintainAspectRatio: false,
+          algorithm: algorithmValue,
         });
 
         const qualityDecimal = outputQuality / 100;
@@ -109,7 +114,7 @@ export function ImageResizeModule({
     }
 
     debounceTimerRef.current = setTimeout(() => {
-      processImage(originalImage, width, height, format, quality);
+      processImage(originalImage, width, height, format, quality, algorithm);
     }, 300);
 
     return () => {
@@ -117,7 +122,7 @@ export function ImageResizeModule({
         clearTimeout(debounceTimerRef.current);
       }
     };
-  }, [originalImage, width, height, format, quality, processImage]);
+  }, [originalImage, width, height, format, quality, algorithm, processImage]);
 
   // Handle file selection
   const handleFileChange = async (
@@ -331,6 +336,7 @@ export function ImageResizeModule({
           width,
           height,
           maintainAspectRatio: aspectRatioLocked,
+          algorithm,
         });
 
         const qualityDecimal = quality / 100;
@@ -495,6 +501,9 @@ export function ImageResizeModule({
             {/* Preset Selector */}
             <PresetSelector onPresetSelect={handlePresetSelect} />
 
+            {/* Algorithm Selector */}
+            <AlgorithmSelector value={algorithm} onChange={setAlgorithm} />
+
             {/* Output Settings */}
             <OutputSettings
               format={format}
@@ -522,6 +531,7 @@ export function ImageResizeModule({
             onDownloadAllAsZip={handleDownloadAllAsZip}
             isProcessing={isProcessingBatch}
             currentProcessingIndex={currentBatchIndex}
+            algorithm={algorithm}
           />
         )}
       </div>

@@ -10,6 +10,7 @@ import {
   CheckCircle,
   XCircle,
 } from "lucide-react";
+import { type ResizeAlgorithm } from "@/src/lib/image-resize-utils";
 
 export interface BatchFile {
   id: string;
@@ -32,6 +33,7 @@ export interface BatchProcessorProps {
   isProcessing: boolean;
   currentProcessingIndex: number;
   disabled?: boolean;
+  algorithm?: ResizeAlgorithm;
 }
 
 function formatFileSize(bytes: number): string {
@@ -50,6 +52,8 @@ export function BatchProcessor({
   isProcessing,
   currentProcessingIndex,
   disabled = false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  algorithm, // Prop accepted for interface completeness; actual processing uses parent's algorithm
 }: BatchProcessorProps) {
   return (
     <div className="space-y-4">
