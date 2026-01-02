@@ -1,4 +1,5 @@
 import { analyticsRouter } from "./routers/analytics";
+import { bookmarksRouter } from "./routers/bookmarks";
 import { colorPaletteRouter } from "./routers/color-palette";
 import { domainNamesRouter } from "./routers/domain-names";
 import { moduleRouter } from "./routers/module";
@@ -25,6 +26,7 @@ export const appRouter = createTRPCRouter({
   snippets: snippetsRouter,
   stickyNote: stickyNoteRouter,
   youtubeVideos: youtubeVideosRouter,
+  bookmarks: bookmarksRouter,
 });
 
 export type AppRouterType = typeof appRouter;

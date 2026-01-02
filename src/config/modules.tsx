@@ -1,4 +1,5 @@
 import { Base64Module } from "@/components/modules/base64-module";
+import { BookmarksModule } from "@/components/modules/bookmarks-module";
 import { ColorConverterModule } from "@/components/modules/color-converter-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
@@ -14,6 +15,7 @@ import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
 import {
   BarChart3,
+  Bookmark,
   BookType,
   Clock,
   Code2,
@@ -134,6 +136,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Code2 className="h-5 w-5" />,
     component: SnippetManagerModule,
     category: "Development",
+    requiresAuth: true,
+  },
+  {
+    id: "bookmarks",
+    name: "Bookmarks",
+    description: "Save and organize your favorite links",
+    icon: <Bookmark className="h-5 w-5" />,
+    component: BookmarksModule,
+    category: "Productivity",
     requiresAuth: true,
   },
   {

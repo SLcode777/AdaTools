@@ -395,6 +395,7 @@ export const ModelName = {
   YouTubeVideo: 'YouTubeVideo',
   PomodoroSettings: 'PomodoroSettings',
   StickyNote: 'StickyNote',
+  Bookmark: 'Bookmark',
   AnalyticsEvent: 'AnalyticsEvent'
 } as const
 
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo" | "pomodoroSettings" | "stickyNote" | "analyticsEvent"
+    modelProps: "workspace" | "user" | "session" | "account" | "verification" | "colorPalette" | "domainName" | "snippet" | "youTubeVideo" | "pomodoroSettings" | "stickyNote" | "bookmark" | "analyticsEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1229,6 +1230,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Bookmark: {
+      payload: Prisma.$BookmarkPayload<ExtArgs>
+      fields: Prisma.BookmarkFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.BookmarkFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.BookmarkFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        findFirst: {
+          args: Prisma.BookmarkFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.BookmarkFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        findMany: {
+          args: Prisma.BookmarkFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        create: {
+          args: Prisma.BookmarkCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        createMany: {
+          args: Prisma.BookmarkCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.BookmarkCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        delete: {
+          args: Prisma.BookmarkDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        update: {
+          args: Prisma.BookmarkUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        deleteMany: {
+          args: Prisma.BookmarkDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.BookmarkUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.BookmarkUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>[]
+        }
+        upsert: {
+          args: Prisma.BookmarkUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$BookmarkPayload>
+        }
+        aggregate: {
+          args: Prisma.BookmarkAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateBookmark>
+        }
+        groupBy: {
+          args: Prisma.BookmarkGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookmarkGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.BookmarkCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.BookmarkCountAggregateOutputType> | number
+        }
+      }
+    }
     AnalyticsEvent: {
       payload: Prisma.$AnalyticsEventPayload<ExtArgs>
       fields: Prisma.AnalyticsEventFieldRefs
@@ -1511,6 +1586,23 @@ export const StickyNoteScalarFieldEnum = {
 export type StickyNoteScalarFieldEnum = (typeof StickyNoteScalarFieldEnum)[keyof typeof StickyNoteScalarFieldEnum]
 
 
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  url: 'url',
+  title: 'title',
+  description: 'description',
+  image: 'image',
+  favicon: 'favicon',
+  tags: 'tags',
+  isFavorite: 'isFavorite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
+
+
 export const AnalyticsEventScalarFieldEnum = {
   id: 'id',
   eventType: 'eventType',
@@ -1758,6 +1850,7 @@ export type GlobalOmitConfig = {
   youTubeVideo?: Prisma.YouTubeVideoOmit
   pomodoroSettings?: Prisma.PomodoroSettingsOmit
   stickyNote?: Prisma.StickyNoteOmit
+  bookmark?: Prisma.BookmarkOmit
   analyticsEvent?: Prisma.AnalyticsEventOmit
 }
 

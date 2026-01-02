@@ -62,6 +62,7 @@ export const ModelName = {
   YouTubeVideo: 'YouTubeVideo',
   PomodoroSettings: 'PomodoroSettings',
   StickyNote: 'StickyNote',
+  Bookmark: 'Bookmark',
   AnalyticsEvent: 'AnalyticsEvent'
 } as const
 
@@ -248,6 +249,23 @@ export const StickyNoteScalarFieldEnum = {
 } as const
 
 export type StickyNoteScalarFieldEnum = (typeof StickyNoteScalarFieldEnum)[keyof typeof StickyNoteScalarFieldEnum]
+
+
+export const BookmarkScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  url: 'url',
+  title: 'title',
+  description: 'description',
+  image: 'image',
+  favicon: 'favicon',
+  tags: 'tags',
+  isFavorite: 'isFavorite',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type BookmarkScalarFieldEnum = (typeof BookmarkScalarFieldEnum)[keyof typeof BookmarkScalarFieldEnum]
 
 
 export const AnalyticsEventScalarFieldEnum = {
