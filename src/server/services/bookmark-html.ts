@@ -1,4 +1,5 @@
 import * as cheerio from "cheerio";
+import type { Element } from "domhandler";
 
 export interface ParsedBookmark {
   url: string;
@@ -17,7 +18,7 @@ export function parseBookmarksHTML(html: string): ParsedBookmark[] {
 
   // Recursive function to parse bookmarks and their folder hierarchy
   function parseNode(
-    node: any,
+    node: Element,
     folderPath: string[] = [],
     isRootLevel = false
   ) {
@@ -149,7 +150,6 @@ export function generateBookmarksHTML(
     indent: number
   ): string {
     let result = "";
-    const indentStr = "    ".repeat(indent);
 
     if (path.length > 0) {
       // Open folders for this path
@@ -157,7 +157,9 @@ export function generateBookmarksHTML(
         const folderPath = path.slice(0, i + 1).join("/");
         if (!openFolders.has(folderPath)) {
           const folderIndent = "    ".repeat(indent + i);
-          result += `${folderIndent}<DT><H3 ADD_DATE="${timestamp}" LAST_MODIFIED="${timestamp}">${escapeHtml(path[i])}</H3>\n`;
+          result += `${folderIndent}<DT><H3 ADD_DATE="${timestamp}" LAST_MODIFIED="${timestamp}">${escapeHtml(
+            path[i]
+          )}</H3>\n`;
           result += `${folderIndent}<DL><p>\n`;
           openFolders.add(folderPath);
         }
@@ -168,7 +170,11 @@ export function generateBookmarksHTML(
     const bookmarkIndent = "    ".repeat(indent + path.length);
     bookmarksInPath.forEach((bookmark) => {
       const iconAttr = bookmark.favicon ? ` ICON="${bookmark.favicon}"` : "";
-      result += `${bookmarkIndent}<DT><A HREF="${escapeHtml(bookmark.url)}" ADD_DATE="${timestamp}"${iconAttr}>${escapeHtml(bookmark.title)}</A>\n`;
+      result += `${bookmarkIndent}<DT><A HREF="${escapeHtml(
+        bookmark.url
+      )}" ADD_DATE="${timestamp}"${iconAttr}>${escapeHtml(
+        bookmark.title
+      )}</A>\n`;
     });
 
     return result;
