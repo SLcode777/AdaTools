@@ -2,6 +2,10 @@ import { db } from "@/src/lib/db";
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { extractMetadata } from "../services/metadata-extractor";
+import {
+  generateBookmarksHTML,
+  parseBookmarksHTML,
+} from "../services/bookmark-html";
 
 const bookmarkSchema = z.object({
   url: z.string().url("Invalid URL format"),
@@ -187,5 +191,59 @@ export const bookmarksRouter = createTRPCRouter({
     const uniqueTags = Array.from(new Set(allTags)).sort();
 
     return uniqueTags;
+  }),
+
+  // Parse HTML file and return bookmarks for user selection
+  parseHTMLFile: protectedProcedure
+    .input(z.object({ html: z.string() }))
+    .mutation(async ({ input }) => {
+      const parsedBookmarks = parseBookmarksHTML(input.html);
+      return parsedBookmarks;
+    }),
+
+  // Import selected bookmarks
+  importBookmarks: protectedProcedure
+    .input(
+      z.object({
+        bookmarks: z.array(
+          z.object({
+            url: z.string(),
+            title: z.string(),
+            favicon: z.string().optional(),
+            tags: z.array(z.string()).default([]),
+          })
+        ),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const created = await db.bookmark.createMany({
+        data: input.bookmarks.map((bookmark) => ({
+          userId: ctx.userId,
+          url: bookmark.url,
+          title: bookmark.title,
+          favicon: bookmark.favicon || undefined,
+          tags: bookmark.tags,
+          isFavorite: false,
+        })),
+      });
+
+      return { count: created.count };
+    }),
+
+  // Export all bookmarks as HTML
+  exportHTML: protectedProcedure.query(async ({ ctx }) => {
+    const bookmarks = await db.bookmark.findMany({
+      where: { userId: ctx.userId },
+      orderBy: { createdAt: "desc" },
+      select: {
+        url: true,
+        title: true,
+        description: true,
+        favicon: true,
+        tags: true,
+      },
+    });
+
+    return generateBookmarksHTML(bookmarks);
   }),
 });
