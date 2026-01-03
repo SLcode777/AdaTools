@@ -26,6 +26,7 @@ import { api } from "@/src/lib/trpc/client";
 import {
   AlertCircle,
   Bookmark,
+  Download,
   Edit,
   ExternalLink,
   Loader2,
@@ -33,6 +34,7 @@ import {
   Search,
   Star,
   Trash2,
+  Upload,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -65,6 +67,7 @@ export function BookmarksModule({
   // State
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
   const [editingBookmark, setEditingBookmark] = useState<string | null>(null);
   const [bookmarkToDelete, setBookmarkToDelete] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
@@ -72,6 +75,16 @@ export function BookmarksModule({
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [newTag, setNewTag] = useState("");
   const [isFetchingMetadata, setIsFetchingMetadata] = useState(false);
+  const [parsedBookmarks, setParsedBookmarks] = useState<
+    Array<{
+      url: string;
+      title: string;
+      favicon?: string;
+      tags: string[];
+      selected: boolean;
+    }>
+  >([]);
+  const [selectAll, setSelectAll] = useState(true);
 
   // Form state
   const [formData, setFormData] = useState<BookmarkFormData>({
@@ -166,6 +179,31 @@ export function BookmarksModule({
     },
     onError: (error) => {
       toast.error(error.message || "Failed to toggle favorite");
+    },
+  });
+
+  const parseHTMLMutation = api.bookmarks.parseHTMLFile.useMutation({
+    onSuccess: (data) => {
+      setParsedBookmarks(data.map((b) => ({ ...b, selected: true })));
+      setSelectAll(true);
+      setImportDialogOpen(true);
+      toast.success(`Found ${data.length} bookmarks`);
+    },
+    onError: (error) => {
+      toast.error("Failed to parse HTML file");
+    },
+  });
+
+  const importMutation = api.bookmarks.importBookmarks.useMutation({
+    onSuccess: (data) => {
+      toast.success(`Imported ${data.count} bookmarks successfully`);
+      utils.bookmarks.getAll.invalidate();
+      utils.bookmarks.getTags.invalidate();
+      setImportDialogOpen(false);
+      setParsedBookmarks([]);
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to import bookmarks");
     },
   });
 
@@ -302,6 +340,75 @@ export function BookmarksModule({
     }
   };
 
+  const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      parseHTMLMutation.mutate({ html: text });
+    } catch (error) {
+      toast.error("Failed to read HTML file");
+    }
+
+    event.target.value = "";
+  };
+
+  const handleExport = async () => {
+    if (!isAuthenticated) {
+      onAuthRequired?.();
+      return;
+    }
+    try {
+      const html = await utils.bookmarks.exportHTML.fetch();
+      const blob = new Blob([html], { type: "text/html" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `bookmarks-${
+        new Date().toISOString().split("T")[0]
+      }.html`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      toast.success("Bookmarks exported successfully");
+    } catch (error) {
+      toast.error("Failed to export bookmarks");
+    }
+  };
+
+  const handleToggleSelectAll = () => {
+    const newSelectAll = !selectAll;
+    setSelectAll(newSelectAll);
+    setParsedBookmarks((prev) =>
+      prev.map((b) => ({ ...b, selected: newSelectAll }))
+    );
+  };
+
+  const handleToggleBookmark = (index: number) => {
+    setParsedBookmarks((prev) =>
+      prev.map((b, i) => (i === index ? { ...b, selected: !b.selected } : b))
+    );
+  };
+
+  const handleConfirmImport = () => {
+    const selectedBookmarks = parsedBookmarks
+      .filter((b) => b.selected)
+      .map(({ url, title, favicon, tags }) => ({ url, title, favicon, tags }));
+
+    if (selectedBookmarks.length === 0) {
+      toast.error("Please select at least one bookmark to import");
+      return;
+    }
+
+    importMutation.mutate({ bookmarks: selectedBookmarks });
+  };
+
   return (
     <Module
       title="Bookmarks"
@@ -313,10 +420,46 @@ export function BookmarksModule({
     >
       <div className="space-y-4">
         {/* Header Actions */}
-        <Button onClick={() => handleOpenDialog()} className="w-full">
-          <Plus className="h-4 w-4 mr-2" />
-          New Bookmark
-        </Button>
+        <div className="space-y-2">
+          <Button onClick={() => handleOpenDialog()} className="w-full">
+            <Plus className="h-4 w-4 mr-2" />
+            New Bookmark
+          </Button>
+
+          <div className="grid grid-cols-2 gap-2">
+            <Button
+              onClick={handleExport}
+              variant="outline"
+              size="sm"
+              className="w-full"
+            >
+              <Download className="h-3.5 w-3.5 mr-2" />
+              Export HTML
+            </Button>
+            <Button
+              onClick={() => {
+                if (!isAuthenticated) {
+                  onAuthRequired?.();
+                  return;
+                }
+                document.getElementById("import-html-file")?.click();
+              }}
+              variant="outline"
+              size="sm"
+              className="w-full"
+            >
+              <Upload className="h-3.5 w-3.5 mr-2" />
+              Import HTML
+            </Button>
+            <input
+              id="import-html-file"
+              type="file"
+              accept=".html"
+              onChange={handleImport}
+              className="hidden"
+            />
+          </div>
+        </div>
 
         {/* Filters */}
         <div className="space-y-2">
@@ -670,6 +813,108 @@ export function BookmarksModule({
                 disabled={deleteMutation.isPending}
               >
                 Delete
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+
+        {/* Import Selection Dialog */}
+        <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
+          <DialogContent className="max-w-lg max-h-[90vh] overflow-hidden [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary">
+            <DialogHeader>
+              <DialogTitle>Import Bookmarks</DialogTitle>
+              <DialogDescription>
+                Select the bookmarks you want to import (
+                {parsedBookmarks.filter((b) => b.selected).length} of{" "}
+                {parsedBookmarks.length} selected)
+              </DialogDescription>
+            </DialogHeader>
+
+            <div className="space-y-4 overflow-hidden">
+              {/* Select All */}
+              <div className="flex items-center gap-2 p-2 border rounded">
+                <input
+                  type="checkbox"
+                  id="select-all"
+                  checked={selectAll}
+                  onChange={handleToggleSelectAll}
+                  className="h-4 w-4"
+                />
+                <Label
+                  htmlFor="select-all"
+                  className="cursor-pointer font-medium"
+                >
+                  Select All
+                </Label>
+              </div>
+
+              {/* Bookmarks List */}
+              <div className="space-y-2 max-h-96 overflow-y-auto overflow-x-hidden [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary">
+                {parsedBookmarks.map((bookmark, index) => (
+                  <div
+                    key={index}
+                    className="flex items-start gap-2 p-2 border rounded hover:border-primary/50 transition-colors min-w-0"
+                  >
+                    <input
+                      type="checkbox"
+                      id={`bookmark-${index}`}
+                      checked={bookmark.selected}
+                      onChange={() => handleToggleBookmark(index)}
+                      className="h-4 w-4 mt-0.5 shrink-0"
+                    />
+                    <div className="flex-1 min-w-0 overflow-hidden w-0">
+                      <Label
+                        htmlFor={`bookmark-${index}`}
+                        className="cursor-pointer font-medium text-sm block overflow-hidden text-ellipsis whitespace-nowrap"
+                      >
+                        {bookmark.title}
+                      </Label>
+                      <p className="text-xs text-muted-foreground overflow-hidden text-ellipsis whitespace-nowrap">
+                        {bookmark.url}
+                      </p>
+                      {bookmark.tags.length > 0 && (
+                        <div className="flex gap-1 mt-1 flex-wrap">
+                          {bookmark.tags.map((tag, tagIndex) => (
+                            <Badge
+                              key={tagIndex}
+                              variant="secondary"
+                              className="text-xs"
+                            >
+                              {tag}
+                            </Badge>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <DialogFooter>
+              <Button
+                variant="outline"
+                onClick={() => setImportDialogOpen(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleConfirmImport}
+                disabled={
+                  importMutation.isPending ||
+                  parsedBookmarks.filter((b) => b.selected).length === 0
+                }
+              >
+                {importMutation.isPending ? (
+                  <>
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    Importing...
+                  </>
+                ) : (
+                  `Import ${
+                    parsedBookmarks.filter((b) => b.selected).length
+                  } Bookmarks`
+                )}
               </Button>
             </DialogFooter>
           </DialogContent>
