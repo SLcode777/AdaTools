@@ -1,4 +1,5 @@
-export type TimerState = "idle" | "work" | "break" | "paused";
+export type TimerState = "idle" | "running" | "paused";
+export type TimerPhase = "work" | "break";
 
 export type SoundEvent =
   | "sessionStart"
@@ -43,8 +44,10 @@ export interface TimerSession {
   totalCycles: number;
   completedCycles: number;
   state: TimerState;
+  phase: TimerPhase;
   remainingSeconds: number;
   totalSeconds: number;
+  endTime: number | null; // Absolute timestamp when timer ends (for background accuracy)
 }
 
 export interface LocalStorageTimerState extends PomodoroSettings {

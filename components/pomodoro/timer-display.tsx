@@ -139,7 +139,7 @@ export function TimerDisplay({
           )}
           style={{ color: settings.textColor }}
         >
-          {getStateLabel(session.state)}
+          {getStateLabel(session.state, session.phase)}
         </div>
 
         {/* Cycle indicator */}

@@ -2,6 +2,7 @@ import type {
   BackgroundImage,
   PomodoroSettings,
   PomodoroSound,
+  TimerPhase,
   TimerState,
 } from "@/src/types/pomodoro";
 
@@ -301,14 +302,12 @@ export function formatTime(seconds: number): string {
 }
 
 // Get label for timer state
-export function getStateLabel(state: TimerState): string {
+export function getStateLabel(state: TimerState, phase?: TimerPhase): string {
   switch (state) {
     case "idle":
       return "Ready to start";
-    case "work":
-      return "Focus Time";
-    case "break":
-      return "Break";
+    case "running":
+      return phase === "break" ? "Break" : "Focus Time";
     case "paused":
       return "Paused";
     default:
