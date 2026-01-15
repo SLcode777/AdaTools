@@ -218,6 +218,9 @@ function SidebarContent({
                       <p>See the repository</p>
                     </div>
                   </Link>
+                  <p className="text-sm text-muted-foreground mt-2">
+                    don&apos;t forget to drop a ⭐ :)
+                  </p>
                 </div>
               </div>
             </div>
