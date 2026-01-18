@@ -280,6 +280,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Lucide](https://lucide.dev/) for the icons
 - All the amazing open source libraries that make this project possible
 - For the pomodoro sounds, see [Pomodoro-sounds-attribution.md](Pomodoro-sounds-attribution.md) for author credits
+- security : Ihan Boo for disclosing a clickjacking vulnerability
 
 ## 📧 Contact
 
