@@ -12,12 +12,16 @@
     "url": "https://github.com/SLcode777/AdaTools/issues"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "doppler run -- next dev",
+    "build": "doppler run -- next build",
+    "start": "doppler run -- next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "check": "pnpm lint && pnpm typecheck && pnpm build"
+    "check": "pnpm lint && pnpm typecheck && pnpm build",
+    "db:migrate": "doppler run -- prisma migrate dev",
+    "db:push": "doppler run -- prisma db push",
+    "db:generate": "doppler run -- prisma generate",
+    "db:studio": "doppler run -- prisma studio"
   },
   "dependencies": {
     "@base-ui/react": "^1.0.0",
