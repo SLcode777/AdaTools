@@ -261,6 +261,7 @@ export const BookmarkScalarFieldEnum = {
   favicon: 'favicon',
   tags: 'tags',
   isFavorite: 'isFavorite',
+  isHidden: 'isHidden',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

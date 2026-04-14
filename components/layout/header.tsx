@@ -92,6 +92,34 @@ export function Header() {
                 <p className="text-base">Dashboard</p>
               </Link>
             </Button>
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className={cn(
+                pathname === "/bookmarks"
+                  ? "text-base text-primary"
+                  : "text-base"
+              )}
+            >
+              <Link href="/bookmarks">
+                <p className="text-base">Bookmarks</p>
+              </Link>
+            </Button>
+            <Button
+              asChild
+              variant="ghost"
+              size="sm"
+              className={cn(
+                pathname === "/snippets"
+                  ? "text-base text-primary"
+                  : "text-base"
+              )}
+            >
+              <Link href="/snippets">
+                <p className="text-base">Snippets</p>
+              </Link>
+            </Button>
           </div>
         )}
 

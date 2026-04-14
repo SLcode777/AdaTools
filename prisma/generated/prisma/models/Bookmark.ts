@@ -33,6 +33,7 @@ export type BookmarkMinAggregateOutputType = {
   image: string | null
   favicon: string | null
   isFavorite: boolean | null
+  isHidden: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -46,6 +47,7 @@ export type BookmarkMaxAggregateOutputType = {
   image: string | null
   favicon: string | null
   isFavorite: boolean | null
+  isHidden: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -60,6 +62,7 @@ export type BookmarkCountAggregateOutputType = {
   favicon: number
   tags: number
   isFavorite: number
+  isHidden: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -75,6 +78,7 @@ export type BookmarkMinAggregateInputType = {
   image?: true
   favicon?: true
   isFavorite?: true
+  isHidden?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +92,7 @@ export type BookmarkMaxAggregateInputType = {
   image?: true
   favicon?: true
   isFavorite?: true
+  isHidden?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -102,6 +107,7 @@ export type BookmarkCountAggregateInputType = {
   favicon?: true
   tags?: true
   isFavorite?: true
+  isHidden?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -189,6 +195,7 @@ export type BookmarkGroupByOutputType = {
   favicon: string | null
   tags: string[]
   isFavorite: boolean
+  isHidden: boolean
   createdAt: Date
   updatedAt: Date
   _count: BookmarkCountAggregateOutputType | null
@@ -224,6 +231,7 @@ export type BookmarkWhereInput = {
   favicon?: Prisma.StringNullableFilter<"Bookmark"> | string | null
   tags?: Prisma.StringNullableListFilter<"Bookmark">
   isFavorite?: Prisma.BoolFilter<"Bookmark"> | boolean
+  isHidden?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -239,6 +247,7 @@ export type BookmarkOrderByWithRelationInput = {
   favicon?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
+  isHidden?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
@@ -257,6 +266,7 @@ export type BookmarkWhereUniqueInput = Prisma.AtLeast<{
   favicon?: Prisma.StringNullableFilter<"Bookmark"> | string | null
   tags?: Prisma.StringNullableListFilter<"Bookmark">
   isFavorite?: Prisma.BoolFilter<"Bookmark"> | boolean
+  isHidden?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -272,6 +282,7 @@ export type BookmarkOrderByWithAggregationInput = {
   favicon?: Prisma.SortOrderInput | Prisma.SortOrder
   tags?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
+  isHidden?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.BookmarkCountOrderByAggregateInput
@@ -292,6 +303,7 @@ export type BookmarkScalarWhereWithAggregatesInput = {
   favicon?: Prisma.StringNullableWithAggregatesFilter<"Bookmark"> | string | null
   tags?: Prisma.StringNullableListFilter<"Bookmark">
   isFavorite?: Prisma.BoolWithAggregatesFilter<"Bookmark"> | boolean
+  isHidden?: Prisma.BoolWithAggregatesFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Bookmark"> | Date | string
 }
@@ -305,6 +317,7 @@ export type BookmarkCreateInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutBookmarksInput
@@ -320,6 +333,7 @@ export type BookmarkUncheckedCreateInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -333,6 +347,7 @@ export type BookmarkUpdateInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutBookmarksNestedInput
@@ -348,6 +363,7 @@ export type BookmarkUncheckedUpdateInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -362,6 +378,7 @@ export type BookmarkCreateManyInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -375,6 +392,7 @@ export type BookmarkUpdateManyMutationInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -389,6 +407,7 @@ export type BookmarkUncheckedUpdateManyInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -413,6 +432,7 @@ export type BookmarkCountOrderByAggregateInput = {
   favicon?: Prisma.SortOrder
   tags?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
+  isHidden?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -426,6 +446,7 @@ export type BookmarkMaxOrderByAggregateInput = {
   image?: Prisma.SortOrder
   favicon?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
+  isHidden?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -439,6 +460,7 @@ export type BookmarkMinOrderByAggregateInput = {
   image?: Prisma.SortOrder
   favicon?: Prisma.SortOrder
   isFavorite?: Prisma.SortOrder
+  isHidden?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -503,6 +525,7 @@ export type BookmarkCreateWithoutUserInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -516,6 +539,7 @@ export type BookmarkUncheckedCreateWithoutUserInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -559,6 +583,7 @@ export type BookmarkScalarWhereInput = {
   favicon?: Prisma.StringNullableFilter<"Bookmark"> | string | null
   tags?: Prisma.StringNullableListFilter<"Bookmark">
   isFavorite?: Prisma.BoolFilter<"Bookmark"> | boolean
+  isHidden?: Prisma.BoolFilter<"Bookmark"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Bookmark"> | Date | string
 }
@@ -572,6 +597,7 @@ export type BookmarkCreateManyUserInput = {
   favicon?: string | null
   tags?: Prisma.BookmarkCreatetagsInput | string[]
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -585,6 +611,7 @@ export type BookmarkUpdateWithoutUserInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -598,6 +625,7 @@ export type BookmarkUncheckedUpdateWithoutUserInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -611,6 +639,7 @@ export type BookmarkUncheckedUpdateManyWithoutUserInput = {
   favicon?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   tags?: Prisma.BookmarkUpdatetagsInput | string[]
   isFavorite?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isHidden?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -627,6 +656,7 @@ export type BookmarkSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   favicon?: boolean
   tags?: boolean
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -642,6 +672,7 @@ export type BookmarkSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   favicon?: boolean
   tags?: boolean
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -657,6 +688,7 @@ export type BookmarkSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   favicon?: boolean
   tags?: boolean
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -672,11 +704,12 @@ export type BookmarkSelectScalar = {
   favicon?: boolean
   tags?: boolean
   isFavorite?: boolean
+  isHidden?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type BookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "url" | "title" | "description" | "image" | "favicon" | "tags" | "isFavorite" | "createdAt" | "updatedAt", ExtArgs["result"]["bookmark"]>
+export type BookmarkOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "url" | "title" | "description" | "image" | "favicon" | "tags" | "isFavorite" | "isHidden" | "createdAt" | "updatedAt", ExtArgs["result"]["bookmark"]>
 export type BookmarkInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -702,6 +735,7 @@ export type $BookmarkPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     favicon: string | null
     tags: string[]
     isFavorite: boolean
+    isHidden: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["bookmark"]>
@@ -1137,6 +1171,7 @@ export interface BookmarkFieldRefs {
   readonly favicon: Prisma.FieldRef<"Bookmark", 'String'>
   readonly tags: Prisma.FieldRef<"Bookmark", 'String[]'>
   readonly isFavorite: Prisma.FieldRef<"Bookmark", 'Boolean'>
+  readonly isHidden: Prisma.FieldRef<"Bookmark", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Bookmark", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Bookmark", 'DateTime'>
 }

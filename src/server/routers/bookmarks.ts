@@ -15,6 +15,7 @@ const bookmarkSchema = z.object({
   favicon: z.string().optional(),
   tags: z.array(z.string()).default([]),
   isFavorite: z.boolean().default(false),
+  isHidden: z.boolean().default(false),
 });
 
 export const bookmarksRouter = createTRPCRouter({
@@ -26,6 +27,7 @@ export const bookmarksRouter = createTRPCRouter({
           search: z.string().optional(),
           tag: z.string().optional(),
           favoritesOnly: z.boolean().optional(),
+          showHidden: z.boolean().optional(),
         })
         .optional()
     )
@@ -33,6 +35,7 @@ export const bookmarksRouter = createTRPCRouter({
       const where: {
         userId: string;
         isFavorite?: boolean;
+        isHidden?: boolean;
         tags?: { has: string };
         OR?: Array<{
           title?: { contains: string; mode: "insensitive" };
@@ -41,6 +44,7 @@ export const bookmarksRouter = createTRPCRouter({
         }>;
       } = {
         userId: ctx.userId,
+        isHidden: input?.showHidden ? undefined : false,
       };
 
       if (input?.favoritesOnly) {
@@ -160,6 +164,24 @@ export const bookmarksRouter = createTRPCRouter({
       });
 
       return { success: true };
+    }),
+
+  // Toggle hidden
+  toggleHidden: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const bookmark = await db.bookmark.findFirst({
+        where: { id: input.id, userId: ctx.userId },
+      });
+
+      if (!bookmark) {
+        throw new Error("Bookmark not found");
+      }
+
+      return await db.bookmark.update({
+        where: { id: input.id },
+        data: { isHidden: !bookmark.isHidden },
+      });
     }),
 
   // Toggle favorite

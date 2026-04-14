@@ -46,6 +46,7 @@ interface BookmarksModuleProps {
   onTogglePin?: () => void;
   isAuthenticated?: boolean;
   onAuthRequired?: () => void;
+  layout?: "column" | "grid";
 }
 
 interface BookmarkFormData {
@@ -63,6 +64,7 @@ export function BookmarksModule({
   onTogglePin,
   isAuthenticated = true,
   onAuthRequired,
+  layout = "column",
 }: BookmarksModuleProps) {
   // State
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -516,7 +518,13 @@ export function BookmarksModule({
         <Separator />
 
         {/* Bookmarks List */}
-        <div className="space-y-2 max-h-100 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary pr-1">
+        <div
+          className={
+            layout === "grid"
+              ? "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3"
+              : "space-y-2 max-h-100 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-primary/50 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:hover:bg-primary pr-1"
+          }
+        >
           {isLoading ? (
             <div className="text-center text-sm text-muted-foreground py-8">
               Loading bookmarks...

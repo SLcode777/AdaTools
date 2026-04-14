@@ -222,12 +222,14 @@ model Bookmark {
    favicon     String?   //favicon URL
    tags        String[]  @default([])
    isFavorite  Boolean   @default(false)
+   isHidden    Boolean   @default(false)
    createdAt   DateTime  @default(now())
    updatedAt   DateTime  @updatedAt
    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
    @@index([userId])
    @@index([isFavorite])
+   @@index([isHidden])
    @@index([createdAt])
    @@map("bookmark")
  }

@@ -1,12 +1,10 @@
 import { Base64Module } from "@/components/modules/base64-module";
-import { BookmarksModule } from "@/components/modules/bookmarks-module";
 import { ColorConverterModule } from "@/components/modules/color-converter-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
-import { SnippetManagerModule } from "@/components/modules/snippet-manager-module";
 import { StickyNoteModule } from "@/components/modules/stickynote-module";
 import { TextStatsModule } from "@/components/modules/text-stats-module";
 import { TranslationModule } from "@/components/modules/translation-module";
@@ -15,10 +13,8 @@ import { WebpConverterModule } from "@/components/modules/webpConverter";
 import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
 import {
   BarChart3,
-  Bookmark,
   BookType,
   Clock,
-  Code2,
   FileText,
   Globe,
   Images,
@@ -127,24 +123,6 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     icon: <Globe className="h-5 w-5" />,
     component: DomainNamesModule,
     category: "Management",
-    requiresAuth: true,
-  },
-  {
-    id: "snippet-manager",
-    name: "Snippet Manager",
-    description: "Store and manage your code snippets",
-    icon: <Code2 className="h-5 w-5" />,
-    component: SnippetManagerModule,
-    category: "Development",
-    requiresAuth: true,
-  },
-  {
-    id: "bookmarks",
-    name: "Bookmarks",
-    description: "Save and organize your favorite links",
-    icon: <Bookmark className="h-5 w-5" />,
-    component: BookmarksModule,
-    category: "Productivity",
     requiresAuth: true,
   },
   {
