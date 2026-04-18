@@ -13,8 +13,8 @@
   },
   "scripts": {
     "dev": "doppler run -- next dev",
-    "build": "doppler run -- next build",
-    "start": "doppler run -- next start",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "check": "pnpm lint && pnpm typecheck && pnpm build",
