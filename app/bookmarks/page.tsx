@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TagInput } from "@/components/ui/tag-input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "@/src/lib/auth-client";
 import { api } from "@/src/lib/trpc/client";
@@ -68,7 +69,6 @@ export default function BookmarksPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [tagFilter, setTagFilter] = useState<string>("");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
-  const [newTag, setNewTag] = useState("");
   const [showHidden, setShowHidden] = useState(false);
   const [isFetchingMetadata, setIsFetchingMetadata] = useState(false);
   const [parsedBookmarks, setParsedBookmarks] = useState<
@@ -220,7 +220,6 @@ export default function BookmarksPage() {
     setDialogOpen(false);
     setEditingBookmark(null);
     setFormData({ url: "", title: "", description: "", image: "", favicon: "", tags: [], isFavorite: false });
-    setNewTag("");
     setIsFetchingMetadata(false);
   };
 
@@ -248,21 +247,6 @@ export default function BookmarksPage() {
   const handleToggleHidden = (id: string) => {
     if (!isAuthenticated) { onAuthRequired(); return; }
     toggleHiddenMutation.mutate({ id });
-  };
-
-  const handleAddTag = () => {
-    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
-      setNewTag("");
-    }
-  };
-
-  const handleRemoveTag = (tag: string) => {
-    setFormData({ ...formData, tags: formData.tags.filter((t) => t !== tag) });
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") { e.preventDefault(); handleAddTag(); }
   };
 
   const handleImport = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -628,27 +612,11 @@ export default function BookmarksPage() {
 
             <div className="space-y-2">
               <Label>Tags</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Add a tag..."
-                />
-                <Button type="button" variant="outline" onClick={handleAddTag}>Add</Button>
-              </div>
-              {formData.tags.length > 0 && (
-                <div className="flex gap-2 flex-wrap">
-                  {formData.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                      <button onClick={() => handleRemoveTag(tag)} className="ml-1">
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
+              <TagInput
+                value={formData.tags}
+                onChange={(tags) => setFormData({ ...formData, tags })}
+                suggestions={displayTags ?? []}
+              />
             </div>
 
             <div className="flex items-center gap-2">

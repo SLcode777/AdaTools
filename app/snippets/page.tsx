@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { TagInput } from "@/components/ui/tag-input";
 import { Textarea } from "@/components/ui/textarea";
 import { api } from "@/src/lib/trpc/client";
 import { useSession } from "@/src/lib/auth-client";
@@ -123,7 +124,6 @@ export default function SnippetsPage() {
   const [tagFilter, setTagFilter] = useState<string>("");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [newTag, setNewTag] = useState("");
   const [formData, setFormData] = useState<SnippetFormData>({
     title: "",
     description: "",
@@ -244,7 +244,6 @@ export default function SnippetsPage() {
     setDialogOpen(false);
     setEditingSnippet(null);
     setFormData({ title: "", description: "", language: "", code: "", tags: [], isFavorite: false });
-    setNewTag("");
   };
 
   const handleSubmit = () => {
@@ -313,21 +312,6 @@ export default function SnippetsPage() {
       toast.error("Failed to parse JSON file");
     }
     event.target.value = "";
-  };
-
-  const handleAddTag = () => {
-    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
-      setNewTag("");
-    }
-  };
-
-  const handleRemoveTag = (tag: string) => {
-    setFormData({ ...formData, tags: formData.tags.filter((t) => t !== tag) });
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") { e.preventDefault(); handleAddTag(); }
   };
 
   const hasActiveFilters = languageFilter || tagFilter || favoritesOnly || searchQuery;
@@ -618,27 +602,11 @@ export default function SnippetsPage() {
 
             <div className="space-y-2">
               <Label>Tags</Label>
-              <div className="flex gap-2">
-                <Input
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Add a tag..."
-                />
-                <Button type="button" variant="outline" onClick={handleAddTag}>Add</Button>
-              </div>
-              {formData.tags.length > 0 && (
-                <div className="flex gap-2 flex-wrap">
-                  {formData.tags.map((tag) => (
-                    <Badge key={tag} variant="secondary">
-                      {tag}
-                      <button onClick={() => handleRemoveTag(tag)} className="ml-1">
-                        <X className="h-3 w-3" />
-                      </button>
-                    </Badge>
-                  ))}
-                </div>
-              )}
+              <TagInput
+                value={formData.tags}
+                onChange={(tags) => setFormData({ ...formData, tags })}
+                suggestions={displayTags ?? []}
+              />
             </div>
 
             <div className="flex items-center gap-2">
