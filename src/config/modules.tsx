@@ -2,6 +2,7 @@ import { Base64Module } from "@/components/modules/base64-module";
 import { ColorConverterModule } from "@/components/modules/color-converter-module";
 import { ColorPaletteModule } from "@/components/modules/color-palette-module";
 import { DomainNamesModule } from "@/components/modules/domain-names-module";
+import { JWTModule } from "@/components/modules/jwt-module";
 import { LoremIpsumModule } from "@/components/modules/lorem-ipsum-module";
 import { PomodoroTimerModule } from "@/components/modules/pomodoro-timer-module";
 import { RemoveBgModule } from "@/components/modules/removeBg-module";
@@ -14,6 +15,7 @@ import { YouTubeEmbedModule } from "@/components/modules/youtube-embed-module";
 import {
   BarChart3,
   BookType,
+  Braces,
   Clock,
   FileText,
   Globe,
@@ -68,6 +70,15 @@ export const AVAILABLE_MODULES: ModuleConfig[] = [
     description: "Base64 encoder/decoder",
     icon: <Settings className="h-5 w-5" />,
     component: Base64Module,
+    category: "Encoding",
+    requiresAuth: false,
+  },
+  {
+    id: "jwt",
+    name: "JWT",
+    description: "JSON Web Token encoder/decoder",
+    icon: <Braces className="h-5 w-5" />,
+    component: JWTModule,
     category: "Encoding",
     requiresAuth: false,
   },
